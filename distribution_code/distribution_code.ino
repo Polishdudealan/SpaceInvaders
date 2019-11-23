@@ -126,9 +126,12 @@ class Cannonball {
     }
     
     // getters
+    
     int get_x() const {
+    	return x;
     }
     int get_y() const {
+    	return y;
     }
     bool has_been_fired() const {
       return fired;
@@ -173,28 +176,35 @@ class Player {
     
     // getters
     int get_x() const {
+      return x;
     }
     int get_y() const {
+      return x;
     }
     int get_lives() const {
+      return lives;
     }
     
     // setter
     void set_x(int x_arg) {
+      x = x_arg;
     }
     
     // Modifies: lives
     void die() {
+      lives--;
     }
     
     // draws the Player
     // calls: draw_with_rgb
     void draw() {
+      draw_with_rgb(GREEN);
     }
     
     // draws black where the Player used to be
     // calls: draw_with_rgb
     void erase() {
+      draw_with_rgb(BLACK);
     }
 
   private:
@@ -204,10 +214,16 @@ class Player {
 
     // sets private data members x and y to initial values
     void initialize(int x_arg, int y_arg) {
+      x = x_arg;
+      y = y_arg;
     }
     
     // draws the player
     void draw_with_rgb(Color color) {
+      matrix.drawPixel(x, y, color.to_333());
+      matrix.drawPixel(x - 1, y, color.to_333());
+      matrix.drawPixel(x + 1, y, color.to_333());
+      matrix.drawPixel(x, y - 1, color.to_333());
     }
 };
 
