@@ -146,6 +146,9 @@ class Cannonball {
     
     // resets private data members to initial values
     void reset() {
+      x = 0;
+      y = 0;
+      fired = false;
     }
     
     // getters
@@ -169,18 +172,31 @@ class Cannonball {
     // moves the Cannonball and detects if it goes off the screen
     // Modifies: y, fired
     void move() {
+      if (y >= 0) {
+        y--;
+      }
+       else {
+        fired = false;
+      }
     }
     
     // resets private data members to initial values
     void hit() {
+      x = 0;
+      y = 0;
+      fired = false;
     }
     
     // draws the Cannonball, if it is fired
     void draw() {
+      matrix.drawPixel(x, y, RED.to_333());
+      matrix.drawPixel(x, y - 1, RED.to_333()); 
     }
     
     // draws black where the Cannonball used to be
     void erase() {
+      matrix.drawPixel(x, y, BLACK.to_333());
+      matrix.drawPixel(x, y - 1, BLACK.to_333());
     }
 
   private:
