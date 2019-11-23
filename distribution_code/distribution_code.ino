@@ -350,6 +350,11 @@ class Game {
     void reset_level() {
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       level++;
+      for (int i = 0; i < 2; i++){
+        for (int j = 0; j < 8; j++){
+          enemies[i*8+j] = Invader(j, i, LEVEL_DATA[level][i][j]);
+        }
+      }
       print_level(level);
     }
 };
