@@ -65,42 +65,55 @@ class Invader {
       strength = 0;
     }
     // sets values for private date members x and y
-    Invader(int x_arg, int y_arg) {
-    }
+    Invader(int x_arg, int y_arg): x(x_arg), y(y_arg) {}
     // sets values for private data members
-    Invader(int x_arg, int y_arg, int strength_arg) {
-    }
+    Invader(int x_arg, int y_arg, int strength_arg): x(x_arg), y(y_arg), strength(strength_arg){}
     // sets values for private data members
     void initialize(int x_arg, int y_arg, int strength_arg) {
+    	x = x_arg;
+	y = y_arg;
+	strength = strength_arg;
     }
     
     // getters
     int get_x() const {
+    	return x;
     }
     int get_y() const {
+    	return y;
     }
     int get_strength() const {
+    	return strength;
     }
 
     // Moves the Invader down the screen by one row
     // Modifies: y
     void move() {
+    	y++;
     }
     
     // draws the Invader if its strength is greater than 0
     // calls: draw_with_rgb
     void draw() {
+    	draw_with_rgb(RED, YELLOW);
     }
     
     // draws black where the Invader used to be
     // calls: draw_with_rgb
     void erase() {
+    	draw_with_rgb(BLACK, BLACK);
     }    
     
     // Invader is hit by a Cannonball.
     // Modifies: strength
     // calls: draw, erase
     void hit() {
+    	strength--;
+	if (!strength){
+		draw();
+	} else{
+		erase();
+	}
     }
 
   private:
@@ -110,6 +123,16 @@ class Invader {
     
     // draws the Invader
     void draw_with_rgb(Color body_color, Color eye_color) {
+ 	uint16_t b_col = body_color.to_333();
+	uint16_t e_col = eye_color.to_333();
+	uint16_t blk = BLACK.to_333();
+	matrix.drawRect(x, y, 4, 4, b_col);
+	matrix.drawPixel(x, y, blk);
+	matrix.drawPixel(x, y+3, blk);
+	matrix.drawPixel(x+1, y+3, blk);
+	matrix.drawPixel(x+2, y+3, blk);
+	matrix.drawPixel(x+1,y+1,e_col);
+	matrix.drawPixel(x+2,y+1,e_col);
     }
 };
 
@@ -290,4 +313,3 @@ void print_lives(int lives) {
 // displays "game over"
 void game_over() {
 }
-
