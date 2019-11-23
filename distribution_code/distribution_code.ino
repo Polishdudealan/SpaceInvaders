@@ -101,7 +101,9 @@ class Invader {
     // draws the Invader if its strength is greater than 0
     // calls: draw_with_rgb
     void draw() {
+      if (strength > 0){
     	draw_with_rgb(RED, YELLOW);
+      }
     }
     
     // draws black where the Invader used to be
@@ -288,14 +290,12 @@ class Game {
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
     void setupGame() {
-      print_level(1); 
+
+
+      matrix.fillScreen(matrix.Color333(0, 0, 0));
+      reset_level();
       delay(3000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
-      for (int i = 0; i < NUM_ENEMIES; i++) {
-        enemies[i] = Invader();     
-      }
-
-      
     }
     
     // advances the game simulation one step and renders the graphics
@@ -311,22 +311,28 @@ class Game {
         }
         ball.move();
 
-        player.set_x(31 - potentiometer_value / 32);
+        player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
                      
         if (time % 100 == 0) {
           for(int i = 0; i < NUM_ENEMIES; i++){
             enemies[i].erase();
-
-            if (ball.get_y() - 1 == enemies[i].get_y() + 3){
-               enemies[i].hit();           
-            }
             enemies[i].move();
             enemies[i].draw();
           }  
         }
+
+        for (int i = 0; i < NUM_ENEMIES; i++){
+          if (i % 8 * 4 <= ball.get_x() && i % 8 * 4 + 3 >= ball.get_x() && ball.get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
+
+            enemies[i].hit(); 
+            ball.hit();
+            break;          
+          }
+        }
         // checks if level is cleared
         if(level_cleared()){
           reset_level();
+          
           
         }
         
@@ -345,10 +351,10 @@ class Game {
     // check if Player defeated all Invaders in current level
     bool level_cleared() {
       int count = 0;
-      for (int i; i < NUM_ENEMIES; i++) {
+      for (int i = 0; i < NUM_ENEMIES; i++) {
         count += enemies[i].get_strength();
       }
-      return count != 0;
+      return count == 0;
     }
 
     // set up a level
@@ -357,11 +363,12 @@ class Game {
       level++;
       for (int i = 0; i < 2; i++){
         for (int j = 0; j < 8; j++){
-          enemies[i*8+j] = Invader(j, i, LEVEL_DATA[level][i][j]);
+          enemies[i*8+j] = Invader(j * 4, i * 4, LEVEL_DATA[level][i][j]);
         }
       }
       print_level(level);
     }
+};
 
 
 // a global variable that represents the game Space Invaders
@@ -396,7 +403,7 @@ void print_level(int level) {
   matrix.print('E');
   matrix.print('L');
 
-  matrix.setCursor(1, 9); // next line
+  matrix.setCursor(13, 9); // next line
   matrix.print(level);
 }
 
