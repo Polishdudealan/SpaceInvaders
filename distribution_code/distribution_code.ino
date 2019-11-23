@@ -126,7 +126,7 @@ class Invader {
  	uint16_t b_col = body_color.to_333();
 	uint16_t e_col = eye_color.to_333();
 	uint16_t blk = BLACK.to_333();
-	matrix.drawRect(x, y, 4, 4, b_col);
+	matrix.fillRect(x, y, 4, 4, b_col);
 	matrix.drawPixel(x, y, blk);
 	matrix.drawPixel(x, y+3, blk);
 	matrix.drawPixel(x+1, y+3, blk);
