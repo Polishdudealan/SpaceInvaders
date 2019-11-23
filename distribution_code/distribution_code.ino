@@ -305,7 +305,7 @@ class Game {
         }
         ball.move();
 
-        player.set_x(potentiometer_value / 32);
+        player.set_x(31 - potentiometer_value / 32);
                      
         if (time % 100 == 0) {
           for(int i = 0; i < NUM_ENEMIES; i++){
