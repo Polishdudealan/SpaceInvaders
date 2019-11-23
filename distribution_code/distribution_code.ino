@@ -56,6 +56,13 @@ const Color WHITE(4, 4, 4);
 const Color LIME(2, 4, 0);
 const Color AQUA(0, 4, 4);
 
+
+static const int LEVEL_DATA[4][2][8] = 
+	{{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},
+	{{1, 2, 1, 2, 1, 2, 1, 2}, {2, 1, 2, 1, 2, 1, 2, 1}},
+	{{1, 2, 3, 4, 5, 1, 2, 3}, {4, 5, 1, 2, 3, 4, 5, 1}},
+	{{5, 4, 5, 4, 5, 4, 5, 4}, {2, 3, 2, 3, 2, 3, 2, 3}}};
+
 class Invader {
   public:
     // Constructors
