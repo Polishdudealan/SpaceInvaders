@@ -276,6 +276,7 @@ class Game {
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
     void setupGame() {
+      matrix.fillScreen(matrix.Color333(0, 0, 0));
     }
     
     // advances the game simulation one step and renders the graphics
@@ -320,6 +321,14 @@ void loop() {
 
 // displays Level
 void print_level(int level) {
+  matrix.setCursor(1, 1);
+  matrix.setTextSize(1);
+  matrix.setTextColor(matrix.Color333(7, 0, 0));
+  matrix.print('L');
+  matrix.print('E');
+  matrix.print('V');
+  matrix.print('E');
+  matrix.print('L');
 }
 
 // displays number of lives
