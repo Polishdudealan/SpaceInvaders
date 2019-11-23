@@ -109,7 +109,7 @@ class Invader {
     // calls: draw, erase
     void hit() {
     	strength--;
-	if (!strength){
+	if (!strength == 0){
 		draw();
 	} else{
 		erase();
@@ -282,11 +282,13 @@ class Game {
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
     void setupGame() {
+      print_level(1); 
+      delay(3000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       for (int i = 0; i < NUM_ENEMIES; i++) {
         enemies[i] = Invader();     
       }
-      print_level(1);
+
       
     }
     
@@ -304,24 +306,19 @@ class Game {
         ball.move();
 
         player.set_x(potentiometer_value / 32);
-//        //values between 0 and 1023
-//        if (potentiometer_value > 750 && player.get_x() < 31){
-//          player.set_x(player.get_x() + 1);
-//        }
-//        else if (potentiometer_value < 350 && player.get_x() > 0){
-//          player.set_x(player.get_x() - 1);
-//        }
-
-        
-          
-        
+                     
         if (time % 100 == 0) {
           for(int i = 0; i < NUM_ENEMIES; i++){
             enemies[i].erase();
+
+            if (ball.get_y() - 1 == enemies[i].get_y() + 3){
+                enemies[i].hit();           
+            }
             enemies[i].move();
             enemies[i].draw();
           }  
         }
+
         player.draw();
         ball.draw();
     }
@@ -358,6 +355,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(BUTTON_PIN_NUMBER, INPUT);
   matrix.begin();
+  game.setupGame();
 }
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/loop/
