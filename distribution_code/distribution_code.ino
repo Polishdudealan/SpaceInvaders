@@ -71,8 +71,8 @@ class Invader {
     // sets values for private data members
     void initialize(int x_arg, int y_arg, int strength_arg) {
     	x = x_arg;
-	y = y_arg;
-	strength = strength_arg;
+	    y = y_arg;
+	    strength = strength_arg;
     }
     
     // getters
@@ -128,7 +128,7 @@ class Invader {
 	uint16_t blk = BLACK.to_333();
 	matrix.fillRect(x, y, 4, 4, b_col);
 	matrix.drawPixel(x, y, blk);
-	matrix.drawPixel(x, y+3, blk);
+	matrix.drawPixel(x+3, y, blk);
 	matrix.drawPixel(x+1, y+3, blk);
 	matrix.drawPixel(x+2, y+3, blk);
 	matrix.drawPixel(x+1,y+1,e_col);
@@ -167,6 +167,7 @@ class Cannonball {
     void fire(int x_arg, int y_arg) {
       x = x_arg;
       y = y_arg;
+      fired = true;
     }
     
     // moves the Cannonball and detects if it goes off the screen
@@ -189,8 +190,13 @@ class Cannonball {
     
     // draws the Cannonball, if it is fired
     void draw() {
+      if(fired){
       matrix.drawPixel(x, y, RED.to_333());
       matrix.drawPixel(x, y - 1, RED.to_333()); 
+      }
+      else {
+        erase();
+      }
     }
     
     // draws black where the Cannonball used to be
@@ -208,8 +214,8 @@ class Cannonball {
 class Player {
   public:
     Player() {
-      x = 0;
-      y = 0;
+      x = 15;
+      y = 15;
       lives = 3;
     }
     
@@ -277,12 +283,42 @@ class Game {
     // Modifies: global variable matrix
     void setupGame() {
       matrix.fillScreen(matrix.Color333(0, 0, 0));
+      for (int i = 0; i < NUM_ENEMIES; i++) {
+        enemies[i] = Invader();     
+      }
+      print_level(1);
+      
     }
     
     // advances the game simulation one step and renders the graphics
     // see spec for details of game
     // Modifies: global variable matrix
     void update(int potentiometer_value, bool button_pressed) {
+        time++;
+        player.erase();
+        ball.erase();
+        
+        if (button_pressed && ball.has_been_fired() == false) {
+          ball.fire(player.get_x(), player.get_y());  
+        }
+        ball.move();
+        //values between 0 and 1023
+        if (potentiometer_value > 750 && player.get_x() < 31){
+          player.set_x(player.get_x() + 1);
+        }
+        else if (potentiometer_value < 350 && player.get_x() > 0){
+          player.set_x(player.get_x() - 1);
+        }
+        
+        if (time % 100 == 0) {
+          for(int i = 0; i < NUM_ENEMIES; i++){
+            enemies[i].erase();
+            enemies[i].move();
+            enemies[i].draw();
+          }  
+        }
+        player.draw();
+        ball.draw();
     }
 
   private:
@@ -294,10 +330,18 @@ class Game {
 
     // check if Player defeated all Invaders in current level
     bool level_cleared() {
+      int count = 0;
+      for (int i; i < NUM_ENEMIES; i++) {
+        count += enemies[i].get_strength();
+      }
+      return count != 0;
     }
 
     // set up a level
     void reset_level() {
+      matrix.fillScreen(matrix.Color333(0, 0, 0));
+      level++;
+      print_level(level);
     }
 };
 
@@ -317,11 +361,13 @@ void loop() {
   bool button_pressed = (digitalRead(BUTTON_PIN_NUMBER) == HIGH);
 
   game.update(potentiometer_value, button_pressed);
+
+  delay(30);
 }
 
 // displays Level
 void print_level(int level) {
-  matrix.setCursor(1, 1);
+  matrix.setCursor(1, 0);
   matrix.setTextSize(1);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('L');
@@ -329,12 +375,39 @@ void print_level(int level) {
   matrix.print('V');
   matrix.print('E');
   matrix.print('L');
+
+  matrix.setCursor(1, 9); // next line
+  matrix.print(level);
 }
 
 // displays number of lives
 void print_lives(int lives) {
+  matrix.setCursor(1, 0);
+  matrix.setTextSize(1);
+  matrix.setTextColor(matrix.Color333(7, 0, 0));
+  matrix.print('L');
+  matrix.print('I');
+  matrix.print('V');
+  matrix.print('E');
+  matrix.print('S');
+
+  matrix.setCursor(1, 9); // next line
+  matrix.print(lives);
 }
 
 // displays "game over"
 void game_over() {
+  matrix.setCursor(1, 0);
+  matrix.setTextSize(1);
+  matrix.setTextColor(matrix.Color333(7, 0, 0));
+  matrix.print('G');
+  matrix.print('A');
+  matrix.print('M');
+  matrix.print('E');
+  matrix.setCursor(1, 9); // next line
+  matrix.print('O');
+  matrix.print('V');
+  matrix.print('E');
+  matrix.print('R');
+
 }
