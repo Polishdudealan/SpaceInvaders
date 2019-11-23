@@ -123,12 +123,17 @@ class Cannonball {
     
     // resets private data members to initial values
     void reset() {
+      x = 0;
+      y = 0;
+      fired = false;
     }
     
     // getters
     int get_x() const {
+      return x;
     }
     int get_y() const {
+      return y;
     }
     bool has_been_fired() const {
     }
@@ -144,6 +149,9 @@ class Cannonball {
     
     // resets private data members to initial values
     void hit() {
+      x = 0;
+      y = 0;
+      fired = false;
     }
     
     // draws the Cannonball, if it is fired
@@ -271,4 +279,3 @@ void print_lives(int lives) {
 // displays "game over"
 void game_over() {
 }
-
