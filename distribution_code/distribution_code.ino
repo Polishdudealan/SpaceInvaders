@@ -76,26 +76,20 @@ class Invader {
     
     // getters
     int get_x() const {
-      return x;
     }
     int get_y() const {
-      return y;
     }
     int get_strength() const {
-      return strength;
     }
 
     // Moves the Invader down the screen by one row
     // Modifies: y
     void move() {
-      y += 1;
     }
     
     // draws the Invader if its strength is greater than 0
     // calls: draw_with_rgb
     void draw() {
-      if (strength > 0) {
-      }
     }
     
     // draws black where the Invader used to be
@@ -142,10 +136,13 @@ class Cannonball {
       return y;
     }
     bool has_been_fired() const {
+      return fired;
     }
     
     // sets private data members
     void fire(int x_arg, int y_arg) {
+      x = x_arg;
+      y = y_arg;
     }
     
     // moves the Cannonball and detects if it goes off the screen
@@ -184,35 +181,28 @@ class Player {
     
     // getters
     int get_x() const {
-      return x;
     }
     int get_y() const {
-      return x;
     }
     int get_lives() const {
-      return lives;
     }
     
     // setter
     void set_x(int x_arg) {
-      x = x_arg;
     }
     
     // Modifies: lives
     void die() {
-      lives--;
     }
     
     // draws the Player
     // calls: draw_with_rgb
     void draw() {
-      draw_with_rgb(GREEN);
     }
     
     // draws black where the Player used to be
     // calls: draw_with_rgb
     void erase() {
-      draw_with_rgb(BLACK);
     }
 
   private:
@@ -222,16 +212,10 @@ class Player {
 
     // sets private data members x and y to initial values
     void initialize(int x_arg, int y_arg) {
-      x = x_arg;
-      y = y_arg;
     }
     
     // draws the player
     void draw_with_rgb(Color color) {
-      matrix.drawPixel(x, y, color.to_333());
-      matrix.drawPixel(x - 1, y, color.to_333());
-      matrix.drawPixel(x + 1, y, color.to_333());
-      matrix.drawPixel(x, y - 1, color.to_333());
     }
 };
 
