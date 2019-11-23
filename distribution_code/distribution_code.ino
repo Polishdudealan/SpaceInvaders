@@ -191,8 +191,8 @@ class Cannonball {
     // draws the Cannonball, if it is fired
     void draw() {
       if(fired){
-      matrix.drawPixel(x, y, RED.to_333());
-      matrix.drawPixel(x, y - 1, RED.to_333()); 
+        matrix.drawPixel(x, y, RED.to_333());
+        matrix.drawPixel(x, y - 1, RED.to_333()); 
       }
       else {
         erase();
@@ -224,7 +224,7 @@ class Player {
       return x;
     }
     int get_y() const {
-      return x;
+      return y;
     }
     int get_lives() const {
       return lives;
@@ -302,13 +302,18 @@ class Game {
           ball.fire(player.get_x(), player.get_y());  
         }
         ball.move();
-        //values between 0 and 1023
-        if (potentiometer_value > 750 && player.get_x() < 31){
-          player.set_x(player.get_x() + 1);
-        }
-        else if (potentiometer_value < 350 && player.get_x() > 0){
-          player.set_x(player.get_x() - 1);
-        }
+
+        player.set_x(potentiometer_value / 32);
+//        //values between 0 and 1023
+//        if (potentiometer_value > 750 && player.get_x() < 31){
+//          player.set_x(player.get_x() + 1);
+//        }
+//        else if (potentiometer_value < 350 && player.get_x() > 0){
+//          player.set_x(player.get_x() - 1);
+//        }
+
+        
+          
         
         if (time % 100 == 0) {
           for(int i = 0; i < NUM_ENEMIES; i++){
