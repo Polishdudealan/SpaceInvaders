@@ -282,3 +282,4 @@ void print_lives(int lives) {
 // displays "game over"
 void game_over() {
 }
+
