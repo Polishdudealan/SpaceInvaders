@@ -101,9 +101,28 @@ class Invader {
     // draws the Invader if its strength is greater than 0
     // calls: draw_with_rgb
     void draw() {
-      if (strength > 0){
-    	draw_with_rgb(RED, YELLOW);
+      if (strength == 1){
+    	draw_with_rgb(RED, BLUE);
       }
+      if (strength == 2){
+      draw_with_rgb(ORANGE, BLUE);
+      }
+      if (strength == 3){
+      draw_with_rgb(YELLOW, BLUE);
+      }
+      if (strength == 4){
+      draw_with_rgb(GREEN, BLUE);
+      }
+      if (strength == 5){
+     draw_with_rgb(BLUE, BLUE);
+      }
+      if (strength == 6){
+      draw_with_rgb(PURPLE, BLUE);
+      }
+      if (strength == 7){
+      draw_with_rgb(WHITE, BLUE);
+      }
+      
     }
     
     // draws black where the Invader used to be
