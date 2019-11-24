@@ -312,7 +312,7 @@ class Game {
         ball.move();
 
         player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
-                     
+        // moves all enemies down the screen             
         if (time % 100 == 0) {
           for(int i = 0; i < NUM_ENEMIES; i++){
             enemies[i].erase();
@@ -320,7 +320,7 @@ class Game {
             enemies[i].draw();
           }  
         }
-
+        //loops through all the enemies
         for (int i = 0; i < NUM_ENEMIES; i++){
           if (i % 8 * 4 <= ball.get_x() && i % 8 * 4 + 3 >= ball.get_x() && ball.get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
 
@@ -328,13 +328,23 @@ class Game {
             ball.hit();
             break;          
           }
+
+        }
+        // checks for enemies getting past player
+        for (int i = 0; i < NUM_ENEMIES; i++){
+                  
+          if (enemies[i].get_y() > 27) {
+            player.die();
+          }
+        }
+        if (player.get_lives() == 0) {
+          level = 0;
+          game_over();  
         }
         // checks if level is cleared
-        if(level_cleared()){
-          reset_level();
-          
-          
-        }
+       if(level_cleared()){
+         reset_level();     
+       }
         
         player.draw();
         ball.draw();
