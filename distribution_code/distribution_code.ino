@@ -17,11 +17,15 @@ const int BUTTON_PIN_NUMBER = 10;
 // global constant for the number of Invaders in the game
 const int NUM_ENEMIES = 16;
 
+// global constant for the number of cannonballs in the game
+const int NUM_BALLS = 4;
+
 // a global variable that represents the LED screen
 RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
 
-//used to determine invader speed
+//constants to determine game speed
 const int INVADER_DELAY = 80;
+const int BALL_DELAY = 5;
 
 // the following functions are for printing messages
 void print_level(int level);
@@ -316,14 +320,14 @@ class Player {
 class Game {
   public:
     Game() {
-      level = 13;
+      level = 0;
       time = 0;
+      ballCycle = 0;
     }
     
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
     void setupGame() {
-
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       reset_level();
       matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -336,12 +340,17 @@ class Game {
     void update(int potentiometer_value, bool button_pressed) {
         time++;
         player.erase();
-        ball.erase();
         
-        if (button_pressed && ball.has_been_fired() == false) {
-          ball.fire(player.get_x(), player.get_y());  
+	if (ballCycle < BALL_DELAY) {
+		ballCycle++;
+	}
+	
+
+	if (button_pressed && ballCycle == BALL_DELAY) {
+	  Cannonball* ball = getBall();
+          ball->fire(player.get_x(), player.get_y());
+	  ballCycle = 0;
         }
-        ball.move();
 
         player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
         // moves all enemies down the screen             
@@ -358,13 +367,14 @@ class Game {
         }
         //loops through all the enemies
         for (int i = 0; i < NUM_ENEMIES; i++){
-          if (i % 8 * 4 <= ball.get_x() && i % 8 * 4 + 3 >= ball.get_x() && ball.get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
-
-            enemies[i].hit(); 
-            ball.hit();
-            break;          
-          }
-
+          for (int j = 0; j < NUM_BALLS; j++) { 
+	    Cannonball* ball = &balls[j];
+	    if (i % 8 * 4 <= ball->get_x() && i % 8 * 4 + 3 >= ball->get_x() && ball->get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
+              enemies[i].hit(); 
+              ball->hit();
+              break;          
+            }
+	  }
         }
         // checks for enemies getting past player
         for (int i = 0; i < NUM_ENEMIES; i++){
@@ -390,16 +400,18 @@ class Game {
        }
 
        player.draw();
-       ball.draw();
+       updateBalls();
     }
 
   private:
     int level;
+    int ballCycle;
     unsigned long time;
     Player player;
-    Cannonball ball;
+    Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
     
+
     // check if Player defeated all Invaders in current level
     bool level_cleared() {
       int count = 0;
@@ -426,6 +438,7 @@ class Game {
     void reset_level() {
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       level++;
+      ballCycle = BALL_DELAY;
       int minStrength = level/5 + 1;
       int maxStrength = 3*sqrt(level);
       maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
@@ -441,6 +454,24 @@ class Game {
       delay(1000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       drawAllEnemies();
+    }
+
+    //returns the proper ball to use when fire is called
+    Cannonball* getBall() {
+	for (int i = 0; i < NUM_BALLS; i++){
+		if (!balls[i].has_been_fired()){
+			return &balls[i];
+		}
+	}
+	return &Cannonball();
+    }
+
+    void updateBalls(){
+	for (int i = 0; i < NUM_BALLS; i++){
+		balls[i].erase();
+		balls[i].move();
+		balls[i].draw();
+	}
     }
 };
 
