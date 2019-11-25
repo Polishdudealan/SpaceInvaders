@@ -20,6 +20,9 @@ const int NUM_ENEMIES = 16;
 // a global variable that represents the LED screen
 RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
 
+//used to determine invader speed
+const int INVADER_DELAY = 80;
+
 // the following functions are for printing messages
 void print_level(int level);
 void print_lives(int lives);
@@ -101,46 +104,52 @@ class Invader {
     // draws the Invader if its strength is greater than 0
     // calls: draw_with_rgb
     void draw() {
-      if (strength == 1){
-    	draw_with_rgb(RED, BLUE);
+      if (strength != 0) {
+        draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7));      
       }
-      if (strength == 2){
-      draw_with_rgb(ORANGE, BLUE);
-      }
-      if (strength == 3){
-      draw_with_rgb(YELLOW, BLUE);
-      }
-      if (strength == 4){
-      draw_with_rgb(GREEN, BLUE);
-      }
-      if (strength == 5){
-     draw_with_rgb(BLUE, BLUE);
-      }
-      if (strength == 6){
-      draw_with_rgb(PURPLE, BLUE);
-      }
-      if (strength == 7){
-      draw_with_rgb(WHITE, BLUE);
-      }
-      
     }
     
     // draws black where the Invader used to be
     // calls: draw_with_rgb
     void erase() {
     	draw_with_rgb(BLACK, BLACK);
-    }    
+    }
+
+    Color num_to_color(int x){
+      switch (x) {
+        case 0:
+          return WHITE;
+          break;
+        case 1:
+          return RED;
+          break;
+        case 2:
+          return ORANGE;
+          break;
+        case 3:
+          return YELLOW;
+          break;
+        case 4:
+          return GREEN;
+          break;
+        case 5:
+          return BLUE;
+          break;
+        default:
+          return PURPLE;
+      }
+    }
     
     // Invader is hit by a Cannonball.
     // Modifies: strength
     // calls: draw, erase
     void hit() {
     	strength--;
-	if (!strength == 0){
-		draw();
-	} else{
-		erase();
-	}
+	    if (!strength == 0){
+		    draw();
+	    } else{
+		    erase();
+	    }
     }
 
   private:
@@ -261,10 +270,15 @@ class Player {
     void set_x(int x_arg) {
       x = x_arg;
     }
+
+    //reset lives upon restarting gamme
+    void reset_lives() {
+      lives = 3;
+    }
     
     // Modifies: lives
     void die() {
-      lives--;
+      lives--; 
     }
     
     // draws the Player
@@ -310,11 +324,10 @@ class Game {
     // Modifies: global variable matrix
     void setupGame() {
 
-
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       reset_level();
-      delay(3000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
+      drawAllEnemies();
     }
     
     // advances the game simulation one step and renders the graphics
@@ -332,12 +345,16 @@ class Game {
 
         player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
         // moves all enemies down the screen             
-        if (time % 100 == 0) {
-          for(int i = 0; i < NUM_ENEMIES; i++){
+        if (time % INVADER_DELAY == 0) {
+          for(int i = NUM_ENEMIES; i >= 0 ; i--){
             enemies[i].erase();
-            enemies[i].move();
-            enemies[i].draw();
-          }  
+            if (firstLayerCleared()) {
+              enemies[i].move();
+            } else if (i > 7) { 
+              enemies[i].move();
+            }
+          }
+          drawAllEnemies(); 
         }
         //loops through all the enemies
         for (int i = 0; i < NUM_ENEMIES; i++){
@@ -352,22 +369,28 @@ class Game {
         // checks for enemies getting past player
         for (int i = 0; i < NUM_ENEMIES; i++){
                   
-          if (enemies[i].get_y() > 27) {
+          if (enemies[i].get_y() == 13 && enemies[i].get_strength() > 0) {
             player.die();
-          }
+            level--;
+            reset_level();
+            }
         }
-        if (player.get_lives() == 0) {
+        if (player.get_lives() < 1) {
+
+          matrix.fillScreen(matrix.Color333(0, 0, 0));
+          player.reset_lives();
           level = 0;
-          game_over();  
+          game_over();
+          delay(4000);
+          setupGame();  
         }
         // checks if level is cleared
        if(level_cleared()){
          reset_level();     
        }
-        
-        player.draw();
-        ball.draw();
-        
+
+       player.draw();
+       ball.draw();
     }
 
   private:
@@ -376,7 +399,7 @@ class Game {
     Player player;
     Cannonball ball;
     Invader enemies[NUM_ENEMIES];
-
+    
     // check if Player defeated all Invaders in current level
     bool level_cleared() {
       int count = 0;
@@ -386,16 +409,35 @@ class Game {
       return count == 0;
     }
 
+    bool firstLayerCleared(){
+      for (int i = NUM_ENEMIES/2; i < NUM_ENEMIES; i++) {
+        if (enemies[i].get_strength() > 0) return false;
+      }
+      return true;
+    }
+
+    void drawAllEnemies(){
+        for(int i = NUM_ENEMIES-1; i >= 0 ; i--){
+          enemies[i].draw();
+        }    
+    }
+
     // set up a level
     void reset_level() {
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       level++;
       for (int i = 0; i < 2; i++){
         for (int j = 0; j < 8; j++){
-          enemies[i*8+j] = Invader(j * 4, i * 4, LEVEL_DATA[level][i][j]);
+          enemies[i*8+j] = Invader(j * 4, i * 4, level < 5 ? LEVEL_DATA[level-1][i][j] : random(1, floor(log(10*level*level*level))));
         }
       }
       print_level(level);
+      delay(1000);
+      matrix.fillScreen(matrix.Color333(0, 0, 0));
+      print_lives(player.get_lives());
+      delay(1000);
+      matrix.fillScreen(matrix.Color333(0, 0, 0));
+      drawAllEnemies();
     }
 };
 
@@ -408,8 +450,9 @@ void setup() {
   Serial.begin(9600);
   pinMode(BUTTON_PIN_NUMBER, INPUT);
   matrix.begin();
-  game.setupGame();
-}
+  matrix.fillScreen(matrix.Color333(0, 0, 0));
+  delay(4000);
+  game.setupGame();}
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/loop/
 void loop() {
@@ -447,20 +490,20 @@ void print_lives(int lives) {
   matrix.print('E');
   matrix.print('S');
 
-  matrix.setCursor(1, 9); // next line
+  matrix.setCursor(14, 9); // next line
   matrix.print(lives);
 }
 
 // displays "game over"
 void game_over() {
-  matrix.setCursor(1, 0);
+  matrix.setCursor(5, 0);
   matrix.setTextSize(1);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('G');
   matrix.print('A');
   matrix.print('M');
   matrix.print('E');
-  matrix.setCursor(1, 9); // next line
+  matrix.setCursor(5, 9); // next line
   matrix.print('O');
   matrix.print('V');
   matrix.print('E');
