@@ -105,7 +105,7 @@ class Invader {
     // calls: draw_with_rgb
     void draw() {
       if (strength != 0) {
-        draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7));      
+        draw_with_rgb(num_to_color(strength % 7), BLUE);      
       }
     }
     
@@ -426,12 +426,9 @@ class Game {
     void reset_level() {
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       level++;
-      int minStrength = level/5 + 1;
-      int maxStrength = 3*sqrt(level);
-      maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
       for (int i = 0; i < 2; i++){
         for (int j = 0; j < 8; j++){
-          enemies[i*8+j] = Invader(j * 4, i * 4, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
+          enemies[i*8+j] = Invader(j * 4, i * 4, level < 5 ? LEVEL_DATA[level-1][i][j] : random(1, 5));
         }
       }
       print_level(level);
