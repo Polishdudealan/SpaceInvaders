@@ -316,7 +316,7 @@ class Player {
 class Game {
   public:
     Game() {
-      level = 13;
+      level = 0;
       time = 0;
     }
     
@@ -356,6 +356,7 @@ class Game {
           }
           drawAllEnemies(); 
         }
+
         //loops through all the enemies
         for (int i = 0; i < NUM_ENEMIES; i++){
           if (i % 8 * 4 <= ball.get_x() && i % 8 * 4 + 3 >= ball.get_x() && ball.get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
@@ -366,17 +367,18 @@ class Game {
           }
 
         }
-        // checks for enemies getting past player
+
+        // checks for enemies getting past player or colliding with player
         for (int i = 0; i < NUM_ENEMIES; i++){
-                  
-          if (enemies[i].get_y() == 13 && enemies[i].get_strength() > 0) {
+          if ((enemies[i].get_y() == 13 || (enemies[i].get_y() == 11 && player.get_x() >= enemies[i].get_x() && player.get_x() <= enemies[i].get_x() + 3))
+	  	&& enemies[i].get_strength() > 0) {
             player.die();
             level--;
             reset_level();
             }
         }
+	//game ending mechanics
         if (player.get_lives() < 1) {
-
           matrix.fillScreen(matrix.Color333(0, 0, 0));
           player.reset_lives();
           level = 0;
@@ -384,6 +386,7 @@ class Game {
           delay(4000);
           setupGame();  
         }
+
         // checks if level is cleared
        if(level_cleared()){
          reset_level();     
