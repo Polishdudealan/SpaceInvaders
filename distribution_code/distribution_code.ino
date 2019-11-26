@@ -1,6 +1,8 @@
 #include <gamma.h>
 #include <RGBmatrixPanel.h>
 #include <Adafruit_GFX.h>
+#include "Player.h"
+#include "Color.h"
 
 // define the wiring of the LED screen
 const uint8_t CLK  = 8;
@@ -20,9 +22,6 @@ const int NUM_ENEMIES = 16;
 // global constant for the number of cannonballs in the game
 const int NUM_BALLS = 4;
 
-// a global variable that represents the LED screen
-RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
-
 //constants to determine game speed
 const int INVADER_DELAY = 80;
 const int BALL_DELAY = 5;
@@ -31,37 +30,6 @@ const int BALL_DELAY = 5;
 void print_level(int level);
 void print_lives(int lives);
 void game_over();
-
-class Color {
-  public:
-    int red;
-    int green;
-    int blue;
-    Color() {
-      red = 0;
-      green = 0;
-      blue = 0;
-    }
-    Color(int r, int g, int b) {
-      red = r;
-      green = g;
-      blue = b;
-    }
-    uint16_t to_333() const {
-      return matrix.Color333(red, green, blue);
-    }
-};
-
-const Color BLACK(0, 0, 0);
-const Color RED(4, 0, 0);
-const Color ORANGE(6, 1, 0);
-const Color YELLOW(4, 4, 0);
-const Color GREEN(0, 4, 0);
-const Color BLUE(0, 0, 4);
-const Color PURPLE(1, 0, 2);
-const Color WHITE(4, 4, 4);
-const Color LIME(2, 4, 0);
-const Color AQUA(0, 4, 4);
 
 static const int LEVEL_DATA[4][2][8] = 
 	{{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},
@@ -72,11 +40,12 @@ static const int LEVEL_DATA[4][2][8] =
 class Invader {
   public:
     // Constructors
-    Invader() {
+    Invader(RGBmatrixPanel& matrix): matrix(matrix) {
       x = 0;
       y = 0;
       strength = 0;
     }
+    
     // sets values for private date members x and y
     Invader(int x_arg, int y_arg): x(x_arg), y(y_arg) {}
     // sets values for private data members
@@ -109,7 +78,7 @@ class Invader {
     // calls: draw_with_rgb
     void draw() {
       if (strength != 0) {
-        draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7));      
+        draw_with_rgb(colors[strength % 7], colors[(strength / 7 + 5) % 7]);      
       }
     }
     
@@ -117,31 +86,6 @@ class Invader {
     // calls: draw_with_rgb
     void erase() {
     	draw_with_rgb(BLACK, BLACK);
-    }
-
-    Color num_to_color(int x){
-      switch (x) {
-        case 0:
-          return WHITE;
-          break;
-        case 1:
-          return RED;
-          break;
-        case 2:
-          return ORANGE;
-          break;
-        case 3:
-          return YELLOW;
-          break;
-        case 4:
-          return GREEN;
-          break;
-        case 5:
-          return BLUE;
-          break;
-        default:
-          return PURPLE;
-      }
     }
     
     // Invader is hit by a Cannonball.
@@ -160,25 +104,26 @@ class Invader {
     int x;
     int y;
     int strength;
+    RGBmatrixPanel matrix;
     
     // draws the Invader
     void draw_with_rgb(Color body_color, Color eye_color) {
- 	uint16_t b_col = body_color.to_333();
-	uint16_t e_col = eye_color.to_333();
-	uint16_t blk = BLACK.to_333();
-	matrix.fillRect(x, y, 4, 4, b_col);
-	matrix.drawPixel(x, y, blk);
-	matrix.drawPixel(x+3, y, blk);
-	matrix.drawPixel(x+1, y+3, blk);
-	matrix.drawPixel(x+2, y+3, blk);
-	matrix.drawPixel(x+1,y+1,e_col);
-	matrix.drawPixel(x+2,y+1,e_col);
+   	  uint16_t b_col = body_color.to_333();
+  	  uint16_t e_col = eye_color.to_333();
+  	  uint16_t blk = BLACK.to_333();
+  	  matrix.fillRect(x, y, 4, 4, b_col);
+    	matrix.drawPixel(x, y, blk);
+  	  matrix.drawPixel(x+3, y, blk);
+  	  matrix.drawPixel(x+1, y+3, blk);
+  	  matrix.drawPixel(x+2, y+3, blk);
+  	  matrix.drawPixel(x+1,y+1,e_col);
+  	  matrix.drawPixel(x+2,y+1,e_col);
     }
 };
 
 class Cannonball {
   public:
-    Cannonball() {
+    Cannonball(RGBmatrixPanel& matrix): matrix(matrix) {
       x = 0;
       y = 0;
       fired = false;
@@ -249,72 +194,7 @@ class Cannonball {
     int x;
     int y;
     bool fired;
-};
-
-class Player {
-  public:
-    Player() {
-      x = 15;
-      y = 15;
-      lives = 3;
-    }
-    
-    // getters
-    int get_x() const {
-      return x;
-    }
-    int get_y() const {
-      return y;
-    }
-    int get_lives() const {
-      return lives;
-    }
-    
-    // setter
-    void set_x(int x_arg) {
-      x = x_arg;
-    }
-
-    //reset lives upon restarting gamme
-    void reset_lives() {
-      lives = 3;
-    }
-    
-    // Modifies: lives
-    void die() {
-      lives--; 
-    }
-    
-    // draws the Player
-    // calls: draw_with_rgb
-    void draw() {
-      draw_with_rgb(GREEN);
-    }
-    
-    // draws black where the Player used to be
-    // calls: draw_with_rgb
-    void erase() {
-      draw_with_rgb(BLACK);
-    }
-
-  private:
-    int x;
-    int y;
-    int lives;
-
-    // sets private data members x and y to initial values
-    void initialize(int x_arg, int y_arg) {
-      x = x_arg;
-      y = y_arg;
-    }
-    
-    // draws the player
-    void draw_with_rgb(Color color) {
-      matrix.drawPixel(x, y, color.to_333());
-      matrix.drawPixel(x - 1, y, color.to_333());
-      matrix.drawPixel(x + 1, y, color.to_333());
-      matrix.drawPixel(x, y - 1, color.to_333());
-    }
+    RGBmatrixPanel matrix;
 };
 
 class Game {
@@ -324,7 +204,7 @@ class Game {
       time = 0;
       ballCycle = 0;
     }
-    
+      
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
     void setupGame() {
@@ -333,60 +213,59 @@ class Game {
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       drawAllEnemies();
     }
-    
+      
     // advances the game simulation one step and renders the graphics
     // see spec for details of game
     // Modifies: global variable matrix
     void update(int potentiometer_value, bool button_pressed) {
         time++;
         player.erase();
-        
-	if (ballCycle < BALL_DELAY) {
-		ballCycle++;
-	}
-	
-
-	if (button_pressed && ballCycle == BALL_DELAY) {
-	  Cannonball* ball = getBall();
-          ball->fire(player.get_x(), player.get_y());
-	  ballCycle = 0;
-        }
-
-        player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
-        // moves all enemies down the screen             
-        if (time % INVADER_DELAY == 0) {
-          for(int i = NUM_ENEMIES; i >= 0 ; i--){
+          
+    	if (ballCycle < BALL_DELAY) {
+    		ballCycle++;
+    	}
+    	
+    	if (button_pressed && ballCycle == BALL_DELAY) {
+    	  Cannonball* ball = getBall();
+        ball->fire(player.get_x(), player.get_y());
+    	  ballCycle = 0;
+      }
+    
+      player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
+      // moves all enemies down the screen             
+      if (time % INVADER_DELAY == 0) {
+        for(int i = NUM_ENEMIES; i >= 0 ; i--){
             enemies[i].erase();
             if (firstLayerCleared()) {
-              enemies[i].move();
+             enemies[i].move();
             } else if (i > 7) { 
-              enemies[i].move();
+             enemies[i].move();
             }
+        }
+        drawAllEnemies(); 
+      }
+      
+      //loops through all the enemies
+      for (int i = 0; i < NUM_ENEMIES; i++){
+        for (int j = 0; j < NUM_BALLS; j++) { 
+          Cannonball* ball = &balls[j];
+          if (i % 8 * 4 <= ball->get_x() && i % 8 * 4 + 3 >= ball->get_x() && ball->get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
+            enemies[i].hit(); 
+            ball->hit();
+            break;          
           }
-          drawAllEnemies(); 
         }
-        //loops through all the enemies
-        for (int i = 0; i < NUM_ENEMIES; i++){
-          for (int j = 0; j < NUM_BALLS; j++) { 
-	    Cannonball* ball = &balls[j];
-	    if (i % 8 * 4 <= ball->get_x() && i % 8 * 4 + 3 >= ball->get_x() && ball->get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
-              enemies[i].hit(); 
-              ball->hit();
-              break;          
-            }
-	  }
-        }
+      }
         // checks for enemies getting past player
-        for (int i = 0; i < NUM_ENEMIES; i++){
-                  
-          if (enemies[i].get_y() == 13 && enemies[i].get_strength() > 0) {
-            player.die();
-            level--;
-            reset_level();
-            }
+      for (int i = 0; i < NUM_ENEMIES; i++){           
+        if (enemies[i].get_y() == 13 && enemies[i].get_strength() > 0) {
+          player.die();
+          level--;
+          reset_level();
         }
+      }
+        
         if (player.get_lives() < 1) {
-
           matrix.fillScreen(matrix.Color333(0, 0, 0));
           player.reset_lives();
           level = 0;
@@ -398,7 +277,7 @@ class Game {
        if(level_cleared()){
          reset_level();     
        }
-
+    
        player.draw();
        updateBalls();
     }
@@ -407,7 +286,8 @@ class Game {
     int level;
     int ballCycle;
     unsigned long time;
-    Player player;
+    RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
+    Player player(matrix);
     Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
     
@@ -458,20 +338,20 @@ class Game {
 
     //returns the proper ball to use when fire is called
     Cannonball* getBall() {
-	for (int i = 0; i < NUM_BALLS; i++){
-		if (!balls[i].has_been_fired()){
-			return &balls[i];
-		}
-	}
-	return &Cannonball();
+	    for (int i = 0; i < NUM_BALLS; i++){
+		    if (!balls[i].has_been_fired()){
+		  	  return &balls[i];
+		    }
+	    }
+	    return &Cannonball();
     }
 
     void updateBalls(){
-	for (int i = 0; i < NUM_BALLS; i++){
-		balls[i].erase();
-		balls[i].move();
-		balls[i].draw();
-	}
+	    for (int i = 0; i < NUM_BALLS; i++){
+		    balls[i].erase();
+		    balls[i].move();
+		    balls[i].draw();
+	    }
     }
 };
 
@@ -486,7 +366,8 @@ void setup() {
   matrix.begin();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   delay(4000);
-  game.setupGame();}
+  game.setupGame();
+}
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/loop/
 void loop() {
@@ -494,7 +375,6 @@ void loop() {
   bool button_pressed = (digitalRead(BUTTON_PIN_NUMBER) == HIGH);
 
   game.update(potentiometer_value, button_pressed);
-
   delay(30);
 }
 
@@ -537,6 +417,7 @@ void game_over() {
   matrix.print('A');
   matrix.print('M');
   matrix.print('E');
+  
   matrix.setCursor(5, 9); // next line
   matrix.print('O');
   matrix.print('V');
