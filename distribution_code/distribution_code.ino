@@ -1,8 +1,26 @@
-#include <gamma.h>
-#include <RGBmatrixPanel.h>
-#include <Adafruit_GFX.h>
+#ifndef LIBRARIES
+  #define LIBRARIES
+  #include <gamma.h>
+  #include <RGBmatrixPanel.h>
+  #include <Adafruit_GFX.h>
+#endif
+
 #include "Player.h"
-#include "Color.h"
+#include "Cannonball.h"
+#include "Invader.h"
+
+#ifndef CONSTANTS
+  #define CONSTANTS
+  #include "Constants.h"
+#endif
+
+
+using namespace Constants;
+
+// the following functions are for printing messages
+void print_level(int level);
+void print_lives(int lives);
+void game_over();
 
 // define the wiring of the LED screen
 const uint8_t CLK  = 8;
@@ -11,191 +29,7 @@ const uint8_t OE = 9;
 const uint8_t A = A0;
 const uint8_t B = A1;
 const uint8_t C = A2;
-
-// define the wiring of the inputs
-const int POTENTIOMETER_PIN_NUMBER = 5;
-const int BUTTON_PIN_NUMBER = 10;
-
-// global constant for the number of Invaders in the game
-const int NUM_ENEMIES = 16;
-
-// global constant for the number of cannonballs in the game
-const int NUM_BALLS = 4;
-
-//constants to determine game speed
-const int INVADER_DELAY = 80;
-const int BALL_DELAY = 5;
-
-// the following functions are for printing messages
-void print_level(int level);
-void print_lives(int lives);
-void game_over();
-
-static const int LEVEL_DATA[4][2][8] = 
-	{{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},
-	{{1, 2, 1, 2, 1, 2, 1, 2}, {2, 1, 2, 1, 2, 1, 2, 1}},
-	{{1, 2, 3, 4, 5, 1, 2, 3}, {4, 5, 1, 2, 3, 4, 5, 1}},
-	{{5, 4, 5, 4, 5, 4, 5, 4}, {2, 3, 2, 3, 2, 3, 2, 3}}};
-
-class Invader {
-  public:
-    // Constructors
-    Invader(RGBmatrixPanel& matrix): matrix(matrix) {
-      x = 0;
-      y = 0;
-      strength = 0;
-    }
-    
-    // sets values for private date members x and y
-    Invader(int x_arg, int y_arg): x(x_arg), y(y_arg) {}
-    // sets values for private data members
-    Invader(int x_arg, int y_arg, int strength_arg): x(x_arg), y(y_arg), strength(strength_arg){}
-    // sets values for private data members
-    void initialize(int x_arg, int y_arg, int strength_arg) {
-    	x = x_arg;
-	    y = y_arg;
-	    strength = strength_arg;
-    }
-    
-    // getters
-    int get_x() const {
-    	return x;
-    }
-    int get_y() const {
-    	return y;
-    }
-    int get_strength() const {
-    	return strength;
-    }
-
-    // Moves the Invader down the screen by one row
-    // Modifies: y
-    void move() {
-    	y++;
-    }
-    
-    // draws the Invader if its strength is greater than 0
-    // calls: draw_with_rgb
-    void draw() {
-      if (strength != 0) {
-        draw_with_rgb(colors[strength % 7], colors[(strength / 7 + 5) % 7]);      
-      }
-    }
-    
-    // draws black where the Invader used to be
-    // calls: draw_with_rgb
-    void erase() {
-    	draw_with_rgb(BLACK, BLACK);
-    }
-    
-    // Invader is hit by a Cannonball.
-    // Modifies: strength
-    // calls: draw, erase
-    void hit() {
-    	strength--;
-	    if (!strength == 0){
-		    draw();
-	    } else{
-		    erase();
-	    }
-    }
-
-  private:
-    int x;
-    int y;
-    int strength;
-    RGBmatrixPanel matrix;
-    
-    // draws the Invader
-    void draw_with_rgb(Color body_color, Color eye_color) {
-   	  uint16_t b_col = body_color.to_333();
-  	  uint16_t e_col = eye_color.to_333();
-  	  uint16_t blk = BLACK.to_333();
-  	  matrix.fillRect(x, y, 4, 4, b_col);
-    	matrix.drawPixel(x, y, blk);
-  	  matrix.drawPixel(x+3, y, blk);
-  	  matrix.drawPixel(x+1, y+3, blk);
-  	  matrix.drawPixel(x+2, y+3, blk);
-  	  matrix.drawPixel(x+1,y+1,e_col);
-  	  matrix.drawPixel(x+2,y+1,e_col);
-    }
-};
-
-class Cannonball {
-  public:
-    Cannonball(RGBmatrixPanel& matrix): matrix(matrix) {
-      x = 0;
-      y = 0;
-      fired = false;
-    }
-    
-    // resets private data members to initial values
-    void reset() {
-      x = 0;
-      y = 0;
-      fired = false;
-    }
-    
-    // getters
-    
-    int get_x() const {
-    	return x;
-    }
-    int get_y() const {
-    	return y;
-    }
-    bool has_been_fired() const {
-      return fired;
-    }
-    
-    // sets private data members
-    void fire(int x_arg, int y_arg) {
-      x = x_arg;
-      y = y_arg;
-      fired = true;
-    }
-    
-    // moves the Cannonball and detects if it goes off the screen
-    // Modifies: y, fired
-    void move() {
-      if (y >= 0) {
-        y--;
-      }
-       else {
-        fired = false;
-      }
-    }
-    
-    // resets private data members to initial values
-    void hit() {
-      x = 0;
-      y = 0;
-      fired = false;
-    }
-    
-    // draws the Cannonball, if it is fired
-    void draw() {
-      if(fired){
-        matrix.drawPixel(x, y, RED.to_333());
-        matrix.drawPixel(x, y - 1, RED.to_333()); 
-      }
-      else {
-        erase();
-      }
-    }
-    
-    // draws black where the Cannonball used to be
-    void erase() {
-      matrix.drawPixel(x, y, BLACK.to_333());
-      matrix.drawPixel(x, y - 1, BLACK.to_333());
-    }
-
-  private:
-    int x;
-    int y;
-    bool fired;
-    RGBmatrixPanel matrix;
-};
+RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
 
 class Game {
   public:
@@ -219,7 +53,7 @@ class Game {
     // Modifies: global variable matrix
     void update(int potentiometer_value, bool button_pressed) {
         time++;
-        player.erase();
+        player.erase(matrix);
           
     	if (ballCycle < BALL_DELAY) {
     		ballCycle++;
@@ -227,15 +61,17 @@ class Game {
     	
     	if (button_pressed && ballCycle == BALL_DELAY) {
     	  Cannonball* ball = getBall();
-        ball->fire(player.get_x(), player.get_y());
-    	  ballCycle = 0;
+        if (ball != NULL) {
+          ball->fire(player.getX(), player.getY());
+      	  ballCycle = 0;
+        }
       }
     
-      player.set_x((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
+      player.setX((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
       // moves all enemies down the screen             
       if (time % INVADER_DELAY == 0) {
         for(int i = NUM_ENEMIES; i >= 0 ; i--){
-            enemies[i].erase();
+            enemies[i].erase(matrix);
             if (firstLayerCleared()) {
              enemies[i].move();
             } else if (i > 7) { 
@@ -249,7 +85,7 @@ class Game {
       for (int i = 0; i < NUM_ENEMIES; i++){
         for (int j = 0; j < NUM_BALLS; j++) { 
           Cannonball* ball = &balls[j];
-          if (i % 8 * 4 <= ball->get_x() && i % 8 * 4 + 3 >= ball->get_x() && ball->get_y() - 1 == enemies[i].get_y() && enemies[i].get_strength() != 0){
+          if (i % 8 * 4 <= ball->getX() && i % 8 * 4 + 3 >= ball->getX() && ball->getY() - 1 == enemies[i].getY() && enemies[i].getStrength() != 0){
             enemies[i].hit(); 
             ball->hit();
             break;          
@@ -258,16 +94,16 @@ class Game {
       }
         // checks for enemies getting past player
       for (int i = 0; i < NUM_ENEMIES; i++){           
-        if (enemies[i].get_y() == 13 && enemies[i].get_strength() > 0) {
+        if (enemies[i].getY() == 13 && enemies[i].getStrength() > 0) {
           player.die();
           level--;
           reset_level();
         }
       }
         
-        if (player.get_lives() < 1) {
+        if (player.getLives() < 1) {
           matrix.fillScreen(matrix.Color333(0, 0, 0));
-          player.reset_lives();
+          player.resetLives();
           level = 0;
           game_over();
           delay(4000);
@@ -278,7 +114,7 @@ class Game {
          reset_level();     
        }
     
-       player.draw();
+       player.draw(matrix);
        updateBalls();
     }
 
@@ -286,8 +122,7 @@ class Game {
     int level;
     int ballCycle;
     unsigned long time;
-    RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
-    Player player(matrix);
+    Player player;
     Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
     
@@ -296,21 +131,21 @@ class Game {
     bool level_cleared() {
       int count = 0;
       for (int i = 0; i < NUM_ENEMIES; i++) {
-        count += enemies[i].get_strength();
+        count += enemies[i].getStrength();
       }
       return count == 0;
     }
 
     bool firstLayerCleared(){
       for (int i = NUM_ENEMIES/2; i < NUM_ENEMIES; i++) {
-        if (enemies[i].get_strength() > 0) return false;
+        if (enemies[i].getStrength() > 0) return false;
       }
       return true;
     }
 
     void drawAllEnemies(){
         for(int i = NUM_ENEMIES-1; i >= 0 ; i--){
-          enemies[i].draw();
+          enemies[i].draw(matrix);
         }    
     }
 
@@ -330,7 +165,7 @@ class Game {
       print_level(level);
       delay(1000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
-      print_lives(player.get_lives());
+      print_lives(player.getLives());
       delay(1000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       drawAllEnemies();
@@ -343,14 +178,14 @@ class Game {
 		  	  return &balls[i];
 		    }
 	    }
-	    return &Cannonball();
+	    return NULL;
     }
 
     void updateBalls(){
 	    for (int i = 0; i < NUM_BALLS; i++){
-		    balls[i].erase();
+		    balls[i].erase(matrix);
 		    balls[i].move();
-		    balls[i].draw();
+		    balls[i].draw(matrix);
 	    }
     }
 };
@@ -423,5 +258,4 @@ void game_over() {
   matrix.print('V');
   matrix.print('E');
   matrix.print('R');
-
 }
