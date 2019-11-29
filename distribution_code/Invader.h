@@ -49,4 +49,8 @@ class Invader : public Sprite {
     
     // draws the Invader
     void draw_with_rgb(Color body_color, Color eye_color, RGBmatrixPanel& matrix);
+
+    
+    //converts numbers to space invader colors for easy use with strength color setting
+    Color num_to_color(int);
 };

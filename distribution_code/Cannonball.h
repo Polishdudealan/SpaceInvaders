@@ -11,7 +11,7 @@ class Cannonball : public Sprite {
     void reset();
     
     // getters
-    bool has_been_fired() const;
+    bool hasBeenFired() const;
     
     // sets private data members
     void fire(int x_arg, int y_arg);

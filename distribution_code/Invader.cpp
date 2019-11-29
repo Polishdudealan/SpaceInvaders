@@ -1,3 +1,4 @@
+
 #include "Invader.h"
 
 #ifndef CONSTANTS
@@ -6,8 +7,6 @@
 #endif
 
 using namespace Constants;
-
-Color invaderColors[] = {WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
 
 Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, int height = 4, int width = 4): x(x_arg), y(y_arg), strength(strength_arg), height(height), width(width) {}
 
@@ -19,22 +18,16 @@ void Invader::move() {
   y++;
 }
 
-// draws the Invader if its strength is greater than 0
-// calls: draw_with_rgb
 void Invader::draw(RGBmatrixPanel& matrix) {
   if (strength != 0) {
-    draw_with_rgb(invaderColors[strength % 7], invaderColors[(strength / 7 + 5) % 7], matrix);      
+    draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7), matrix);      
   }
 }
 
-// draws black where the Invader used to be
-// calls: draw_with_rgb
 void Invader::erase(RGBmatrixPanel& matrix) {
   draw_with_rgb(BLACK, BLACK, matrix);
 }
 
-// Invader is hit by a Cannonball.
-// Modifies: strength
 void Invader::hit() {
   strength--;
 }
@@ -51,3 +44,28 @@ void Invader::draw_with_rgb(Color body_color, Color eye_color, RGBmatrixPanel& m
   matrix.drawPixel(x+1,y+1,e_col);
   matrix.drawPixel(x+2,y+1,e_col);
 }
+
+Color Invader::num_to_color(int x){
+      switch (x) {
+        case 0:
+          return WHITE;
+          break;
+        case 1:
+          return RED;
+          break;
+        case 2:
+          return ORANGE;
+          break;
+        case 3:
+          return YELLOW;
+          break;
+        case 4:
+          return GREEN;
+          break;
+        case 5:
+          return BLUE;
+          break;
+        default:
+          return PURPLE;
+      }
+    }

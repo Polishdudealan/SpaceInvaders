@@ -14,22 +14,7 @@
   #include "Constants.h"
 #endif
 
-
 using namespace Constants;
-
-// the following functions are for printing messages
-void print_level(int level);
-void print_lives(int lives);
-void game_over();
-
-// define the wiring of the LED screen
-const uint8_t CLK  = 8;
-const uint8_t LAT = A3;
-const uint8_t OE = 9;
-const uint8_t A = A0;
-const uint8_t B = A1;
-const uint8_t C = A2;
-RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
 
 class Game {
   public:
@@ -42,6 +27,9 @@ class Game {
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
     void setupGame() {
+      matrix.begin();
+      matrix.fillScreen(matrix.Color333(0, 0, 0));
+      delay(4000);
       matrix.fillScreen(matrix.Color333(0, 0, 0));
       reset_level();
       matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -85,14 +73,15 @@ class Game {
       for (int i = 0; i < NUM_ENEMIES; i++){
         for (int j = 0; j < NUM_BALLS; j++) { 
           Cannonball* ball = &balls[j];
-          if (i % 8 * 4 <= ball->getX() && i % 8 * 4 + 3 >= ball->getX() && ball->getY() - 1 == enemies[i].getY() && enemies[i].getStrength() != 0){
+          if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getStrength() != 0){
             enemies[i].hit(); 
             ball->hit();
             break;          
           }
         }
       }
-        // checks for enemies getting past player
+      
+      // checks for enemies getting past player
       for (int i = 0; i < NUM_ENEMIES; i++){           
         if (enemies[i].getY() == 13 && enemies[i].getStrength() > 0) {
           player.die();
@@ -125,7 +114,15 @@ class Game {
     Player player;
     Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
-    
+
+    // define the wiring of the LED screen
+    const uint8_t CLK  = 8;
+    const uint8_t LAT = A3;
+    const uint8_t OE = 9;
+    const uint8_t A = A0;
+    const uint8_t B = A1;
+    const uint8_t C = A2;
+    RGBmatrixPanel matrix{A, B, C, CLK, LAT, OE, false};
 
     // check if Player defeated all Invaders in current level
     bool level_cleared() {
@@ -174,7 +171,7 @@ class Game {
     //returns the proper ball to use when fire is called
     Cannonball* getBall() {
 	    for (int i = 0; i < NUM_BALLS; i++){
-		    if (!balls[i].has_been_fired()){
+		    if (!balls[i].hasBeenFired()){
 		  	  return &balls[i];
 		    }
 	    }
@@ -188,6 +185,53 @@ class Game {
 		    balls[i].draw(matrix);
 	    }
     }
+
+    // displays Level
+    void print_level(int level) {
+      matrix.setCursor(1, 0);
+      matrix.setTextSize(1);
+      matrix.setTextColor(matrix.Color333(7, 0, 0));
+      matrix.print('L');
+      matrix.print('E');
+      matrix.print('V');
+      matrix.print('E');
+      matrix.print('L');
+    
+      matrix.setCursor(13, 9); // next line
+      matrix.print(level);
+    }
+    
+    // displays number of lives
+    void print_lives(int lives) {
+      matrix.setCursor(1, 0);
+      matrix.setTextSize(1);
+      matrix.setTextColor(matrix.Color333(7, 0, 0));
+      matrix.print('L');
+      matrix.print('I');
+      matrix.print('V');
+      matrix.print('E');
+      matrix.print('S');
+    
+      matrix.setCursor(14, 9); // next line
+      matrix.print(lives);
+    }
+    
+    // displays "game over"
+    void game_over() {
+      matrix.setCursor(5, 0);
+      matrix.setTextSize(1);
+      matrix.setTextColor(matrix.Color333(7, 0, 0));
+      matrix.print('G');
+      matrix.print('A');
+      matrix.print('M');
+      matrix.print('E');
+      
+      matrix.setCursor(5, 9); // next line
+      matrix.print('O');
+      matrix.print('V');
+      matrix.print('E');
+      matrix.print('R');
+    }
 };
 
 
@@ -198,9 +242,6 @@ Game game;
 void setup() {
   Serial.begin(9600);
   pinMode(BUTTON_PIN_NUMBER, INPUT);
-  matrix.begin();
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
-  delay(4000);
   game.setupGame();
 }
 
@@ -208,54 +249,6 @@ void setup() {
 void loop() {
   int potentiometer_value = analogRead(POTENTIOMETER_PIN_NUMBER);
   bool button_pressed = (digitalRead(BUTTON_PIN_NUMBER) == HIGH);
-
   game.update(potentiometer_value, button_pressed);
   delay(30);
-}
-
-// displays Level
-void print_level(int level) {
-  matrix.setCursor(1, 0);
-  matrix.setTextSize(1);
-  matrix.setTextColor(matrix.Color333(7, 0, 0));
-  matrix.print('L');
-  matrix.print('E');
-  matrix.print('V');
-  matrix.print('E');
-  matrix.print('L');
-
-  matrix.setCursor(13, 9); // next line
-  matrix.print(level);
-}
-
-// displays number of lives
-void print_lives(int lives) {
-  matrix.setCursor(1, 0);
-  matrix.setTextSize(1);
-  matrix.setTextColor(matrix.Color333(7, 0, 0));
-  matrix.print('L');
-  matrix.print('I');
-  matrix.print('V');
-  matrix.print('E');
-  matrix.print('S');
-
-  matrix.setCursor(14, 9); // next line
-  matrix.print(lives);
-}
-
-// displays "game over"
-void game_over() {
-  matrix.setCursor(5, 0);
-  matrix.setTextSize(1);
-  matrix.setTextColor(matrix.Color333(7, 0, 0));
-  matrix.print('G');
-  matrix.print('A');
-  matrix.print('M');
-  matrix.print('E');
-  
-  matrix.setCursor(5, 9); // next line
-  matrix.print('O');
-  matrix.print('V');
-  matrix.print('E');
-  matrix.print('R');
 }

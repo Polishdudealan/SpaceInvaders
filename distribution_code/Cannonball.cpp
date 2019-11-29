@@ -10,7 +10,7 @@ void Cannonball::reset() {
   fired = false;
 }
     
-bool Cannonball::has_been_fired() const {
+bool Cannonball::hasBeenFired() const {
   return fired;
 }
 
@@ -45,7 +45,6 @@ void Cannonball::draw(RGBmatrixPanel& matrix) {
   }
 }
   
-// draws black where the Cannonball used to be
 void Cannonball::erase(RGBmatrixPanel& matrix) {
   matrix.drawPixel(x, y, BLACK.to_333());
   matrix.drawPixel(x, y - 1, BLACK.to_333());
