@@ -21,6 +21,8 @@ void Invader::move() {
 void Invader::draw(RGBmatrixPanel& matrix) {
   if (strength != 0) {
     draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7), matrix);      
+  } else {
+    erase(matrix);
   }
 }
 

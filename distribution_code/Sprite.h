@@ -25,10 +25,6 @@ class Sprite {
       return horizontalOverlap && verticalOverlap;
 	  }
 
-    //need to be implemented in each child class, will likely use draw_with_rgb
-    //but that might have more arguments such as color and cannot be virutal
-    virtual void draw(RGBmatrixPanel&)   = 0;
-    virtual void erase(RGBmatrixPanel&)  = 0;
 	protected:
 		//origin is upper left corner
 		int x;

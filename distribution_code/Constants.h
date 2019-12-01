@@ -15,8 +15,8 @@ namespace Constants {
   const Color AQUA(0, 4, 4);
   
   // define the wiring of the inputs
-  const int POTENTIOMETER_PIN_NUMBER = 5;
-  const int BUTTON_PIN_NUMBER = 10;
+  const int POTENTIOMETER_PIN_NUMBER = 6;
+  const int BUTTON_PIN_NUMBER = 50;
   
   // global constant for the number of Invaders in the game
   const int NUM_ENEMIES = 16;

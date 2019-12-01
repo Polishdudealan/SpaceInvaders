@@ -7,7 +7,7 @@
 
 using namespace Constants;
 
-Player::Player(): x(15), y(15), lives(3), width(2), height(2) {}
+Player::Player(): x(15), y(14), lives(3), width(2), height(2) {}
 
 int Player::getLives() const {
 	return lives;

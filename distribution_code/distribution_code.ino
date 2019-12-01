@@ -40,8 +40,9 @@ class Game {
     // see spec for details of game
     // Modifies: global variable matrix
     void update(int potentiometer_value, bool button_pressed) {
-        time++;
-        player.erase(matrix);
+      time++;
+      player.erase(matrix);
+      updateBalls();
           
     	if (ballCycle < BALL_DELAY) {
     		ballCycle++;
@@ -54,8 +55,9 @@ class Game {
       	  ballCycle = 0;
         }
       }
-    
-      player.setX((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 31 ): 0);
+
+      //this allows for the potentiometer to be more narrow, only using the middle two quarters of its range to control the player
+      player.setX((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 32 ): 1);
       // moves all enemies down the screen             
       if (time % INVADER_DELAY == 0) {
         for(int i = NUM_ENEMIES; i >= 0 ; i--){
@@ -104,7 +106,6 @@ class Game {
        }
     
        player.draw(matrix);
-       updateBalls();
     }
 
   private:
@@ -116,9 +117,9 @@ class Game {
     Invader enemies[NUM_ENEMIES];
 
     // define the wiring of the LED screen
-    const uint8_t CLK  = 8;
+    const uint8_t CLK  = 11;
     const uint8_t LAT = A3;
-    const uint8_t OE = 9;
+    const uint8_t OE = 10;
     const uint8_t A = A0;
     const uint8_t B = A1;
     const uint8_t C = A2;
