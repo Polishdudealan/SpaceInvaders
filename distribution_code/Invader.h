@@ -6,7 +6,7 @@
 class Invader : public Sprite {
   public:
     // Constructor, this functions as default
-    Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, int height = 4, int width = 4);
+    Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, int width = 4, int height = 4);
     
     // sets values for private data members
     void initialize(int x_arg, int y_arg, int strength_arg) {
@@ -36,16 +36,6 @@ class Invader : public Sprite {
 
   private:
     int strength;
-    
-    //origin is upper left corner
-    int x;
-    int y;
-
-    //extending right and down from origin 
-    int width;
-    int height;
-    
-    SpriteType type = INVADER;
     
     // draws the Invader
     void draw_with_rgb(Color body_color, Color eye_color, RGBmatrixPanel& matrix);

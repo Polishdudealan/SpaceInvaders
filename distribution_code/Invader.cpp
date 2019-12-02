@@ -8,7 +8,7 @@
 
 using namespace Constants;
 
-Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, int height = 4, int width = 4): x(x_arg), y(y_arg), strength(strength_arg), height(height), width(width) {}
+Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, int height = 4, int width = 4): strength(strength_arg), Sprite(x_arg, y_arg, width, height) {}
 
 int Invader::getStrength() const {
   return strength;

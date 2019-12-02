@@ -73,6 +73,10 @@ class Game {
 
     //returns the proper ball to use when fire is called
     Cannonball* getBall();
+
+    //draws everything
+    void drawAll();
+    
     
     //********** update functions **********
     Sprite* updates[MAX_UPDATES_PER_TICK] = {};

@@ -2,7 +2,7 @@
 #include "Constants.h"
 using namespace Constants;
 
-Cannonball::Cannonball(int width = 1, int height = 2): x(0), y(0), fired(false), width(width), height(height) {}
+Cannonball::Cannonball(int width = 1, int height = 2): fired(false), Sprite(0, 0, width, height) {}
 
 void Cannonball::reset() {
   x = 0;

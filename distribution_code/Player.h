@@ -33,17 +33,7 @@ class Player : public Sprite {
     void erase(RGBmatrixPanel& matrix);
   private:
     int lives;
-    
-    //origin is upper left corner
-    int x;
-    int y;
-
-    //extending right and down from origin 
-    int width;
-    int height;
-    
-    SpriteType type = PLAYER;
- 
+     
     // sets private data members x and y to initial values
     void initialize(int x_arg, int y_arg);
     void draw_with_rgb(Color color, RGBmatrixPanel& matrix);

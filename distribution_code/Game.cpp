@@ -14,9 +14,14 @@ void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
+  drawAll();
 }
 
 void Game::update(int potentiometer_value, bool button_pressed) {
+  Invader i0 {0,0};
+  Invader i1 {0,0};
+  Serial.print(i0.isColliding(i1));
+  
   time++;
   inputUpdate(potentiometer_value, button_pressed);
   moveUpdate();
@@ -63,6 +68,10 @@ void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
 }
 
 void Game::moveUpdate() {
+  if (layerCleared(currentLayer)){
+    currentLayer--;
+  }
+  
   // moves all enemies down the screen             
   if (time % INVADER_DELAY == 0) {
     for (int i = 0; i < NUM_ENEMIES; i++) {
@@ -70,8 +79,8 @@ void Game::moveUpdate() {
       if (currentLayer == i/8) {
         enemies[i].erase(matrix);
         enemies[i].move();
-        enemies[i].draw(matrix);
       }
+      enemies[i].draw(matrix);
     }
   }
   
@@ -93,7 +102,9 @@ void Game::checkCollisions(){
       Cannonball* ball = &balls[j];
       if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getStrength() != 0){
         enemies[i].hit(); 
+        enemies[i].draw(matrix);
         ball->hit();
+        ball->draw(matrix);
         break;          
       }
     }
@@ -131,7 +142,8 @@ bool Game::layerCleared(int layer){
 }
 
 void Game::reset_level() {
-  layers = currentLayer = 2;
+  layers = 2;
+  currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
   ballCycle = BALL_DELAY;
@@ -158,6 +170,16 @@ Cannonball* Game::getBall() {
     }
   }
   return NULL;
+}
+
+void Game::drawAll(){
+  player.draw(matrix);
+  for (int i = 0; i < NUM_ENEMIES; i++) {
+    enemies[i].draw(matrix);
+  }
+  for (int i = 0; i < NUM_BALLS; i++) {
+    balls[i].draw(matrix);
+  }
 }
 
 void Game::print_level(int level) {

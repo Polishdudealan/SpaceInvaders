@@ -7,10 +7,10 @@
   #include <Adafruit_GFX.h>
 #endif
 
-enum SpriteType {INVADER, PLAYER, CANNONBALL, POWERUP};
-
 class Sprite { 
 	public: 
+    Sprite(int x, int y, int h, int w): x(x), y(y), width(w), height(h) {}
+    
 		//position getters for all sprites
 		int getX() const { return x; }
 		int getY()const { return y; }
@@ -38,6 +38,4 @@ class Sprite {
     //extending right and down from origin 
     int width;
     int height;
-    
-		SpriteType type;
-	};
+};

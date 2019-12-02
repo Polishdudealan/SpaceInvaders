@@ -31,14 +31,4 @@ class Cannonball : public Sprite {
 
   private:
     bool fired;
-
-    //origin is upper left corner
-    int x;
-    int y;
-
-    //extending right and down from origin 
-    int width;
-    int height;
-    
-    SpriteType type = CANNONBALL;
 };

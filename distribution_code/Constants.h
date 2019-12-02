@@ -19,7 +19,7 @@ namespace Constants {
   const int BUTTON_PIN_NUMBER = 50;
   
   //constants to determine game speed
-  const int INVADER_DELAY = 10;
+  const int INVADER_DELAY = 70;
   const int BALL_DELAY = 5;
   
   static const int LEVEL_DATA[4][2][8] = 
