@@ -57,7 +57,8 @@ class Game {
       }
 
       //this allows for the potentiometer to be more narrow, only using the middle two quarters of its range to control the player
-      player.setX((47 - potentiometer_value / 16) >= 0 ? ((47 - potentiometer_value / 16) < 32 ? (47 - potentiometer_value / 16) : 32 ): 1);
+      player.setX((47 - potentiometer_value / 16) >= -1 ? ((47 - potentiometer_value / 16) < 31 ? (47 - potentiometer_value / 16) : 30 ): -1);
+      
       // moves all enemies down the screen             
       if (time % INVADER_DELAY == 0) {
         for(int i = NUM_ENEMIES; i >= 0 ; i--){
@@ -84,11 +85,16 @@ class Game {
       }
       
       // checks for enemies getting past player
-      for (int i = 0; i < NUM_ENEMIES; i++){           
-        if (enemies[i].getY() == 13 && enemies[i].getStrength() > 0) {
+      for (int i = 0; i < NUM_ENEMIES; i++) {           
+        if ((enemies[i].getY() == 13 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
           player.die();
           level--;
+          if (player.getLives() <= 0) {
+            level = 0;
+            game_over();
+          }
           reset_level();
+          return;
         }
       }
         
