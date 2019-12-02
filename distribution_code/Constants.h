@@ -18,12 +18,6 @@ namespace Constants {
   const int POTENTIOMETER_PIN_NUMBER = 6;
   const int BUTTON_PIN_NUMBER = 50;
   
-  // global constant for the number of Invaders in the game
-  const int NUM_ENEMIES = 16;
-  
-  // global constant for the number of cannonballs in the game
-  const int NUM_BALLS = 4;
-  
   //constants to determine game speed
   const int INVADER_DELAY = 10;
   const int BALL_DELAY = 5;
