@@ -53,6 +53,7 @@ class Game {
     unsigned long time;
     int numUpdates;
     int layers;
+    int currentLayer;
 
     //****** Sprites ********
     Player player;

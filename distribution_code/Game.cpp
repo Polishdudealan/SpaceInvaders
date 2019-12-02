@@ -22,34 +22,19 @@ void Game::update(int potentiometer_value, bool button_pressed) {
   moveUpdate();
   checkCollisions();
   
-  // checks for enemies getting past player
-  for (int i = 0; i < NUM_ENEMIES; i++) {           
-    if ((enemies[i].getY() == 13 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
-      player.die();
-      level--;
-      if (player.getLives() <= 0) {
-        level = 0;
-        game_over();
-      }
-      reset_level();
-      return;
-    }
+  if (player.getLives() < 1) {
+    matrix.fillScreen(matrix.Color333(0, 0, 0));
+    player.resetLives();
+    level = 0;
+    game_over();
+    delay(4000);
+    setupGame();  
   }
-    
-    if (player.getLives() < 1) {
-      matrix.fillScreen(matrix.Color333(0, 0, 0));
-      player.resetLives();
-      level = 0;
-      game_over();
-      delay(4000);
-      setupGame();  
-    }
-    // checks if level is cleared
-   if(level_cleared()){
-     reset_level();     
-   }
-
-   player.draw(matrix);
+   
+  // checks if level is cleared
+  if(level_cleared()){
+    reset_level();     
+  }
 }
 
 void Game::inputUpdate(int potentiometer_value, bool button_pressed) { 
@@ -62,7 +47,7 @@ void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
     if (ball != NULL) {
       ball->fire(player.getX(), player.getY());
       ballCycle = 0;
-      upd(ball);
+      ball->draw(matrix);
     }
   }
 
@@ -71,17 +56,23 @@ void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
   
   // if position changed update
   if (newX != player.getX()) {
+    player.erase(matrix);
     player.setX(newX);
-    upd(&player);
+    player.draw(matrix);
   }
 }
 
 void Game::moveUpdate() {
-
   // moves all enemies down the screen             
   if (time % INVADER_DELAY == 0) {
-    
-    enemies[i].draw(matirx);
+    for (int i = 0; i < NUM_ENEMIES; i++) {
+      // i / 8 is current layer
+      if (currentLayer == i/8) {
+        enemies[i].erase(matrix);
+        enemies[i].move();
+        enemies[i].draw(matrix);
+      }
+    }
   }
   
   //cannonball movements
@@ -107,6 +98,20 @@ void Game::checkCollisions(){
       }
     }
   }
+
+  // checks for enemies getting past player
+  for (int i = 0; i < NUM_ENEMIES; i++) {           
+    if ((enemies[i].getY() == 13 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
+      player.die();
+      level--;
+      if (player.getLives() <= 0) {
+        level = 0;
+        game_over();
+      }
+      reset_level();
+      return;
+    }
+  }
 }
 
 bool Game::level_cleared() {
@@ -126,7 +131,7 @@ bool Game::layerCleared(int layer){
 }
 
 void Game::reset_level() {
-  layers = 2;
+  layers = currentLayer = 2;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
   ballCycle = BALL_DELAY;
