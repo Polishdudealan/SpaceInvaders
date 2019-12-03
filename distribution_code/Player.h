@@ -29,8 +29,6 @@ class Player : public Sprite {
     //draws the space invader on matrix
     void draw(RGBmatrixPanel& matrix);
 
-    //erases space invader from matrix 
-    void erase(RGBmatrixPanel& matrix);
   private:
     int lives;
      

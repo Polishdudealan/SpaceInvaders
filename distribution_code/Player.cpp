@@ -7,7 +7,7 @@
 
 using namespace Constants;
 
-Player::Player(): lives(3), Sprite(15, 14, 2, 2) {}
+Player::Player(): lives(3), Sprite(15, 14, 3, 2) {}
 
 int Player::getLives() const {
 	return lives;
@@ -32,10 +32,6 @@ void Player::initialize(int x_arg, int y_arg) {
 
 void Player::draw(RGBmatrixPanel& matrix) {
   draw_with_rgb(GREEN, matrix);
-}
-
-void Player::erase(RGBmatrixPanel& matrix) {
-  draw_with_rgb(BLACK, matrix);
 }
 
 void Player::draw_with_rgb(Color color, RGBmatrixPanel& matrix) {

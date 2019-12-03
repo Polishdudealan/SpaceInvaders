@@ -25,9 +25,6 @@ class Cannonball : public Sprite {
     
     // draws the Cannonball, if it is fired
     void draw(RGBmatrixPanel& matrix);
-    
-    // draws black where the Cannonball used to be
-    void erase(RGBmatrixPanel& matrix);
 
   private:
     bool fired;

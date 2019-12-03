@@ -26,10 +26,6 @@ class Invader : public Sprite {
     // calls: draw_with_rgb
     void draw(RGBmatrixPanel& matrix);
     
-    // draws black where the Invader used to be
-    // calls: draw_with_rgb
-    void erase(RGBmatrixPanel& matrix);
-    
     // Invader is hit by a Cannonball.
     // Modifies: strength
     void hit();

@@ -36,9 +36,12 @@ class Game {
     // game constant for the number of cannonballs in the game
     static const int NUM_BALLS = 4;
 
-    // game constant determining the size of the update array
-    static const int MAX_UPDATES_PER_TICK = 64;
+    //game constant for the number of players in the game
+    static const int NUM_PLAYERS = 1;
 
+    //total sprites
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS;
+    
     // define the wiring of the LED screen
     const uint8_t CLK  = 11;
     const uint8_t LAT = A3;
@@ -59,6 +62,7 @@ class Game {
     Player player;
     Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
+    Sprite* updatableSprites[NUM_SPRITES];
 
 
     //***** Helper Functions
@@ -72,16 +76,10 @@ class Game {
     void reset_level();
 
     //returns the proper ball to use when fire is called
-    Cannonball* getBall();
+    Cannonball* getBall();    
 
-    //draws everything
-    void drawAll();
-    
     
     //********** update functions **********
-    Sprite* updates[MAX_UPDATES_PER_TICK] = {};
-    void upd(Sprite* s);
-    
     //moves all sprites in game
     void moveUpdate();
 

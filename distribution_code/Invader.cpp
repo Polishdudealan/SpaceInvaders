@@ -26,10 +26,6 @@ void Invader::draw(RGBmatrixPanel& matrix) {
   }
 }
 
-void Invader::erase(RGBmatrixPanel& matrix) {
-  draw_with_rgb(BLACK, BLACK, matrix);
-}
-
 void Invader::hit() {
   strength--;
 }

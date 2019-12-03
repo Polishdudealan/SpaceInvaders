@@ -14,18 +14,14 @@ void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  drawAll();
 }
 
 void Game::update(int potentiometer_value, bool button_pressed) {
-  Invader i0 {0,0};
-  Invader i1 {0,0};
-  Serial.print(i0.isColliding(i1));
-  
   time++;
   inputUpdate(potentiometer_value, button_pressed);
   moveUpdate();
   checkCollisions();
+  redrawSprites();
   
   if (player.getLives() < 1) {
     matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -50,9 +46,9 @@ void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
   if (button_pressed && ballCycle == BALL_DELAY) {
     Cannonball* ball = getBall();
     if (ball != NULL) {
-      ball->fire(player.getX(), player.getY());
+      ball->fire(player.getX() + 1, player.getY() - 1);
       ballCycle = 0;
-      ball->draw(matrix);
+      ball->upd();
     }
   }
 
@@ -61,9 +57,8 @@ void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
   
   // if position changed update
   if (newX != player.getX()) {
-    player.erase(matrix);
     player.setX(newX);
-    player.draw(matrix);
+    player.upd();
   }
 }
 
@@ -77,19 +72,17 @@ void Game::moveUpdate() {
     for (int i = 0; i < NUM_ENEMIES; i++) {
       // i / 8 is current layer
       if (currentLayer == i/8) {
-        enemies[i].erase(matrix);
         enemies[i].move();
+        enemies[i].upd();
       }
-      enemies[i].draw(matrix);
     }
   }
   
   //cannonball movements
   for (int i = 0; i < NUM_BALLS; i++){
     if (balls[i].hasBeenFired()){
-      balls[i].erase(matrix);
       balls[i].move();
-      balls[i].draw(matrix);
+      balls[i].upd();
     }
   }
 }
@@ -102,9 +95,9 @@ void Game::checkCollisions(){
       Cannonball* ball = &balls[j];
       if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getStrength() != 0){
         enemies[i].hit(); 
-        enemies[i].draw(matrix);
         ball->hit();
-        ball->draw(matrix);
+        enemies[i].upd();
+        ball->upd();
         break;          
       }
     }
@@ -122,6 +115,12 @@ void Game::checkCollisions(){
       reset_level();
       return;
     }
+  }
+}
+
+void Game::redrawSprites(){
+  for (int i = 0; i < NUM_SPRITES; i++) {
+    updatableSprites[i]->redraw(matrix);
   }
 }
 
@@ -146,15 +145,36 @@ void Game::reset_level() {
   currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
+  
   ballCycle = BALL_DELAY;
+  for (int i = 0; i < NUM_BALLS; i++) {
+    balls[i].hit();
+  }
+  
+  //defines the strength of invaders
   int minStrength = level/5 + 1;
   int maxStrength = 3*sqrt(level);
   maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
+  randomSeed(random(0,100));
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
       enemies[i*8+j] = Invader(j * 4, i * 4, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
     }
   }
+
+  int count = 0;
+  for (int i = 0; i < NUM_BALLS; i++) {
+    updatableSprites[count++] = &balls[i];
+  }
+  for (int i = 0; i < NUM_ENEMIES; i++) {
+    updatableSprites[count++] = &enemies[i];
+  }
+  updatableSprites[count++] = &player;
+
+  for (int i = 0; i < NUM_SPRITES; i++) {
+    updatableSprites[i]->upd();
+  }
+    
   print_level(level);
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -170,16 +190,6 @@ Cannonball* Game::getBall() {
     }
   }
   return NULL;
-}
-
-void Game::drawAll(){
-  player.draw(matrix);
-  for (int i = 0; i < NUM_ENEMIES; i++) {
-    enemies[i].draw(matrix);
-  }
-  for (int i = 0; i < NUM_BALLS; i++) {
-    balls[i].draw(matrix);
-  }
 }
 
 void Game::print_level(int level) {

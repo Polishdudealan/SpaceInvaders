@@ -2,11 +2,11 @@
 #include "Constants.h"
 using namespace Constants;
 
-Cannonball::Cannonball(int width = 1, int height = 2): fired(false), Sprite(0, 0, width, height) {}
+Cannonball::Cannonball(int width = 1, int height = 2): fired(false), Sprite(-10, -10, width, height) {}
 
 void Cannonball::reset() {
-  x = 0;
-  y = 0;
+  x = -10;
+  y = -10;
   fired = false;
 }
     
@@ -30,8 +30,8 @@ void Cannonball::move() {
 }
 
 void Cannonball::hit() {
-  x = 0;
-  y = 0;
+  x = -10;
+  y = -10;
   fired = false;
 }
 
@@ -43,9 +43,4 @@ void Cannonball::draw(RGBmatrixPanel& matrix) {
   else {
     erase(matrix);
   }
-}
-  
-void Cannonball::erase(RGBmatrixPanel& matrix) {
-  matrix.drawPixel(x, y, BLACK.to_333());
-  matrix.drawPixel(x, y - 1, BLACK.to_333());
 }
