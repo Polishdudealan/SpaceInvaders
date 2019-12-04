@@ -26,8 +26,13 @@ class Player : public Sprite {
     // Modifies: lives
     void die();
 
+    // Modifies: lives for powerup
+    void lives1up();
+
     //draws the space invader on matrix
     void draw(RGBmatrixPanel& matrix);
+
+   
 
   private:
     int lives;

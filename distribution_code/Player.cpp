@@ -24,6 +24,11 @@ void Player::resetLives() {
 void Player::die() {
 	lives--; 
 }
+
+void Player::lives1up() {
+  lives++; 
+}
+
    
 void Player::initialize(int x_arg, int y_arg) {
 	x = x_arg;
