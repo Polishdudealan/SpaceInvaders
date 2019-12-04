@@ -273,7 +273,7 @@ uint16_t RGBmatrixPanel::ColorHSV(
 
 void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
   uint8_t r, g, b, bit, limit, *ptr;
-
+  
   if((x < 0) || (x >= _width) || (y < 0) || (y >= _height)) return;
 
   switch(rotation) {
