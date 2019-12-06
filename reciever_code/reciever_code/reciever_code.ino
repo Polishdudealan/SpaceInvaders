@@ -35,5 +35,5 @@ void loop() {
     matrix.fillScreen(matrix.Color333(0, 0, 1));
   }
 
-  delay(500);
+  delay(20);
 }
