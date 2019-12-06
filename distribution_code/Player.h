@@ -10,6 +10,9 @@
   #include <Adafruit_GFX.h>
 #endif
 
+#include "Constants.h"
+using namespace Constants;
+
 class Player : public Sprite {
   public:
     Player();
@@ -26,7 +29,10 @@ class Player : public Sprite {
     // Modifies: lives
     void die();
 
-    // Modifies: lives for powerup
+    //this should be called when there is a collision with a powerup
+    void powerup(PowerupType);
+
+    // Modifies: lives when get life powerup
     void lives1up();
 
     //draws the space invader on matrix

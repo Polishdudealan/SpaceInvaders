@@ -25,6 +25,14 @@ void Player::die() {
 	lives--; 
 }
 
+void Player::powerup(PowerupType power){
+  switch(power){
+    case LIFE:
+      lives1up();
+      break;
+  }
+}
+
 void Player::lives1up() {
   lives++; 
 }

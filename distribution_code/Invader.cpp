@@ -44,26 +44,29 @@ void Invader::draw_with_rgb(Color body_color, Color eye_color, RGBmatrixPanel& m
 }
 
 Color Invader::num_to_color(int x){
-      switch (x) {
-        case 0:
-          return WHITE;
-          break;
-        case 1:
-          return RED;
-          break;
-        case 2:
-          return ORANGE;
-          break;
-        case 3:
-          return YELLOW;
-          break;
-        case 4:
-          return GREEN;
-          break;
-        case 5:
-          return BLUE;
-          break;
-        default:
-          return PURPLE;
-      }
-    }
+  switch (x) {
+    case 0:
+      return WHITE;
+      break;
+    case 1:
+      return RED;
+      break;
+    case 2:
+      return ORANGE;
+      break;
+    case 3:
+      return YELLOW;
+      break;
+    case 4:
+      return GREEN;
+      break;
+    case 5:
+      return BLUE;
+      break;
+    case 6:
+      return PURPLE;
+      break;
+    default:
+      return BLACK;
+  }
+}
