@@ -103,6 +103,11 @@ void Game::checkCollisions(){
     }
   }
 
+ if (powerup.check_active() && powerup.isColliding(player)) {
+     powerup.deactivate();
+     player.powerup(LIFE);
+  }
+
   // checks for enemies getting past player
   for (int i = 0; i < NUM_ENEMIES; i++) {           
     if ((enemies[i].getY() == 13 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
@@ -170,6 +175,7 @@ void Game::reset_level() {
     updatableSprites[count++] = &enemies[i];
   }
   updatableSprites[count++] = &player;
+  updatableSprites[count++] = &powerup;
 
   for (int i = 0; i < NUM_SPRITES; i++) {
     updatableSprites[i]->upd();

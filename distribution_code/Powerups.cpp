@@ -15,7 +15,7 @@ void Powerups::draw__pup_with_rgb(Color color, RGBmatrixPanel& matrix) {
   matrix.drawPixel(x + 2, y + 1, color.to_333());
 }
 
-Color Powerups::p_color(PowerupType power){
+Color Powerups::p_color(PowerupType power) {
   switch (power) {
     case LIFE:
       return RED;
@@ -24,3 +24,17 @@ Color Powerups::p_color(PowerupType power){
       return BLACK;
   }
 }
+
+void Powerups :: move() {
+    if (active) {
+       y++;  
+    }
+}
+
+bool Powerups :: check_active() {
+  return active;
+  }
+
+void Powerups :: deactivate() {
+    active = false;
+  }

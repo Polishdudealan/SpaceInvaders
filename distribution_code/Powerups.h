@@ -22,11 +22,14 @@ class Powerups : public Sprite {
     Powerups();
     // powerup->pup
     void draw(RGBmatrixPanel& matrix);
-    
+    void move();
+    bool check_active();
+    void deactivate();
 
 
   private:
     void draw__pup_with_rgb(Color color, RGBmatrixPanel& matrix);
     Color p_color(PowerupType power);
-    
+    bool active;
+     
 };

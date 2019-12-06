@@ -6,6 +6,7 @@
 #endif
 
 #include "Player.h"
+#include "Powerups.h"
 #include "Cannonball.h"
 #include "Invader.h"
 
@@ -39,8 +40,11 @@ class Game {
     //game constant for the number of players in the game
     static const int NUM_PLAYERS = 1;
 
+    //game constant for number of powerups
+    static const int NUM_POWERUPS = 1;
+
     //total sprites
-    static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS;
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS + NUM_POWERUPS;
     
     // define the wiring of the LED screen
     const uint8_t CLK  = 11;
@@ -63,6 +67,7 @@ class Game {
     Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
     Sprite* updatableSprites[NUM_SPRITES];
+    Powerups powerup;
 
 
     //***** Helper Functions
