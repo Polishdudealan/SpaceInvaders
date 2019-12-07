@@ -6,7 +6,7 @@
 #endif
 #include "Signal.h"
 #include "Player.h"
-#include "Powerups.h"
+//#include "Powerups.h"
 #include "Cannonball.h"
 #include "Invader.h"
 
@@ -44,7 +44,7 @@ class Game {
     static const int NUM_POWERUPS = 1;
 
     //total sprites
-    static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS + NUM_POWERUPS;
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS; //+ NUM_POWERUPS;
     
     // define the wiring of the LED screen
 //    const uint8_t CLK  = 11;
@@ -69,7 +69,7 @@ class Game {
     Cannonball balls[NUM_BALLS];
     Invader enemies[NUM_ENEMIES];
     Sprite* updatableSprites[NUM_SPRITES];
-    Powerups powerup;
+    //Powerups powerup;
 
 
     //***** Helper Functions

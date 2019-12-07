@@ -8,36 +8,34 @@ Game::Game() {
 }
 
 void Game::setupGame() {
-//  matrix.fillScreen(matrix.Color333(0, 0, 0));
-//  delay(4000);
-//  matrix.fillScreen(matrix.Color333(0, 0, 0));
-//  reset_level();
-//  matrix.fillScreen(matrix.Color333(0, 0, 0));
+  matrix.fillScreen(matrix.Color333(0, 0, 0));
+  delay(4000);
+  matrix.fillScreen(matrix.Color333(0, 0, 0));
+  reset_level();
+  matrix.fillScreen(matrix.Color333(0, 0, 0));
 }
 
 void Game::update(int potentiometer_value, bool button_pressed) {
-    //matrix.fillScreen(PURPLE.to_333());
-    player.upd();
-    player.redraw(matrix);
-    player.setX(potentiometer_value);
-//  time++;
-//  inputUpdate(potentiometer_value, button_pressed);
-//  moveUpdate();
-//  checkCollisions();
-//  
-//  if (player.getLives() < 1) {
-//    matrix.fillScreen(matrix.Color333(0, 0, 0));
-//    player.resetLives();
-//    level = 0;
-//    game_over();
-//    delay(4000);
-//    setupGame();  
-//  }
-//   
-//  // checks if level is cleared
-//  if(level_cleared()){
-//    reset_level();     
-//  }
+
+  
+  time++;
+  inputUpdate(potentiometer_value, button_pressed);
+  moveUpdate();
+  checkCollisions();
+  
+  if (player.getLives() < 1) {
+    matrix.fillScreen(matrix.Color333(0, 0, 0));
+    player.resetLives();
+    level = 0;
+    game_over();
+    delay(4000);
+    setupGame();  
+  }
+   
+  // checks if level is cleared
+  if(level_cleared()){
+    reset_level();     
+    }
 }
 
 void Game::inputUpdate(int potentiometer_value, bool button_pressed) { 
@@ -105,10 +103,10 @@ void Game::checkCollisions(){
     }
   }
 
- if (powerup.check_active() && powerup.isColliding(player)) {
-     powerup.deactivate();
-     player.powerup(LIFE);
-  }
+// if (powerup.check_active() && powerup.isColliding(player)) {
+//     powerup.deactivate();
+//     player.powerup(LIFE);
+//  }
 
   // checks for enemies getting past player
   for (int i = 0; i < NUM_ENEMIES; i++) {           
@@ -177,17 +175,17 @@ void Game::reset_level() {
     updatableSprites[count++] = &enemies[i];
   }
   updatableSprites[count++] = &player;
-  updatableSprites[count++] = &powerup;
+  //updatableSprites[count++] = &powerup;
 
   for (int i = 0; i < NUM_SPRITES; i++) {
     updatableSprites[i]->upd();
   }
     
   print_level(level);
-  delay(1000);
+  delay(5000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   print_lives(player.getLives());
-  delay(1000);
+  delay(5000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
 }
 

@@ -10,9 +10,9 @@
 class Signal : public RGBmatrixPanel {
   public:
     Signal();
-    enum Datatype {DRAWPIXEL, DRAWRECT, FILLSCREEN, SETCURSOR, PRINTCHAR, SETTEXTCOLOR};
+    enum Datatype {DRAWPIXEL, FILLRECT, FILLSCREEN, SETCURSOR, PRINTCHAR, SETTEXTCOLOR};
     void drawPixel(int16_t x, int16_t y, uint16_t c);
-    void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+    void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
     void fillScreen(uint16_t color);
     void setCursor(int16_t x, int16_t y);
     void print(char character);

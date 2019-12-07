@@ -23,7 +23,7 @@ Game game;
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/setup/
 void setup() {
-  Serial.begin(38400);
+  Serial.begin(115200);
 
   pinMode(BUTTON_PIN_NUMBER, INPUT);
   game.setupGame();
