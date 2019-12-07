@@ -17,15 +17,18 @@
 
 using namespace Constants;
 
+
 // a global variable that represents the game Space Invaders
 Game game;
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/setup/
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(38400);
+
   pinMode(BUTTON_PIN_NUMBER, INPUT);
   game.setupGame();
 }
+
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/loop/
 void loop() {

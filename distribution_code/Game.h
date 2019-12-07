@@ -4,7 +4,7 @@
   #include <RGBmatrixPanel.h>
   #include <Adafruit_GFX.h>
 #endif
-
+#include "Signal.h"
 #include "Player.h"
 #include "Powerups.h"
 #include "Cannonball.h"
@@ -47,13 +47,15 @@ class Game {
     static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS + NUM_POWERUPS;
     
     // define the wiring of the LED screen
-    const uint8_t CLK  = 11;
-    const uint8_t LAT = A3;
-    const uint8_t OE = 10;
-    const uint8_t A = A0;
-    const uint8_t B = A1;
-    const uint8_t C = A2;
-    RGBmatrixPanel matrix{A, B, C, CLK, LAT, OE, false};
+//    const uint8_t CLK  = 11;
+//    const uint8_t LAT = A3;
+//    const uint8_t OE = 10;
+//    const uint8_t A = A0;
+//    const uint8_t B = A1;
+//    const uint8_t C = A2;
+//    RGBmatrixPanel matrix{A, B, C, CLK, LAT, OE, false};
+    Signal matrix;
+
     
     int level;
     int ballCycle;

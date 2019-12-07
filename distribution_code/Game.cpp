@@ -8,34 +8,36 @@ Game::Game() {
 }
 
 void Game::setupGame() {
-  matrix.begin();
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
-  delay(4000);
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
-  reset_level();
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
+//  matrix.fillScreen(matrix.Color333(0, 0, 0));
+//  delay(4000);
+//  matrix.fillScreen(matrix.Color333(0, 0, 0));
+//  reset_level();
+//  matrix.fillScreen(matrix.Color333(0, 0, 0));
 }
 
 void Game::update(int potentiometer_value, bool button_pressed) {
-  time++;
-  inputUpdate(potentiometer_value, button_pressed);
-  moveUpdate();
-  checkCollisions();
-  redrawSprites();
-  
-  if (player.getLives() < 1) {
-    matrix.fillScreen(matrix.Color333(0, 0, 0));
-    player.resetLives();
-    level = 0;
-    game_over();
-    delay(4000);
-    setupGame();  
-  }
-   
-  // checks if level is cleared
-  if(level_cleared()){
-    reset_level();     
-  }
+    //matrix.fillScreen(PURPLE.to_333());
+    player.upd();
+    player.redraw(matrix);
+    player.setX(potentiometer_value);
+//  time++;
+//  inputUpdate(potentiometer_value, button_pressed);
+//  moveUpdate();
+//  checkCollisions();
+//  
+//  if (player.getLives() < 1) {
+//    matrix.fillScreen(matrix.Color333(0, 0, 0));
+//    player.resetLives();
+//    level = 0;
+//    game_over();
+//    delay(4000);
+//    setupGame();  
+//  }
+//   
+//  // checks if level is cleared
+//  if(level_cleared()){
+//    reset_level();     
+//  }
 }
 
 void Game::inputUpdate(int potentiometer_value, bool button_pressed) { 
@@ -200,7 +202,6 @@ Cannonball* Game::getBall() {
 
 void Game::print_level(int level) {
   matrix.setCursor(1, 0);
-  matrix.setTextSize(1);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('L');
   matrix.print('E');
@@ -214,7 +215,6 @@ void Game::print_level(int level) {
 
 void Game::print_lives(int lives) {
   matrix.setCursor(1, 0);
-  matrix.setTextSize(1);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('L');
   matrix.print('I');
@@ -228,7 +228,6 @@ void Game::print_lives(int lives) {
 
 void Game::game_over() {
   matrix.setCursor(5, 0);
-  matrix.setTextSize(1);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('G');
   matrix.print('A');
