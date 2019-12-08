@@ -15,13 +15,12 @@ void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
 }
 
-void Game::update(int potentiometer_value, bool button_pressed) {
-
-  
+void Game::update(int potentiometer_value, bool button_pressed) { 
   time++;
   inputUpdate(potentiometer_value, button_pressed);
   moveUpdate();
   checkCollisions();
+  redrawSprites();
   
   if (player.getLives() < 1) {
     matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -110,7 +109,7 @@ void Game::checkCollisions(){
 
   // checks for enemies getting past player
   for (int i = 0; i < NUM_ENEMIES; i++) {           
-    if ((enemies[i].getY() == 13 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
+    if ((enemies[i].getY() == 29 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
       player.die();
       level--;
       if (player.getLives() <= 0) {
@@ -182,10 +181,10 @@ void Game::reset_level() {
   }
     
   print_level(level);
-  delay(5000);
+  delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   print_lives(player.getLives());
-  delay(5000);
+  delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
 }
 
@@ -207,8 +206,9 @@ void Game::print_level(int level) {
   matrix.print('E');
   matrix.print('L');
 
-  matrix.setCursor(13, 9); // next line
-  matrix.print(level);
+  matrix.setCursor(11, 9); // next line
+  matrix.print((level / 10) + '0');
+  matrix.print((level % 10) + '0');
 }
 
 void Game::print_lives(int lives) {
@@ -220,8 +220,9 @@ void Game::print_lives(int lives) {
   matrix.print('E');
   matrix.print('S');
 
-  matrix.setCursor(14, 9); // next line
-  matrix.print(lives);
+  matrix.setCursor(11, 9); // next line 
+  matrix.print((lives / 10) + '0');
+  matrix.print((lives % 10) + '0');
 }
 
 void Game::game_over() {

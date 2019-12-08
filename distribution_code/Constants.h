@@ -1,6 +1,7 @@
 #pragma once
-
+#include "Signal.h"
 #include "Color.h"
+
 
 namespace Constants { 
   const Color BLACK(0, 0, 0);
@@ -19,8 +20,8 @@ namespace Constants {
   const int BUTTON_PIN_NUMBER = 50;
   
   //constants to determine game speed
-  const int INVADER_DELAY = 70;
-  const int BALL_DELAY = 5;
+  const int INVADER_DELAY = 30;
+  const int BALL_DELAY = 8;
   
   static const int LEVEL_DATA[4][2][8] = 
     {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Signal.h"
 #include "Sprite.h"
 #include "Color.h" 
 
@@ -24,7 +24,7 @@ class Cannonball : public Sprite {
     void hit();
     
     // draws the Cannonball, if it is fired
-    void draw(RGBmatrixPanel& matrix);
+    void draw(Signal& matrix);
 
   private:
     bool fired;

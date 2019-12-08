@@ -18,7 +18,7 @@ void Invader::move() {
   y++;
 }
 
-void Invader::draw(RGBmatrixPanel& matrix) {
+void Invader::draw(Signal& matrix) {
   if (strength != 0) {
     draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7), matrix);      
   } else {
@@ -30,7 +30,7 @@ void Invader::hit() {
   strength--;
 }
 
-void Invader::draw_with_rgb(Color body_color, Color eye_color, RGBmatrixPanel& matrix) {
+void Invader::draw_with_rgb(Color body_color, Color eye_color, Signal& matrix) {
   uint16_t b_col = body_color.to_333();
   uint16_t e_col = eye_color.to_333();
   uint16_t blk = BLACK.to_333();

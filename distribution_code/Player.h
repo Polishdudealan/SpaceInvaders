@@ -1,14 +1,7 @@
 #pragma once
-
+#include "Signal.h"
 #include "Color.h"
 #include "Sprite.h"
-
-#ifndef LIBRARIES
-  #define LIBRARIES
-  #include <gamma.h>
-  #include <RGBmatrixPanel.h>
-  #include <Adafruit_GFX.h>
-#endif
 
 #include "Constants.h"
 using namespace Constants;
@@ -36,15 +29,13 @@ class Player : public Sprite {
     void lives1up();
 
     //draws the space invader on matrix
-    void draw(RGBmatrixPanel& matrix);
-
-   
+    void draw(Signal& matrix);
 
   private:
     int lives;
      
     // sets private data members x and y to initial values
     void initialize(int x_arg, int y_arg);
-    void draw_with_rgb(Color color, RGBmatrixPanel& matrix);
+    void draw_with_rgb(Color color, Signal& matrix);
     
 };

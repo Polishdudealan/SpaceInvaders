@@ -39,10 +39,6 @@ void serialEvent() {
     //Serial.println(command);
     uint16_t color = ((0x00FF & storage[5]) << 8) | (0x00FF & storage[6]);
         
-    if (storage[0] > 6 || storage[0] < 0 || storage[1] > 20 || storage[1] < -20 || storage[2] > 20 || storage[2] < -20 ||
-        storage[3] > 40 || storage[3] < 0 || storage[4] > 40 || storage[4] < 0) {
-          return;
-    }
     //Serial.println(color);
     switch (storage[0]) {
     case DRAWPIXEL:

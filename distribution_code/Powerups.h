@@ -2,13 +2,7 @@
 
 #include "Color.h"
 #include "Sprite.h"
-
-#ifndef LIBRARIES
-  #define LIBRARIES
-  #include <gamma.h>
-  #include <RGBmatrixPanel.h>
-  #include <Adafruit_GFX.h>
-#endif
+#include "Signal.h"
 
 #ifndef CONSTANTS
   #define CONSTANTS
@@ -21,14 +15,14 @@ class Powerups : public Sprite {
   public:
     Powerups();
     // powerup->pup
-    void draw(RGBmatrixPanel& matrix);
+    void draw(Signal& matrix);
     void move();
     bool check_active();
     void deactivate();
 
 
   private:
-    void draw__pup_with_rgb(Color color, RGBmatrixPanel& matrix);
+    void draw__pup_with_rgb(Color color, Signal& matrix);
     Color p_color(PowerupType power);
     bool active;
      

@@ -1,12 +1,5 @@
 #pragma once
-
-#ifndef LIBRARIES
-  #define LIBRARIES
-  #include <gamma.h>
-  #include <RGBmatrixPanel.h>
-  #include <Adafruit_GFX.h>
-#endif
-
+#include "Signal.h"
 #ifndef CONSTANTS
   #define CONSTANTS
   #include "Constants.h"
@@ -20,7 +13,7 @@ class Sprite {
     
 	  //needs to be implemented in each child class, will likely use draw_with_rgb  
     //but that might have more arguments such as color and cannot be virutal  
-    virtual void draw(RGBmatrixPanel&)   = 0; 
+    virtual void draw(Signal&)   = 0; 
     
     //position getters for all sprites
 		int getX() const { return x; }
@@ -42,7 +35,7 @@ class Sprite {
     }
     
     //will erase old image and draw new image with new positions and values
-    void redraw(RGBmatrixPanel& matrix) {
+    void redraw(Signal& matrix) {
       if (redrawFlag) {
         eraseOld(matrix);
         oldX = x;
@@ -53,12 +46,12 @@ class Sprite {
     }
 
     // erases sprite previous position
-    void eraseOld(RGBmatrixPanel& matrix) {
+    void eraseOld(Signal& matrix) {
 		  matrix.fillRect(oldX, oldY, width, height, Constants::BLACK.to_333());
 	  }
 
     //erases sprite current position
-    void erase(RGBmatrixPanel& matrix) {
+    void erase(Signal& matrix) {
       matrix.fillRect(x, y, width, height, Constants::BLACK.to_333());
     }
 	  

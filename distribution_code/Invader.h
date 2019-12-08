@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Signal.h"
 #include "Sprite.h"
 #include "Color.h"
 
@@ -24,7 +24,7 @@ class Invader : public Sprite {
     
     // draws the Invader if its strength is greater than 0
     // calls: draw_with_rgb
-    void draw(RGBmatrixPanel& matrix);
+    void draw(Signal& matrix);
     
     // Invader is hit by a Cannonball.
     // Modifies: strength
@@ -34,7 +34,7 @@ class Invader : public Sprite {
     int strength;
     
     // draws the Invader
-    void draw_with_rgb(Color body_color, Color eye_color, RGBmatrixPanel& matrix);
+    void draw_with_rgb(Color body_color, Color eye_color, Signal& matrix);
 
     
     //converts numbers to space invader colors for easy use with strength color setting

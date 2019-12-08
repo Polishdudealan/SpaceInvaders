@@ -1,10 +1,3 @@
-#ifndef LIBRARIES
-  #define LIBRARIES
-  #include <gamma.h>
-  #include <RGBmatrixPanel.h>
-  #include <Adafruit_GFX.h>
-#endif
-
 #include "Player.h"
 #include "Cannonball.h"
 #include "Invader.h"

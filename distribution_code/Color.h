@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Signal.h"
 #include <stdint.h>
 
 class Color {

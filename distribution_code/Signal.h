@@ -7,7 +7,7 @@
   #include <Adafruit_GFX.h>
 #endif
 
-class Signal : public RGBmatrixPanel {
+class Signal{
   public:
     Signal();
     enum Datatype {DRAWPIXEL, FILLRECT, FILLSCREEN, SETCURSOR, PRINTCHAR, SETTEXTCOLOR};
@@ -17,4 +17,5 @@ class Signal : public RGBmatrixPanel {
     void setCursor(int16_t x, int16_t y);
     void print(char character);
     void setTextColor(int16_t color);
+    uint16_t Signal::Color333(uint8_t r, uint8_t g, uint8_t b);
 };

@@ -1,9 +1,4 @@
-#ifndef LIBRARIES
-  #define LIBRARIES
-  #include <gamma.h>
-  #include <RGBmatrixPanel.h>
-  #include <Adafruit_GFX.h>
-#endif
+
 #include "Signal.h"
 #include "Player.h"
 //#include "Powerups.h"
@@ -35,7 +30,7 @@ class Game {
     static const int NUM_ENEMIES = 16;
   
     // game constant for the number of cannonballs in the game
-    static const int NUM_BALLS = 4;
+    static const int NUM_BALLS = 8;
 
     //game constant for the number of players in the game
     static const int NUM_PLAYERS = 1;
@@ -53,7 +48,7 @@ class Game {
 //    const uint8_t A = A0;
 //    const uint8_t B = A1;
 //    const uint8_t C = A2;
-//    RGBmatrixPanel matrix{A, B, C, CLK, LAT, OE, false};
+//    Signal matrix{A, B, C, CLK, LAT, OE, false};
     Signal matrix;
 
     

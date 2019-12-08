@@ -35,7 +35,7 @@ void Cannonball::hit() {
   fired = false;
 }
 
-void Cannonball::draw(RGBmatrixPanel& matrix) {
+void Cannonball::draw(Signal& matrix) {
   if(fired){
     matrix.drawPixel(x, y, RED.to_333());
     matrix.drawPixel(x, y - 1, RED.to_333()); 

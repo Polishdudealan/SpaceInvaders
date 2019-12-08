@@ -8,7 +8,7 @@ Color::Color(){
  
 Color::Color(int r, int g, int b): red(r), green(g), blue(b) {}
 
-// taken directly from RGBMatrixPanel for organization purposes
+// taken directly from RGB matrix panel for organization purposes
 // sorry for redundency but this prevents having to pass around
 // an entire matrix object for every color
 // Promote 3/3/3 RGB to Adafruit_GFX 5/6/5
