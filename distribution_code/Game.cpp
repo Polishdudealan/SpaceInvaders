@@ -21,6 +21,8 @@ void Game::update(int potentiometer_value, bool button_pressed) {
   moveUpdate();
   checkCollisions();
   redrawSprites();
+  matrix.fillRect(0, 6, 16, 1, AQUA.to_333());
+  
   
   if (player.getLives() < 1) {
     matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -162,7 +164,7 @@ void Game::reset_level() {
   randomSeed(random(0,100));
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
-      enemies[i*8+j] = Invader(j * 4, i * 4, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
+      enemies[i*8+j] = Invader(j * 4, i * 4 + 5, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
     }
   }
 
