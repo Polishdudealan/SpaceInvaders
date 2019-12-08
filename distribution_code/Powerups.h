@@ -16,12 +16,19 @@ class Powerups : public Sprite {
     Powerups();
     // powerup->pup
     void draw(Signal& matrix);
+    
     void move();
+    
     bool check_active();
+    
     void deactivate();
 
+    PowerupType getType();
+
+    void spawn(int x, int y, PowerupType type);
 
   private:
+    PowerupType type;
     void draw__pup_with_rgb(Color color, Signal& matrix);
     Color p_color(PowerupType power);
     bool active;

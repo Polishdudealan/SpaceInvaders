@@ -22,6 +22,11 @@ namespace Constants {
   //constants to determine game speed
   const int INVADER_DELAY = 30;
   const int BALL_DELAY = 8;
+  const int POWERUP_DELAY = 9;
+
+  //number of balls for each player
+  static const int NUM_BALLS = 8;
+
   
   static const int LEVEL_DATA[4][2][8] = 
     {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},
@@ -29,6 +34,6 @@ namespace Constants {
     {{1, 2, 3, 4, 5, 1, 2, 3}, {4, 5, 1, 2, 3, 4, 5, 1}},
     {{5, 4, 5, 4, 5, 4, 5, 4}, {2, 3, 2, 3, 2, 3, 2, 3}}};
 
-  enum PowerupType {NONE, LIFE};
+  enum PowerupType {LIFE, NONE};
 
 };

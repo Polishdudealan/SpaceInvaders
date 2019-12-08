@@ -1,6 +1,5 @@
 #include "Powerups.h"
 
-
 Powerups::Powerups(): Sprite(-10, -10, 3, 3) {}
 
 void Powerups::draw(Signal& matrix) {
@@ -26,15 +25,26 @@ Color Powerups::p_color(PowerupType power) {
 }
 
 void Powerups :: move() {
-    if (active) {
-       y++;  
-    }
+  if (active) {
+   y++;  
+  }
 }
 
 bool Powerups :: check_active() {
   return active;
-  }
+}
 
 void Powerups :: deactivate() {
-    active = false;
-  }
+  active = false;
+}
+
+PowerupType Powerups::getType() {
+  return type;
+}
+
+void Powerups::spawn(int arg_x, int arg_y, PowerupType arg_type){
+  x = arg_x;
+  y = arg_y;
+  type = arg_type;
+  active = true;
+}

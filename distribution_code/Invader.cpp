@@ -1,4 +1,3 @@
-
 #include "Invader.h"
 
 #ifndef CONSTANTS
@@ -8,7 +7,14 @@
 
 using namespace Constants;
 
-Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, int height = 4, int width = 4): strength(strength_arg), Sprite(x_arg, y_arg, width, height) {}
+Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, bool dropsPUp = false, int height = 4, int width = 4): strength(strength_arg), dropsPUp(dropsPUp), Sprite(x_arg, y_arg, width, height) {}
+
+// sets values for private data members
+void Invader::initialize(int x_arg, int y_arg, int strength_arg) {
+  x = x_arg;
+  y = y_arg;
+  strength = strength_arg;
+}
 
 int Invader::getStrength() const {
   return strength;
@@ -41,6 +47,10 @@ void Invader::draw_with_rgb(Color body_color, Color eye_color, Signal& matrix) {
   matrix.drawPixel(x+2, y+3, blk);
   matrix.drawPixel(x+1,y+1,e_col);
   matrix.drawPixel(x+2,y+1,e_col);
+}
+
+bool Invader::drops(){
+  return dropsPUp;
 }
 
 Color Invader::num_to_color(int x){
