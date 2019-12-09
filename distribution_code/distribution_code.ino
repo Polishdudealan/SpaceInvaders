@@ -18,6 +18,7 @@ Game game;
 void setup() {
   Serial.begin(115200);
   pinMode(BUTTON_PIN_NUMBER, INPUT);
+  pinMode(
   game.setupGame();
 }
 

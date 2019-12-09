@@ -33,10 +33,10 @@ class Game {
     static const int NUM_PLAYERS = 1;
 
     //game constant for number of powerups
-    static const int NUM_POWERUPS = 2;
+    static const int NUM_POWERUPS = 1;
 
     //total sprites
-    static const int NUM_SPRITES = NUM_ENEMIES + NUM_BALLS + NUM_PLAYERS + NUM_POWERUPS;
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_PLAYER_BALLS + NUM_PLAYERS + NUM_POWERUPS;
     
     //our class for sending board info to the unos
     Signal matrix;
@@ -50,8 +50,8 @@ class Game {
     //****** Sprites ********
     Player player;
     Invader enemies[NUM_ENEMIES];
+    Powerups powerup;
     Sprite* updatableSprites[NUM_SPRITES];
-    Powerups powerups[NUM_POWERUPS];
 
 
     //***** Helper Functions
@@ -66,6 +66,7 @@ class Game {
 
     //return proper powerup
     Powerups* getPowerup();
+    
     
     //********** update functions **********
     //moves all sprites in game

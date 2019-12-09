@@ -7,7 +7,13 @@
 
 using namespace Constants;
 
-Player::Player(): lives(3), ballCycle(0), Sprite(15, 30, 3, 2) {}
+Player::Player(): powerupAbility(NONE), lives(3), ballDelay(8), Sprite(15, 30, 3, 2) {}
+
+void Player::reload(){
+  if (ballCycle < ballDelay){
+    ballCycle++;
+  }
+}
 
 int Player::getLives() const {
 	return lives;
@@ -25,46 +31,41 @@ void Player::die() {
 	lives--; 
 }
 
-void Player::reload(){
-  if (ballCycle < BALL_DELAY) {
-    ballCycle++;
-  }
-}
-
 void Player::powerup(PowerupType power){
-  switch(power){
-    case LIFE:
-      lives1up();
-      break;
+  if(power == LIFE){
+    lives1up();
+    return;
   }
+  
+  ballDelay = 8;
+  if (power == RAPID_FIRE) {
+    ballDelay = 4;
+  }
+  powerupAbility = power;
+  
 }
 
 void Player::lives1up() {
   lives++; 
 }
 
-void Player::fire(){
-  if (ballCycle == BALL_DELAY){
-    Cannonball* ball = getBall();
-    if (ball != NULL) {
-      ball->fire(x + 1, y - 1);
-      ballCycle = 0;
-      ball->upd();
-    }
-  }
-}
-   
 void Player::initialize(int x_arg, int y_arg) {
 	x = x_arg;
 	y = y_arg;
 }
 
 void Player::draw(Signal& matrix) {
-  draw_with_rgb(GREEN, matrix);
+  Color bodyCol = GREEN;
+  Color blasterCol = p_color(powerupAbility);
+  
+  matrix.drawPixel(x, y + 1, bodyCol.to_333());
+  matrix.drawPixel(x + 1, y, blasterCol.to_333());
+  matrix.drawPixel(x + 1, y + 1, bodyCol.to_333());
+  matrix.drawPixel(x + 2, y + 1, bodyCol.to_333());
 }
 
-Cannonball* Player::getBall() {
-  for (int i = 0; i < NUM_BALLS; i++){
+Cannonball* Player::getPlayerBall() {
+  for (int i = 0; i < NUM_PLAYER_BALLS; i++){
     if (!balls[i].hasBeenFired()){
       return &balls[i];
     }
@@ -72,9 +73,13 @@ Cannonball* Player::getBall() {
   return NULL;
 }
 
-void Player::draw_with_rgb(Color color, Signal& matrix) {
-  matrix.drawPixel(x, y + 1, color.to_333());
-  matrix.drawPixel(x + 1, y, color.to_333());
-  matrix.drawPixel(x + 1, y + 1, color.to_333());
-  matrix.drawPixel(x + 2, y + 1, color.to_333());
+void Player::fire(){
+  if (ballCycle == ballDelay) {
+    Cannonball* ball = getPlayerBall();
+    if (ball != NULL) {
+      ball->fire(x + 1, y - 1);
+      ballCycle = 0;
+      ball->upd();
+    }
+  }
 }

@@ -9,28 +9,24 @@
   #include "Constants.h"
 #endif
 
-using namespace Constants;
-
 class Powerups : public Sprite {
   public:
-    Powerups();
+    Powerups(int width = 3, int height = 3);
+    
     // powerup->pup
     void draw(Signal& matrix);
     
     void move();
     
-    bool check_active();
+    bool check_active() const;
     
     void deactivate();
 
-    PowerupType getType();
+    Constants::PowerupType getType() const;
 
-    void spawn(int x, int y, PowerupType type);
+    void spawn(int x, int y, Constants::PowerupType type);
 
   private:
-    PowerupType type;
-    void draw__pup_with_rgb(Color color, Signal& matrix);
-    Color p_color(PowerupType power);
-    bool active;
-     
+    Constants::PowerupType type;
+    bool active;     
 };

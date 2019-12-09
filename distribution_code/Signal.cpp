@@ -23,7 +23,7 @@ void Signal::drawPixel(int16_t x, int16_t y, uint16_t c) {
   
 }
 
-void Signal::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c){
+void Signal::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c){    
   char c1 = (c & 0xFF00) >> 8;
   char c2 = c & 0x00FF;
   char data1[8] = {FILLRECT, x, y, w, h, c1, c2, 0};

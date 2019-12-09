@@ -17,5 +17,5 @@ class Signal{
     void setCursor(int16_t x, int16_t y);
     void print(char character);
     void setTextColor(int16_t color);
-    uint16_t Signal::Color333(uint8_t r, uint8_t g, uint8_t b);
+    uint16_t Color333(uint8_t r, uint8_t g, uint8_t b);
 };

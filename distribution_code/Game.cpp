@@ -20,17 +20,17 @@ void Game::reset_level() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
   
-  for (int i = 0; i < NUM_BALLS; i++) {
+  for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     player.balls[i].hit();
   }
-  
+  powerup.deactivate();
+
   //defines the strength of invaders
   int minStrength = level/5 + 1;
   int maxStrength = 3*sqrt(level);
   maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
-  randomSeed(random(0,100));
+  randomSeed(time % 100);
   int powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
-  Serial.println(powerUpLocation, DEC);
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
       if (i*8+j == powerUpLocation){
@@ -42,16 +42,15 @@ void Game::reset_level() {
   }
 
   int count = 0;
-  for (int i = 0; i < NUM_BALLS; i++) {
+  for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     updatableSprites[count++] = &player.balls[i];
   }
   for (int i = 0; i < NUM_ENEMIES; i++) {
     updatableSprites[count++] = &enemies[i];
   }
+  updatableSprites[count++] = &powerup;
   updatableSprites[count++] = &player;
-  for (int i = 0; i < NUM_POWERUPS; i++) {
-    updatableSprites[count++] = &powerups[i];
-  }
+  
   for (int i = 0; i < NUM_SPRITES; i++) {
     updatableSprites[i]->upd();
   }
@@ -64,9 +63,8 @@ void Game::reset_level() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
 }
 
-void Game::inputUpdate(int potentiometer_value, bool button_pressed) { 
+void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
   player.reload();
-
   if (button_pressed) {
     player.fire();
   }
@@ -98,16 +96,14 @@ void Game::moveUpdate() {
   }
 
   if (time % POWERUP_DELAY == 0) {
-    for (int i = 0; i < NUM_POWERUPS; i++){
-      if (powerups[i].check_active()){
-        powerups[i].move();
-        powerups[i].upd();
-      }
+    if (powerup.check_active()){
+      powerup.move();
+      powerup.upd();
     }
   }
   
   //cannonball movements
-  for (int i = 0; i < NUM_BALLS; i++){
+  for (int i = 0; i < NUM_PLAYER_BALLS; i++){
     if (player.balls[i].hasBeenFired()){
       player.balls[i].move();
       player.balls[i].upd();
@@ -119,16 +115,13 @@ void Game::moveUpdate() {
 void Game::checkCollisions(){
   //loops through all the enemies
   for (int i = 0; i < NUM_ENEMIES; i++){
-    for (int j = 0; j < NUM_BALLS; j++) { 
+    for (int j = 0; j < NUM_PLAYER_BALLS; j++) { 
       Cannonball* ball = &player.balls[j];
       if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getStrength() != 0){
         enemies[i].hit();
         if (enemies[i].getStrength() == 0 && enemies[i].drops()){
-           Powerups* p = getPowerup();
-           if (!p == NULL){
-             p->spawn(enemies[i].getX(), enemies[i].getY(), random(0, NONE));
-             p->upd();
-           }
+           powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
+           powerup.upd();
         }
         ball->hit();
         enemies[i].upd();
@@ -138,11 +131,11 @@ void Game::checkCollisions(){
     }
   }
 
-  for (int i = 0; i < NUM_POWERUPS; i++){
-    if (powerups[i].check_active() && powerups[i].isColliding(player)) {
-      powerups[i].deactivate();
-      player.powerup(powerups[i].getType());
-    }
+  if (powerup.check_active() && powerup.isColliding(player)) {
+    powerup.deactivate();
+    powerup.upd();
+    player.powerup(powerup.getType());
+    player.upd();
   }
 
   // checks for enemies getting past player
@@ -187,7 +180,6 @@ void Game::update(int potentiometer_value, bool button_pressed) {
   inputUpdate(potentiometer_value, button_pressed);
   moveUpdate();
   checkCollisions();
-  redrawSprites();  
   
   if (player.getLives() < 1) {
     matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -201,16 +193,9 @@ void Game::update(int potentiometer_value, bool button_pressed) {
   // checks if level is cleared
   if(level_cleared()){
     reset_level();     
-    }
-}
-
-Powerups* Game::getPowerup() {
-  for (int i = 0; i < NUM_BALLS; i++){
-    if (!powerups[i].check_active()){
-      return &powerups[i];
-    }
   }
-  return NULL;
+  
+  redrawSprites();  
 }
 
 void Game::print_level(int level) {
