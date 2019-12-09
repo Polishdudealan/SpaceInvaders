@@ -3,8 +3,9 @@
 Signal::Signal() {
   Serial1.begin(115200);
   Serial2.begin(115200);
-  }
-  //stole from RGGmatrixPanel code
+}
+  
+//stole from RGGmatrixPanel code
 uint16_t Signal::Color333(uint8_t r, uint8_t g, uint8_t b) {
   // RRRrrGGGgggBBBbb
   return ((r & 0x7) << 13) | ((r & 0x6) << 10) |

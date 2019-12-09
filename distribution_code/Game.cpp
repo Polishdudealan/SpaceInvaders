@@ -104,9 +104,9 @@ void Game::checkCollisions(){
         ball->upd();
         //updates playerscore and refreshes scoreboard
         playerScore++;
-        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
-        score_board(playerScore);
-        break;          
+//        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
+//        score_board(playerScore);
+//        break;          
       }
     }
   }
