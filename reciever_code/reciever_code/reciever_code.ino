@@ -26,17 +26,40 @@ const char NONE = 6;
 void setup() {
   Serial.begin(115200);
   matrix.begin();
-  matrix.setTextSize(1);
+  matrix.setTextSize(1 );
   for (int i = 0; i < BUFFER_SIZE; i++) {
     storage[i] = 0;
   }
 }
 
+
 void serialEvent() {
     Serial.readBytes(storage, BUFFER_SIZE);
-    Serial.println(storage[6]);
-    //Serial.println("redsomthing");
-    //Serial.println(command);
+    Serial.print("storage 0: ");
+    Serial.println(storage[0]);
+
+    if (storage[0] > 10 || storage[0] < 0) {
+      Serial.println("error 1");
+
+    }
+    else if (storage[1] > 32 || storage[1] < -32){
+      Serial.println("error 2");
+
+    }
+    else if (storage[2] > 32 || storage[2] < -32) {
+      Serial.println("error 3");
+
+    }
+    else if (storage[3] > 64 || storage[3] < -32) {
+      Serial.println("error 4");
+
+    }
+    else if (storage[4] > 64 || storage[4] < -32) {
+      Serial.println("error 5");
+
+    }
+
+
     uint16_t color = ((0x00FF & storage[5]) << 8) | (0x00FF & storage[6]);
         
     //Serial.println(color);
@@ -61,7 +84,7 @@ void serialEvent() {
       break;
     default:
     ;
-  }
+    }
 }
 
 void loop() {

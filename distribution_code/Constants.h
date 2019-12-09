@@ -14,11 +14,17 @@ namespace Constants {
   const Color WHITE(4, 4, 4);
   const Color LIME(2, 4, 0);
   const Color AQUA(0, 4, 4);
+  const Color DAMPWHITE(1, 1, 1);
   
   // define the wiring of the inputs
-  const int POTENTIOMETER_PIN_NUMBER = A4;
-  const int BUTTON_PIN_NUMBER = 50;
-  
+  const int POTENTIOMETER1_PIN_NUMBER = A14;
+  const int POTENTIOMETER2_PIN_NUMBER = A15 ;
+
+  const int BUTTON1_PIN_NUMBER = 35;
+  const int BUTTON2_PIN_NUMBER = 37;
+  const int BUTTON3_PIN_NUMBER = 39;
+  const int BUTTON4_PIN_NUMBER = 41;
+    
   //constants to determine game speed
   const int INVADER_DELAY = 30;
   const int BALL_DELAY = 8;

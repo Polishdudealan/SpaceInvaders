@@ -6,6 +6,8 @@ Game::Game() {
   ballCycle = 0;
   numUpdates = 0;
 }
+// defines player score and initializes to 0
+int playerScore = 0;
 
 void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -13,17 +15,17 @@ void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
+  score_board(playerScore);
 }
 
 void Game::update(int potentiometer_value, bool button_pressed) { 
+  potentiometer_value = 1024 - potentiometer_value;
   time++;
+
   inputUpdate(potentiometer_value, button_pressed);
   moveUpdate();
   checkCollisions();
-  redrawSprites();
-  matrix.fillRect(0, 6, 16, 1, AQUA.to_333());
-  
-  
+
   if (player.getLives() < 1) {
     matrix.fillScreen(matrix.Color333(0, 0, 0));
     player.resetLives();
@@ -36,7 +38,8 @@ void Game::update(int potentiometer_value, bool button_pressed) {
   // checks if level is cleared
   if(level_cleared()){
     reset_level();     
-    }
+  }
+  redrawSprites();
 }
 
 void Game::inputUpdate(int potentiometer_value, bool button_pressed) { 
@@ -99,6 +102,10 @@ void Game::checkCollisions(){
         ball->hit();
         enemies[i].upd();
         ball->upd();
+        //updates playerscore and refreshes scoreboard
+        playerScore++;
+        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
+        score_board(playerScore);
         break;          
       }
     }
@@ -115,6 +122,7 @@ void Game::checkCollisions(){
       player.die();
       level--;
       if (player.getLives() <= 0) {
+        playerScore = 0;
         level = 0;
         game_over();
       }
@@ -164,7 +172,7 @@ void Game::reset_level() {
   randomSeed(random(0,100));
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
-      enemies[i*8+j] = Invader(j * 4, i * 4 + 5, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
+      enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
     }
   }
 
@@ -188,6 +196,7 @@ void Game::reset_level() {
   print_lives(player.getLives());
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
+  score_board(playerScore);
 }
 
 Cannonball* Game::getBall() {
@@ -240,4 +249,21 @@ void Game::game_over() {
   matrix.print('V');
   matrix.print('E');
   matrix.print('R');
+}
+
+void Game::score_board(int score){
+  //draws scoreboard line
+  matrix.fillRect(0, 5, 32, 1, AQUA.to_333());
+ 
+  //converts int score to array of place values
+  int value[6];
+  for (int i = 5; i >= 0; i--) {
+    value[i] = score % 10;
+    score /= 10;
+  }
+  //prints numbers as characters 
+  for (int i = 0; i < 6; i++) {
+    Font::printCharacter(value[i], 9 + 4 * i, 0, matrix);
+  }
+  
 }

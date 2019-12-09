@@ -21,7 +21,7 @@ void Cannonball::fire(int x_arg, int y_arg) {
 }
 
 void Cannonball::move() {
-  if (y >= 0) {
+  if (y >= 7) {
     y--;
   }
    else {
@@ -38,7 +38,7 @@ void Cannonball::hit() {
 void Cannonball::draw(Signal& matrix) {
   if(fired){
     matrix.drawPixel(x, y, RED.to_333());
-    matrix.drawPixel(x, y - 1, RED.to_333()); 
+    matrix.drawPixel(x, y + 1, RED.to_333()); 
   }
   else {
     erase(matrix);
