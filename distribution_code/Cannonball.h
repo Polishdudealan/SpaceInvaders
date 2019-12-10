@@ -39,6 +39,8 @@ class Cannonball : public Sprite {
     // draws the Cannonball, if it is fired
     void draw(Signal& matrix);
 
+    //draws nuke
+    void drawNuke(int frame,Signal& matrix);
 
   private:
     bool fired;

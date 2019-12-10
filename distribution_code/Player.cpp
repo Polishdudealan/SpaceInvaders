@@ -90,6 +90,10 @@ void Player::fire(){
       ball->fire(x + 1, y - 1);
       ballCycle = 0;
       ball->upd();
+      // piezo sound effect
+      for(int i = 0; i < 1000; i += 100){
+      tone(PIEZOPIN, 4000 + i, 10);
+      }
     }
   }
 }
