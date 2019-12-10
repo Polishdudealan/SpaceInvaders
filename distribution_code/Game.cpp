@@ -7,6 +7,7 @@ Game::Game() {
 }
 
 void Game::setupGame() {
+   matrix.fillScreen(BLACK.to_333());
    player.balls[0].drawNuke(1,matrix);
    delay(100000);
 //  matrix.fillScreen(matrix.Color333(0, 0, 0));
