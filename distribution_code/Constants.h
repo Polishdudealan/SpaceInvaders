@@ -19,10 +19,14 @@ namespace Constants {
   const Color DAMPRED(2, 0, 0);
   
   // define the wiring of the inputs
+  const int PIEZOPIN = 30;
 
   const int POTENTIOMETER1_PIN_NUMBER = A14;
   const int POTENTIOMETER2_PIN_NUMBER = A15 ;
 
+  //game speed (30 is a good value)
+  static int boardComputationDelay = 30;
+  
   const int BUTTON1_PIN_NUMBER = 35;
   const int BUTTON2_PIN_NUMBER = 37;
   const int BUTTON3_PIN_NUMBER = 39;
