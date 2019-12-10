@@ -52,6 +52,10 @@ class Game {
     int numUpdates;
     int layers;
     int currentLayer;
+    
+    // defines player score and initializes to 0
+    int player1Score = 0;
+    int player2Score = 0;
 
     //****** Sprites ********
     Player player;
@@ -99,5 +103,5 @@ class Game {
     void game_over();
 
     // displays scoreboard
-    void score_board(int scoreNumber);
+    void score_board(int score1Number, int score2Number);
 };

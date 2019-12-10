@@ -9,9 +9,11 @@
 #include "Sprite.h"
 #include "Color.h" 
 
+using namespace Constants;
+
 class Cannonball : public Sprite {
   public:
-    Cannonball(BulletType type = PLAYER, int width = 1, int height = 2);
+    Cannonball(BallType type = PLAYER, int width = 1, int height = 2);
     
     // resets private data members to initial values
     void reset();
