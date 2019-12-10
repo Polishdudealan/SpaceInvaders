@@ -24,7 +24,7 @@ namespace Constants {
   const int POTENTIOMETER2_PIN_NUMBER = A15 ;
 
   const int BUTTON1_PIN_NUMBER = 35;
-  const int BUTTON2_PIN_NUMBER = 37;
+  const int BUTTON2_PIN_NUMBER = 43;
   const int BUTTON3_PIN_NUMBER = 39;
   const int BUTTON4_PIN_NUMBER = 41;
     

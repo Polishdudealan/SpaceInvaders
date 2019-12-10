@@ -26,7 +26,7 @@ void Game::reset_level() {
   level++;
   
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
-    player.balls[i].hit();
+    player.balls[i].reset();
   }
   powerup.deactivate();
   
@@ -72,14 +72,17 @@ void Game::reset_level() {
   score_board(player1Score, player2Score);
 } 
 
-void Game::inputUpdate(int potentiometer_value, bool button_pressed) {
+void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) {
   player.reload();
-  if (button_pressed) {
+  if (left_regular_pressed) {
     player.fire();
+  }
+  if (left_special_pressed){
+    player.specialFire();
   }
 
   // this allows for the potentiometer to be more narrow, only using the middle two quarters of its range to control the player
-  int newX = (47 - potentiometer_value / 16) >= -1 ? ((47 - potentiometer_value / 16) < 31 ? (47 - potentiometer_value / 16) : 30 ): -1;
+  int newX = (47 - left_potentiometer_value / 16) >= -1 ? ((47 - left_potentiometer_value / 16) < 31 ? (47 - left_potentiometer_value / 16) : 30 ): -1;
   
   // if position changed update
   if (newX != player.getX()) {
@@ -222,10 +225,10 @@ bool Game::layerCleared(int layer){
   return true;
 }
 
-void Game::update(int potentiometer_value, bool button_pressed) { 
+void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) { 
   time++;
-  potentiometer_value = 1024-potentiometer_value;
-  inputUpdate(potentiometer_value, button_pressed);
+  left_potentiometer_value = 1024-left_potentiometer_value;
+  inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
   moveUpdate();
   checkCollisions();
   

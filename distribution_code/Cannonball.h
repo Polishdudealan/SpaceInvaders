@@ -42,5 +42,7 @@ class Cannonball : public Sprite {
 
   private:
     bool fired;
+    bool exploding;
+    int explodingDuration;
     BallType type;
 };

@@ -29,7 +29,7 @@ class Game {
     // advances the game simulation one step and renders the graphics
     // see spec for details of game
     // Modifies: global variable matrix
-    void update(int potentiometer_value, bool button_pressed);
+    void update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed);
 
   private:
     // game constant for the number of Invaders in the game
@@ -87,7 +87,7 @@ class Game {
     void moveUpdate();
 
     //checks inputs from the user
-    void inputUpdate(int pot, bool btn);
+    void inputUpdate(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed);
 
     //checks to see if there are any collisions which are important to gameplay
     void checkCollisions();

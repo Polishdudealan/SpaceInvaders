@@ -35,6 +35,7 @@ void loop() {
   bool right_regular = (digitalRead(BUTTON4_PIN_NUMBER) == HIGH);
 
   //todo implement game select
-  game.update(left_potentiometer, left_regular);
+  game.update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
+//  game.update(left_potentiometer, left_special, false, right_potentiometer, false, false);
   delay(30);
 }

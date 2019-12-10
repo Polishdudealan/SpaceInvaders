@@ -43,12 +43,18 @@ class Player : public Sprite {
 
     //fires a ball
     void fire();
+
+    //fires a special ball determined by powerups
+    void specialFire();
     
   private:
     int lives;
     int ballDelay;
-    int ballCycle;
+    int ballCycle = 0;
+    int specialDelay;
+    int specialCycle = 0;
     PowerupType powerupAbility;
+    BallType specialType;
      
     // sets private data members x and y to initial values
     void initialize(int x_arg, int y_arg);

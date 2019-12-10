@@ -7,11 +7,14 @@
 
 using namespace Constants;
 
-Player::Player(): powerupAbility(NONE), lives(3), ballDelay(8), Sprite(15, 30, 3, 2) {}
+Player::Player(): powerupAbility(NONE), lives(3), ballDelay(8), specialDelay(100), Sprite(15, 30, 3, 2) {}
 
 void Player::reload(){
   if (ballCycle < ballDelay){
     ballCycle++;
+  }
+  if (specialCycle < specialDelay) {
+    specialCycle++;
   }
 }
 
@@ -32,6 +35,9 @@ void Player::die() {
 }
 
 void Player::powerup(PowerupType power){
+  powerupAbility = power;
+  specialType = STANDARD;
+
   if(power == LIFE){
     lives1up();
     return;
@@ -41,9 +47,11 @@ void Player::powerup(PowerupType power){
   if (power == RAPID_FIRE) {
     ballDelay = 4;
     ballCycle = 0;
+  } else if (power = BOMB_SHOT) {
+    specialType = BOMB;
+    specialCycle = 0;
+    specialDelay = 250;
   }
-  powerupAbility = power;
-  
 }
 
 void Player::lives1up() {
@@ -78,8 +86,22 @@ void Player::fire(){
   if (ballCycle == ballDelay) {
     Cannonball* ball = getPlayerBall();
     if (ball != NULL) {
+      ball->setType(STANDARD);
       ball->fire(x + 1, y - 1);
       ballCycle = 0;
+      ball->upd();
+    }
+  }
+}
+
+void Player::specialFire(){
+  if (powerupAbility == NONE || powerupAbility == LIFE) return;
+  if (specialCycle == specialDelay) {
+    Cannonball* ball = getPlayerBall();
+    if (ball != NULL) {
+      ball->setType(specialType);
+      ball->fire(x + 1, y - 1);
+      specialCycle = 0;
       ball->upd();
     }
   }
