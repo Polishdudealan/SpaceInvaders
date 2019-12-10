@@ -177,6 +177,7 @@ bool Game::layerCleared(int layer){
 
 void Game::update(int potentiometer_value, bool button_pressed) { 
   time++;
+  potentiometer_value = 1024-potentiometer_value;
   inputUpdate(potentiometer_value, button_pressed);
   moveUpdate();
   checkCollisions();

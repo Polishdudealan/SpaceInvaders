@@ -34,7 +34,6 @@ void setup() {
 
 void serialEvent() {
     Serial.readBytes(storage, BUFFER_SIZE);
-    Serial.println(storage[6]);
     //Serial.println("redsomthing");
     //Serial.println(command);
     uint16_t color = ((0x00FF & storage[5]) << 8) | (0x00FF & storage[6]);

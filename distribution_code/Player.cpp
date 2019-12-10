@@ -40,6 +40,7 @@ void Player::powerup(PowerupType power){
   ballDelay = 8;
   if (power == RAPID_FIRE) {
     ballDelay = 4;
+    ballCycle = 0;
   }
   powerupAbility = power;
   
