@@ -7,13 +7,15 @@ Game::Game() {
 }
 
 void Game::setupGame() {
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
-  player.powerup(NONE);
-  delay(4000);
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
-  reset_level();
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
-  score_board(player1Score, player2Score);
+   player.balls[0].drawNuke(1,matrix);
+   delay(100000);
+//  matrix.fillScreen(matrix.Color333(0, 0, 0));
+//  player.powerup(NONE);
+//  delay(4000);
+//  matrix.fillScreen(matrix.Color333(0, 0, 0));
+//  reset_level();
+//  matrix.fillScreen(matrix.Color333(0, 0, 0));
+//  score_board(player1Score, player2Score);
 
 }
 
