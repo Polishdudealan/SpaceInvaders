@@ -3,15 +3,16 @@
 Signal::Signal() {
   Serial1.begin(115200);
   Serial2.begin(115200);
-  }
-  //stole from RGGmatrixPanel code
+}
+  
+//stole from RGGmatrixPanel code
 uint16_t Signal::Color333(uint8_t r, uint8_t g, uint8_t b) {
   // RRRrrGGGgggBBBbb
   return ((r & 0x7) << 13) | ((r & 0x6) << 10) |
          ((g & 0x7) <<  8) | ((g & 0x7) <<  5) |
          ((b & 0x7) <<  2) | ((b & 0x6) >>  1);
 }
-
+ 
  
 void Signal::drawPixel(int16_t x, int16_t y, uint16_t c) {
   char c1 = (c & 0xFF00) >> 8;
@@ -19,8 +20,7 @@ void Signal::drawPixel(int16_t x, int16_t y, uint16_t c) {
   char data1[8] = {DRAWPIXEL, x, y, 0, 0, c1, c2, 0};
   char data2[8] = {DRAWPIXEL, x, y - 16, 0, 0, c1, c2, 0};
   Serial1.write(data1, 8);
-  Serial2.write(data2, 8);
-  
+  Serial2.write(data2, 8);  
 }
 
 void Signal::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c){    
@@ -49,9 +49,8 @@ void Signal::setCursor(int16_t x, int16_t y){
 
 void Signal::print(char character){
   char data1[8] = {PRINTCHAR, 0, 0, 0, 0, 0, 0, character};
-  char data2[8] = {PRINTCHAR, 0, 0, 0, 0, 0, 0, character};
   Serial1.write(data1, 8);
-  Serial2.write(data2, 8);
+  Serial2.write(data1, 8);
 }
 
 void Signal::setTextColor(int16_t c){

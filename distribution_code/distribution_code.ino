@@ -17,15 +17,24 @@ Game game;
 // see https://www.arduino.cc/reference/en/language/structure/sketch/setup/
 void setup() {
   Serial.begin(115200);
-  pinMode(BUTTON_PIN_NUMBER, INPUT);
+  pinMode(BUTTON1_PIN_NUMBER, INPUT);
+  pinMode(BUTTON2_PIN_NUMBER, INPUT);
+  pinMode(BUTTON3_PIN_NUMBER, INPUT);
+  pinMode(BUTTON4_PIN_NUMBER, INPUT);
   game.setupGame();
 }
 
 
 // see https://www.arduino.cc/reference/en/language/structure/sketch/loop/
 void loop() {
-  int potentiometer_value = analogRead(POTENTIOMETER_PIN_NUMBER);
-  bool button_pressed = (digitalRead(BUTTON_PIN_NUMBER) == HIGH);
-  game.update(potentiometer_value, button_pressed);
+  int left_potentiometer = analogRead(POTENTIOMETER1_PIN_NUMBER);
+  bool left_regular = (digitalRead(BUTTON1_PIN_NUMBER) == HIGH);
+  bool left_special = (digitalRead(BUTTON2_PIN_NUMBER) == HIGH);
+  int right_potentiometer = analogRead(POTENTIOMETER2_PIN_NUMBER);
+  bool right_special = (digitalRead(BUTTON3_PIN_NUMBER) == HIGH);
+  bool right_regular = (digitalRead(BUTTON4_PIN_NUMBER) == HIGH);
+
+  //todo implement game select
+  game.update(left_potentiometer, left_regular);
   delay(30);
 }

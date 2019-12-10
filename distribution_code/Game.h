@@ -5,6 +5,12 @@
 #include "Cannonball.h"
 #include "Invader.h"
 
+#ifndef FONT
+  #define FONT
+  #include "Font.h"
+#endif
+
+
 #ifndef CONSTANTS
   #define CONSTANTS
   #include "Constants.h"
@@ -91,4 +97,7 @@ class Game {
     
     // displays "game over"
     void game_over();
+
+    // displays scoreboard
+    void score_board(int scoreNumber);
 };
