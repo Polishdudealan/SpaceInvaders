@@ -39,9 +39,9 @@ void Game::reset_level() {
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
       if (i*8+j == powerUpLocation){
-        enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), true);
+        enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < NUM_SCRIPTED_LEVELS + 1 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), true);
       } else {
-        enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), false);
+        enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < NUM_SCRIPTED_LEVELS + 1 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), false);
       }
     }
   }
@@ -112,10 +112,10 @@ void Game::moveUpdate() {
 
   int invaderShootSeed = random(0, INVADER_SHOOT_PROBABILITY);
   for (int i = 0; i < NUM_ENEMIES; i++){
-    if (enemies[i].fire(invaderShootSeed)){
+    if (enemies[i].getHP() > 0 && enemies[i].fire(invaderShootSeed)){
       Cannonball* ball = getEnemyCannonball();
       if (ball != NULL){
-        ball->fire(enemies[i].getX(), enemies[i].getY());
+        ball->fire(enemies[i].getX() + 1, enemies[i].getY() + 3);
         ball->upd();
       }
     }
