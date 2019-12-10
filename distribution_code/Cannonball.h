@@ -20,13 +20,16 @@ class Cannonball : public Sprite {
     
     // getters
     bool hasBeenFired() const;
+
+    bool isInvader() const;
+
+    BallType getType();
     
     // sets private data members
     void fire(int x_arg, int y_arg);
     
-    // moves the Cannonball and detects if it goes off the screen
-    // Modifies: y, fired
-    void move();
+    //updates all cannonball information, which depends upon type
+    void tick();
     
     // resets private data members to initial values
     void hit();

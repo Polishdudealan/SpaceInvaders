@@ -2,7 +2,7 @@
 
 using namespace Constants;
 
-Cannonball::Cannonball(BallType type = PLAYER, int width = 1, int height = 2): fired(false), type(type), Sprite(-10, -10, width, height) {}
+Cannonball::Cannonball(BallType type = PLAYER, int width = 1, int height = 2): fired(false), invaderBall(invaderBall), type(type), Sprite(-10, -10, width, height) {}
 
 void Cannonball::reset() {
   x = -10;
@@ -14,18 +14,33 @@ bool Cannonball::hasBeenFired() const {
   return fired;
 }
 
+bool Cannonball::isInvader(){
+  return invaderBall;
+}
+
+BallType Cannonball::getType(){
+  return type;
+}
+
 void Cannonball::fire(int x_arg, int y_arg) {
   x = x_arg;
   y = y_arg;
   fired = true;
 }
 
-void Cannonball::move() {
-  if (y >= 7) {
-    y--;
-  }
-   else {
-    fired = false;
+void Cannonball::tick() {
+  if (type == INVADER){
+    if (y <= 31){
+      y++;
+    } else {
+      fired = false;
+    }
+  } else {
+    if (y >= 7) {
+      y--;
+    } else {
+      fired = false;
+    }      
   }
 }
 

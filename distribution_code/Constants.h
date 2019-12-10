@@ -42,7 +42,7 @@ namespace Constants {
     {{5, 4, 5, 4, 5, 4, 5, 4}, {2, 3, 2, 3, 2, 3, 2, 3}}};
 
   enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, NONE};
-  enum BallType {PLAYER, INVADER, BOMB};
+  enum BallType {INVADER, STANDARD, BOMB};
   const int NUM_P_TYPES = 3;
   inline Color p_color(PowerupType type) {
     switch (type) {

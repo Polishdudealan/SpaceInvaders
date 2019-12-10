@@ -110,7 +110,7 @@ void Game::moveUpdate() {
   //cannonball movements
   for (int i = 0; i < NUM_PLAYER_BALLS; i++){
     if (player.balls[i].hasBeenFired()){
-      player.balls[i].move();
+      player.balls[i].tick();
       player.balls[i].upd();
     }
   }

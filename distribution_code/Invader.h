@@ -38,8 +38,8 @@ class Invader : public Sprite {
 
   private:
     int strength;
-    int ballCycle;
     bool dropsPUp;
+    int shootNum;
     
     // draws the Invader
     void draw_with_rgb(Color body_color, Color eye_color, Signal& matrix);
