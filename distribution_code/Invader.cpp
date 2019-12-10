@@ -7,7 +7,24 @@
 
 using namespace Constants;
 
-Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, bool dropsPUp = false, int height = 4, int width = 4): strength(strength_arg), dropsPUp(dropsPUp), Sprite(x_arg, y_arg, width, height) {}
+Invader::Invader(int x_arg = 0, int y_arg = 0, int strength_arg = 0, bool dropsPUp = false, int height = 4, int width = 4): strength(strength_arg), dropsPUp(dropsPUp), Sprite(x_arg, y_arg, width, height) {
+  if (strength <= 7) {
+    hP = strength;
+    shootNum = doubleShootNum = -1;
+  } else if (strength <= 14){
+    hP = strength - 7;
+    shootNum = random(0,INVADER_SHOOT_PROBABILITY);
+    doubleShootNum = -1;
+  } else if (strength <= 19) {
+    hP = 2 * strength - 22;
+    shootNum = random(0,INVADER_SHOOT_PROBABILITY);
+    doubleShootNum = -1;
+  } else {
+    hP = 2 * strength - 22;
+    shootNum = random(0,INVADER_SHOOT_PROBABILITY);
+    doubleShootNum = random(0,INVADER_SHOOT_PROBABILITY);
+  }
+} 
 
 // sets values for private data members
 void Invader::initialize(int x_arg, int y_arg, int strength_arg) {
@@ -16,8 +33,8 @@ void Invader::initialize(int x_arg, int y_arg, int strength_arg) {
   strength = strength_arg;
 }
 
-int Invader::getStrength() const {
-  return strength;
+int Invader::getHP() const {
+  return hP;
 }
 
 void Invader::move() {
@@ -25,15 +42,19 @@ void Invader::move() {
 }
 
 void Invader::draw(Signal& matrix) {
-  if (strength != 0) {
-    draw_with_rgb(num_to_color(strength % 7), num_to_color((strength / 7 + 5) % 7), matrix);      
+  if (hP != 0) {
+    draw_with_rgb(num_to_color(hP % 7), num_to_color((strength / 7 + 5) % 7), matrix);      
   } else {
     erase(matrix);
   }
 }
 
 void Invader::hit() {
-  strength--;
+  hP--;
+}
+
+bool Invader::fire(int seed){
+  return seed == shootNum || seed == doubleShootNum;
 }
 
 void Invader::draw_with_rgb(Color body_color, Color eye_color, Signal& matrix) {

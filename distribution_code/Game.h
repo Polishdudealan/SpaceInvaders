@@ -33,7 +33,10 @@ class Game {
 
   private:
     // game constant for the number of Invaders in the game
-    static const int NUM_ENEMIES = 16;
+    static const int NUM_ENEMIES = 24;
+
+    //game constant for number of enemy balls possible
+    static const int NUM_ENEMY_BALLS = 5;
   
     //game constant for the number of players in the game
     static const int NUM_PLAYERS = 1;
@@ -42,7 +45,7 @@ class Game {
     static const int NUM_POWERUPS = 1;
 
     //total sprites
-    static const int NUM_SPRITES = NUM_ENEMIES + NUM_PLAYER_BALLS + NUM_PLAYERS + NUM_POWERUPS;
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_ENEMY_BALLS + NUM_PLAYER_BALLS + NUM_PLAYERS + NUM_POWERUPS;
     
     //our class for sending board info to the unos
     Signal matrix;
@@ -60,6 +63,7 @@ class Game {
     //****** Sprites ********
     Player player;
     Invader enemies[NUM_ENEMIES];
+    Cannonball enemyBalls[NUM_ENEMY_BALLS];
     Powerups powerup;
     Sprite* updatableSprites[NUM_SPRITES];
 
@@ -74,8 +78,8 @@ class Game {
     // set up a level
     void reset_level();
 
-    //return proper powerup
-    Powerups* getPowerup();
+    //return proper cannonball
+    Cannonball* getEnemyCannonball();
     
     
     //********** update functions **********

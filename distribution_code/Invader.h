@@ -2,6 +2,7 @@
 #include "Signal.h"
 #include "Sprite.h"
 #include "Color.h"
+#include "Cannonball.h"
 
 #ifndef CONSTANTS
   #define CONSTANTS
@@ -19,7 +20,7 @@ class Invader : public Sprite {
     void initialize(int x_arg, int y_arg, int strength_arg);
 
     //getters
-    int getStrength() const;
+    int getHP() const;
 
     // Moves the Invader down the screen by one row
     // Modifies: y
@@ -36,10 +37,15 @@ class Invader : public Sprite {
     //returns whether this invader drops a powerup
     bool drops();
 
+    //fires a ball if shootNum or doubleShootNum is equal to the seed
+    bool fire(int seed);
+
   private:
+    int hP;
     int strength;
     bool dropsPUp;
     int shootNum;
+    int doubleShootNum;
     
     // draws the Invader
     void draw_with_rgb(Color body_color, Color eye_color, Signal& matrix);

@@ -4,6 +4,9 @@ Game::Game() {
   level = 0;
   time = 0;
   numUpdates = 0;
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++){
+    enemyBalls[i].setType(INVADER);
+  }
 }
 
 void Game::setupGame() {
@@ -14,11 +17,10 @@ void Game::setupGame() {
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score, player2Score);
-
 }
 
 void Game::reset_level() {
-  layers = 2;
+  layers = 3;
   currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
@@ -44,10 +46,12 @@ void Game::reset_level() {
     }
   }
 
-
   int count = 0;
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     updatableSprites[count++] = &player.balls[i];
+  }
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
+    updatableSprites[count++] = &enemyBalls[i];
   }
   for (int i = 0; i < NUM_ENEMIES; i++) {
     updatableSprites[count++] = &enemies[i];
@@ -93,9 +97,26 @@ void Game::moveUpdate() {
   if (time % INVADER_DELAY == 0) {
     for (int i = 0; i < NUM_ENEMIES; i++) {
       // i / 8 is current layer
-      if (currentLayer == i/8) {
+      if (currentLayer == i/8 && enemies[i].getHP() > 0) {
         enemies[i].move();
         enemies[i].upd();
+      }
+    }
+  }
+  
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
+    enemyBalls[i].tick();
+    enemyBalls[i].upd();
+  }
+  
+
+  int invaderShootSeed = random(0, INVADER_SHOOT_PROBABILITY);
+  for (int i = 0; i < NUM_ENEMIES; i++){
+    if (enemies[i].fire(invaderShootSeed)){
+      Cannonball* ball = getEnemyCannonball();
+      if (ball != NULL){
+        ball->fire(enemies[i].getX(), enemies[i].getY());
+        ball->upd();
       }
     }
   }
@@ -121,9 +142,9 @@ void Game::checkCollisions(){
   for (int i = 0; i < NUM_ENEMIES; i++){
     for (int j = 0; j < NUM_PLAYER_BALLS; j++) { 
       Cannonball* ball = &player.balls[j];
-      if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getStrength() != 0){
+      if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getHP() != 0){
         enemies[i].hit();
-        if (enemies[i].getStrength() == 0 && enemies[i].drops()){
+        if (enemies[i].getHP() == 0 && enemies[i].drops()){
            powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
            powerup.upd();
         }
@@ -148,7 +169,23 @@ void Game::checkCollisions(){
 
   // checks for enemies getting past player
   for (int i = 0; i < NUM_ENEMIES; i++) {           
-    if ((enemies[i].getY() == 29 || player.isColliding(enemies[i])) && enemies[i].getStrength() > 0) {
+    if ((enemies[i].getY() == 29 || (player.isColliding(enemies[i])) && enemies[i].getHP() > 0)) {
+      player.die();
+      level--;
+      if (player.getLives() <= 0) {
+        player1Score = 0;
+        player2Score = 0;
+        level = 0;
+        game_over();
+      }
+      reset_level();
+      return;
+    }
+  }
+
+  // checks for enemies getting past player
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++) {           
+    if (player.isColliding(enemyBalls[i]) && enemyBalls[i].hasBeenFired()) {
       player.die();
       level--;
       if (player.getLives() <= 0) {
@@ -180,7 +217,7 @@ bool Game::level_cleared() {
 
 bool Game::layerCleared(int layer){
   for (int i = layer * NUM_ENEMIES / layers; i < (layer + 1) * NUM_ENEMIES / layers; i++) {
-    if (enemies[i].getStrength() > 0) return false;
+    if (enemies[i].getHP() > 0) return false;
   }
   return true;
 }
@@ -275,4 +312,13 @@ void Game::score_board(int score1, int score2){
     Font::printCharacter(value2[i], 17 + 4 * i, 0, matrix);
   }
   
+}
+
+Cannonball* Game::getEnemyCannonball() {
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++){
+    if (!enemyBalls[i].hasBeenFired()){
+      return &enemyBalls[i];
+    }
+  }
+  return NULL;
 }

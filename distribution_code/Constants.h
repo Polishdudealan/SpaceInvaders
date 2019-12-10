@@ -32,17 +32,21 @@ namespace Constants {
   const int INVADER_DELAY = 30;
   const int POWERUP_DELAY = 9;
 
+  //Determines how often invader shoots, lower numbers are more often
+  const int INVADER_SHOOT_PROBABILITY = 100;
+
   //number of balls for each player
   const int NUM_PLAYER_BALLS = 8;
-  
-  const int LEVEL_DATA[4][2][8] = 
-    {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},
-    {{1, 2, 1, 2, 1, 2, 1, 2}, {2, 1, 2, 1, 2, 1, 2, 1}},
-    {{1, 2, 3, 4, 5, 1, 2, 3}, {4, 5, 1, 2, 3, 4, 5, 1}},
-    {{5, 4, 5, 4, 5, 4, 5, 4}, {2, 3, 2, 3, 2, 3, 2, 3}}};
+
+  const int NUM_SCRIPTED_LEVELS = 5;
+  const int LEVEL_DATA[NUM_SCRIPTED_LEVELS][3][8] = 
+   {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}},
+    {{1, 2, 1, 2, 1, 2, 1, 2}, {2, 1, 2, 1, 2, 1, 2, 1}, {0, 0, 0, 0, 0, 0, 0, 0}}, 
+    {{1, 2, 3, 4, 4, 3, 2, 1}, {0, 1, 2, 3, 3, 2, 1, 0}, {0, 0, 1, 2, 2, 1, 0, 0}},
+    {{6, 0, 4, 4, 4, 4, 0, 6}, {0, 6, 5, 6, 6, 5, 6, 0}, {0, 0, 6, 0, 0, 6, 0, 0}},
+    {{6, 0, 4, 4, 4, 4, 0, 6}, {0, 6, 5, 6, 6, 5, 6, 0}, {0, 0, 6, 0, 0, 6, 0, 0}}};
 
   enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, NONE};
-  enum BallType {INVADER, STANDARD, BOMB};
   const int NUM_P_TYPES = 3;
   inline Color p_color(PowerupType type) {
     switch (type) {
@@ -57,6 +61,22 @@ namespace Constants {
         break;
       case NONE:
         return GREEN;
+        break;
+      default:
+        return BLACK;
+    }
+  }
+  enum BallType {INVADER, STANDARD, BOMB};
+  inline Color b_color(BallType type){
+    switch (type) {
+      case STANDARD:
+        return RED;
+        break;
+      case INVADER:
+        return GREEN; //wen plotnick said to use this color, citing him as a source, only for this
+        break;
+      case BOMB:
+        return YELLOW;
         break;
       default:
         return BLACK;

@@ -13,7 +13,7 @@ using namespace Constants;
 
 class Cannonball : public Sprite {
   public:
-    Cannonball(BallType type = PLAYER, int width = 1, int height = 2);
+    Cannonball(BallType type = STANDARD, int width = 1, int height = 2);
     
     // resets private data members to initial values
     void reset();
@@ -21,9 +21,11 @@ class Cannonball : public Sprite {
     // getters
     bool hasBeenFired() const;
 
-    bool isInvader() const;
-
+    //gets the ball type
     BallType getType();
+
+    //sets what type the ball is
+    void setType(BallType type);
     
     // sets private data members
     void fire(int x_arg, int y_arg);
@@ -36,6 +38,7 @@ class Cannonball : public Sprite {
     
     // draws the Cannonball, if it is fired
     void draw(Signal& matrix);
+
 
   private:
     bool fired;
