@@ -33,12 +33,18 @@ void Game::reset_level() {
   int minStrength = level/5 + 1;
   int maxStrength = 3*sqrt(level);
   maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
-  randomSeed(random(0,100));
+  randomSeed(time % 100);
+  int powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
-      enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength));
+      if (i*8+j == powerUpLocation){
+        enemies[i*8+j] = Invader(j * 4, i * 4 + 5, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), true);
+      } else {
+        enemies[i*8+j] = Invader(j * 4, i * 4 + 5, level < 5 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), false);
+      }
     }
   }
+
 
   int count = 0;
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
