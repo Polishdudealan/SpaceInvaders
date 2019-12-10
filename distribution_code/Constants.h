@@ -39,8 +39,9 @@ namespace Constants {
     {{1, 2, 3, 4, 5, 1, 2, 3}, {4, 5, 1, 2, 3, 4, 5, 1}},
     {{5, 4, 5, 4, 5, 4, 5, 4}, {2, 3, 2, 3, 2, 3, 2, 3}}};
 
-  enum PowerupType {LIFE, RAPID_FIRE, NONE};
-  const int NUM_P_TYPES = 2;
+  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, NONE};
+  enum BallType {PLAYER, INVADER, BOMB};
+  const int NUM_P_TYPES = 3;
   inline Color p_color(PowerupType type) {
     switch (type) {
       case LIFE:
@@ -48,6 +49,9 @@ namespace Constants {
         break;
       case RAPID_FIRE:
         return AQUA; //wen plotnick said to use this color, citing him as a source, only for this
+        break;
+      case BOMB_SHOT:
+        return YELLOW;
         break;
       case NONE:
         return GREEN;

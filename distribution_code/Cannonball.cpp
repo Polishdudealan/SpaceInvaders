@@ -1,11 +1,8 @@
 #include "Cannonball.h"
-#ifndef CONSTANTS
-  #define CONSTANTS
-  #include "Constants.h"
-#endif
+
 using namespace Constants;
 
-Cannonball::Cannonball(int width = 1, int height = 2): fired(false), Sprite(-10, -10, width, height) {}
+Cannonball::Cannonball(BallType type = PLAYER, int width = 1, int height = 2): fired(false), type(type), Sprite(-10, -10, width, height) {}
 
 void Cannonball::reset() {
   x = -10;

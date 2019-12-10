@@ -1,11 +1,17 @@
 #pragma once
+
+#ifndef CONSTANTS
+  #define CONSTANTS
+  #include "Constants.h"
+#endif
+
 #include "Signal.h"
 #include "Sprite.h"
 #include "Color.h" 
 
 class Cannonball : public Sprite {
   public:
-    Cannonball(int width = 1, int height = 2);
+    Cannonball(BulletType type = PLAYER, int width = 1, int height = 2);
     
     // resets private data members to initial values
     void reset();
@@ -28,4 +34,5 @@ class Cannonball : public Sprite {
 
   private:
     bool fired;
+    BallType type;
 };
