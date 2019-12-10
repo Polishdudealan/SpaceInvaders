@@ -7,7 +7,8 @@ Game::Game() {
   numUpdates = 0;
 }
 // defines player score and initializes to 0
-int playerScore = 0;
+int player1Score = 0;
+int player2Score = 0;
 
 void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -15,7 +16,8 @@ void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  score_board(playerScore);
+  score_board(player1Score, player2Score);
+
 }
 
 void Game::update(int potentiometer_value, bool button_pressed) { 
@@ -103,10 +105,11 @@ void Game::checkCollisions(){
         enemies[i].upd();
         ball->upd();
         //updates playerscore and refreshes scoreboard
-        playerScore++;
-//        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
-//        score_board(playerScore);
-//        break;          
+        player1Score++;
+        player2Score++;
+        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
+        score_board(player1Score, player2Score);//TODO fix for 2 players     
+ 
       }
     }
   }
@@ -122,7 +125,8 @@ void Game::checkCollisions(){
       player.die();
       level--;
       if (player.getLives() <= 0) {
-        playerScore = 0;
+        player1Score = 0;
+        player2Score = 0;
         level = 0;
         game_over();
       }
@@ -158,6 +162,7 @@ void Game::reset_level() {
   layers = 2;
   currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
+  delay(250);
   level++;
   
   ballCycle = BALL_DELAY;
@@ -196,7 +201,8 @@ void Game::reset_level() {
   print_lives(player.getLives());
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  score_board(playerScore);
+  score_board(player1Score, player2Score);
+
 }
 
 Cannonball* Game::getBall() {
@@ -251,19 +257,27 @@ void Game::game_over() {
   matrix.print('R');
 }
 
-void Game::score_board(int score){
+void Game::score_board(int score1, int score2){
   //draws scoreboard line
-  matrix.fillRect(0, 5, 32, 1, AQUA.to_333());
- 
+  matrix.fillRect(0, 5, 16, 1, DAMPBLUE.to_333());
+  matrix.fillRect(15, 0, 1, 5, DAMPBLUE.to_333());
+  matrix.fillRect(16, 5, 16, 1, DAMPRED.to_333());
+  matrix.fillRect(16, 0, 1, 5, DAMPRED.to_333());
+
   //converts int score to array of place values
-  int value[6];
-  for (int i = 5; i >= 0; i--) {
-    value[i] = score % 10;
-    score /= 10;
+  int value1[4];
+  int value2[4];
+  for (int i = 3; i >= 0; i--) {
+    value1[i] = score1 % 10;
+    value2[i] = score2 % 10;
+    score1 /= 10;
+    score2 /= 10;
   }
+
   //prints numbers as characters 
-  for (int i = 0; i < 6; i++) {
-    Font::printCharacter(value[i], 9 + 4 * i, 0, matrix);
+  for (int i = 0; i < 4; i++) {
+    Font::printCharacter(value1[i], 0 + 4 * i, 0, matrix);
+    Font::printCharacter(value2[i], 17 + 4 * i, 0, matrix);
   }
   
 }

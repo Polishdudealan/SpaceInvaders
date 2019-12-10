@@ -15,6 +15,8 @@ namespace Constants {
   const Color LIME(2, 4, 0);
   const Color AQUA(0, 4, 4);
   const Color DAMPWHITE(1, 1, 1);
+  const Color DAMPBLUE(0, 0, 2);
+  const Color DAMPRED(2, 0, 0);
   
   // define the wiring of the inputs
   const int POTENTIOMETER1_PIN_NUMBER = A14;
