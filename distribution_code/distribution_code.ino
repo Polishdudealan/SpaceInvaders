@@ -45,19 +45,20 @@ void setup() {
   matrix.print('U');
   
   //one_player
-  Font::printCharacter(1, pos_x + 0, pos_y,  AQUA.to_333(), matrix);
+  Font::printCharacter(1, pos_x -1, pos_y,  AQUA.to_333(), matrix); // changed to 4
   Font::printCharacter('-', pos_x + 3, pos_y,  AQUA.to_333(), matrix); 
-  Font::printCharacter('P', pos_x + 6, pos_y,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x + 7, pos_y,  AQUA.to_333(), matrix);
   
   //two_player
-  Font::printCharacter(2, pos_x + 0, pos_y + 8,  AQUA.to_333(), matrix);
+  Font::printCharacter(2, pos_x -1, pos_y + 8,  AQUA.to_333(), matrix); // changed to 4
   Font::printCharacter('-', pos_x + 3, pos_y + 8,  AQUA.to_333(), matrix); 
-  Font::printCharacter('P', pos_x + 6, pos_y + 8,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x + 7, pos_y + 8,  AQUA.to_333(), matrix); 
   
   //pvp
-  Font::printCharacter('P', pos_x + 0, pos_y + 16,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x -1, pos_y + 16,  AQUA.to_333(), matrix); // changed to 4 
   Font::printCharacter('V', pos_x + 3, pos_y + 16,  AQUA.to_333(), matrix);
-  Font::printCharacter('P', pos_x + 6, pos_y + 16,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x + 7, pos_y + 16,  AQUA.to_333(), matrix);
+  
   printBox(pos_x - 1, pos_y - 1, GREEN.to_333());
   printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
   printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
@@ -149,11 +150,11 @@ void loop() {
 
 void printBox(int x, int y, uint16_t color){
   //top line
-  matrix.fillRect(x, y, 11, 1, color);
+  matrix.fillRect(x, y, 11, 1, color); 
   //left side
-  matrix.fillRect(x, y, 1, 6, color);
+  matrix.fillRect(x-1, y, 1, 6, color); //subtracted 1 to width to make box bigger
   //bottom line
-  matrix.fillRect(x, y + 6, 11, 1, color);
+  matrix.fillRect(x, y + 6, 11, 1, color); 
   //right side
-  matrix.fillRect(x + 10, y, 1, 6, color); 
+  matrix.fillRect(x + 11, y, 1, 6, color); //added 1 to width to make box bigger
 }
