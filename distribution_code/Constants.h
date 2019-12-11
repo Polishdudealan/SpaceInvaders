@@ -36,7 +36,7 @@ namespace Constants {
     
   //constants to determine game speed
   const int INVADER_DELAY = 30;
-  const int POWERUP_DELAY = 9;
+  const int POWERUP_DELAY = 5;
 
   //Determines how often invader shoots, lower numbers are more often
   const int INVADER_SHOOT_PROBABILITY = 100;

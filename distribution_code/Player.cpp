@@ -145,10 +145,7 @@ void Player::specialFire(){
       ball->upd();
     }
   }
-  for(int i = 0; i < 1000; i += 100){
-    tone(PIEZOPIN, 1500 - i, 10);
-  }
-  
+  tone(PIEZOPIN, 700, 5);
 }
 
 PowerupType Player::getPowerup() {

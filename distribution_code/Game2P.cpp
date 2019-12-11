@@ -28,7 +28,8 @@ void Game2P::reset_level() {
     player1.balls[i].reset();
     player2.balls[i].reset();
   }
-  powerup.deactivate();
+  powerup1.deactivate();
+  powerup2.deactivate();
   for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
     enemyBalls[i].reset();
   }
@@ -41,15 +42,16 @@ void Game2P::reset_level() {
   int maxStrength = 3*sqrt(level);
   maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
   randomSeed(time % 100);
-  int powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
+  int powerUpLocation1 = random(0, NUM_ENEMIES);
+  int powerUpLocation2 = random(0, NUM_ENEMIES);  
   int timeout = 0;
-  while (LEVEL_DATA[level][powerUpLocation/8][powerUpLocation % 8] == 0 && timeout < 100) {
-    powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
+  while (LEVEL_DATA[level][powerUpLocation1/8][powerUpLocation1 % 8] == 0 && timeout < 100) {
+    powerUpLocation1 = random(0, NUM_ENEMIES);
     timeout++;
   }
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
-      if (i*8+j == powerUpLocation){
+      if (i*8+j == powerUpLocation1 || i*8+j == powerUpLocation2){
         enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < NUM_SCRIPTED_LEVELS + 1 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), true);
       } else {
         enemies[i*8+j] = Invader(j * 4, i * 4 + 6, level < NUM_SCRIPTED_LEVELS + 1 ? LEVEL_DATA[level-1][i][j] : random(minStrength, maxStrength), false);
@@ -71,7 +73,8 @@ void Game2P::reset_level() {
   }
   updatableSprites[count++] = &player1;
   updatableSprites[count++] = &player2;
-  updatableSprites[count++] = &powerup;
+  updatableSprites[count++] = &powerup1;
+  updatableSprites[count++] = &powerup2;
 
   for (int i = 0; i < NUM_SPRITES; i++) {
     updatableSprites[i]->upd();
@@ -203,9 +206,13 @@ void Game2P::moveUpdate() {
   }
 
   if (time % POWERUP_DELAY == 0) {
-    if (powerup.check_active()){
-      powerup.move();
-      powerup.upd();
+    if (powerup1.check_active()){
+      powerup1.move();
+      powerup1.upd();
+    }
+    if (powerup2.check_active()){
+      powerup2.move();
+      powerup2.upd();
     }
   }
   
@@ -247,8 +254,13 @@ void Game2P::checkCollisions(){
             enemies[i].hit();
           }
           if (enemies[i].getHP() == 0 && enemies[i].drops()){
-             powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
-             powerup.upd();
+            if (!powerup1.check_active()){
+              powerup1.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
+              powerup1.upd();    
+            } else {
+              powerup2.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
+              powerup2.upd();    
+            }
           }
           ball->hit();
           enemies[i].upd();
@@ -266,17 +278,29 @@ void Game2P::checkCollisions(){
     }
   }
 
-  if (powerup.check_active() && powerup.isColliding(player1)) {
-    powerup.deactivate();
-    powerup.upd();
-    player1.powerup(powerup.getType());
+  if (powerup1.check_active() && powerup1.isColliding(player1)) {
+    powerup1.deactivate();
+    powerup1.upd();
+    player1.powerup(powerup1.getType());
+    player1.upd();
+  }
+  if (powerup2.check_active() && powerup2.isColliding(player1)) {
+    powerup2.deactivate();
+    powerup2.upd();
+    player1.powerup(powerup2.getType());
     player1.upd();
   }
 
-  if (powerup.check_active() && powerup.isColliding(player2)) {
-    powerup.deactivate();
-    powerup.upd();
-    player2.powerup(powerup.getType());
+  if (powerup1.check_active() && powerup1.isColliding(player2)) {
+    powerup1.deactivate();
+    powerup1.upd();
+    player2.powerup(powerup1.getType());
+    player2.upd();
+  }
+  if (powerup2.check_active() && powerup2.isColliding(player2)) {
+    powerup2.deactivate();
+    powerup2.upd();
+    player2.powerup(powerup2.getType());
     player2.upd();
   }
 

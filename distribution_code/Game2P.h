@@ -41,7 +41,7 @@ class Game2P : public Gamemode {
     static const int NUM_PLAYERS = 2;
 
     //game constant for number of powerups
-    static const int NUM_POWERUPS = 1;
+    static const int NUM_POWERUPS = 2;
 
     static const int NUM_PACMEN = 1;
 
@@ -67,7 +67,8 @@ class Game2P : public Gamemode {
     Player player2{RED};
     Invader enemies[NUM_ENEMIES];
     Cannonball enemyBalls[NUM_ENEMY_BALLS];
-    Powerups powerup;
+    Powerups powerup1;
+    Powerups powerup2;
     Pacman pacman;
     Sprite* updatableSprites[NUM_SPRITES];
 
