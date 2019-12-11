@@ -27,6 +27,8 @@ class Pacman : public Sprite {
     // draws the Cannonball, if it is fired
     void draw(Signal& matrix);
 
+    //stops pacman mayhem, because if you have cut rate car insurance your car could be in danger from pacmen like these
+    void deactivate();
   private:
     bool fired;
     int curFrame = 0;

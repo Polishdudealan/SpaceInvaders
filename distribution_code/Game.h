@@ -42,8 +42,11 @@ class Game : public Gamemode {
     //game constant for number of powerups
     static const int NUM_POWERUPS = 1;
 
+    //game constant for number of pacmen
+    static const int NUM_PACMEN = 1;
+
     //total sprites
-    static const int NUM_SPRITES = NUM_ENEMIES + NUM_ENEMY_BALLS + NUM_PLAYER_BALLS + NUM_PLAYERS + NUM_POWERUPS;
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_ENEMY_BALLS + NUM_PLAYER_BALLS + NUM_PACMEN + NUM_PLAYERS + NUM_POWERUPS;
     
     //our class for sending board info to the unos
     Signal matrix;

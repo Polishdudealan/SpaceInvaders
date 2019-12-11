@@ -23,7 +23,7 @@ void Game2P::reset_level() {
   currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
-  
+
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     player1.balls[i].reset();
     player2.balls[i].reset();
@@ -32,7 +32,8 @@ void Game2P::reset_level() {
   for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
     enemyBalls[i].reset();
   }
-  
+  pacman.deactivate();
+    
   //defines the strength of invaders
   int minStrength = level/5 + 1;
   int maxStrength = 3*sqrt(level);
@@ -55,6 +56,7 @@ void Game2P::reset_level() {
   }
 
   int count = 0;
+  updatableSprites[count++] = &pacman;
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     updatableSprites[count++] = &player1.balls[i];
     updatableSprites[count++] = &player2.balls[i];
@@ -90,12 +92,24 @@ void Game2P::inputUpdate(int left_potentiometer_value, bool left_regular_pressed
     player1.fire();
   }
   if (left_special_pressed){
+    if (player1.getPowerup() == PACMAN && !pacman.hasBeenFired()){
+      pacman.fire();
+      player1.powerup(NONE);
+      player1.upd();
+      player1Score += 50;
+    }
     player1.specialFire();
   }
   if (right_regular_pressed) {
     player2.fire();
   }
   if (right_special_pressed){
+    if (player2.getPowerup() == PACMAN && !pacman.hasBeenFired()){
+      pacman.fire();
+      player2.powerup(NONE);
+      player2.upd();
+      player2Score += 50;
+    }
     player2.specialFire();
   }
   
@@ -167,6 +181,11 @@ void Game2P::moveUpdate() {
       player2.balls[i].tick();
       player2.balls[i].upd();
     } 
+  }
+
+  if (pacman.hasBeenFired()){
+    pacman.tick();
+    pacman.upd();
   }
 }
 
@@ -284,6 +303,14 @@ void Game2P::checkCollisions(){
   }
   if (player1.isColliding(player2)) {
     playersCollided = true;
+  }
+  if (pacman.hasBeenFired()){
+    for (int i = 0; i < NUM_ENEMIES; i++){
+      if (pacman.isColliding(enemies[i]) && enemies[i].getHP() > 0) {
+        enemies[i].hit();
+        enemies[i].upd();
+      }
+    }
   }
 }
 

@@ -110,3 +110,7 @@ void Player::specialFire(){
     }
   }
 }
+
+PowerupType Player::getPowerup() {
+  return powerupAbility;
+}

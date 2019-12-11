@@ -28,6 +28,12 @@ void Pacman::draw(Signal& matrix) {
   }
 }
 
+void Pacman::deactivate() {
+  fired = false;
+  x = 100;
+  y = 100;
+}
+
 void Pacman::drawPacman(Signal& matrix) {
     if (x % 2 == 0) {
         //middle rectangle

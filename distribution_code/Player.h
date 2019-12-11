@@ -46,6 +46,9 @@ class Player : public Sprite {
 
     //fires a special ball determined by powerups
     void specialFire();
+
+    //returns the active powerup
+    PowerupType getPowerup();
     
   private:
     int lives;

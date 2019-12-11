@@ -22,6 +22,8 @@ void Game::reset_level() {
   currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   level++;
+
+  pacman.deactivate();
   
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     player1.balls[i].reset();
@@ -53,6 +55,7 @@ void Game::reset_level() {
   }
 
   int count = 0;
+  updatableSprites[count++] = &pacman;
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     updatableSprites[count++] = &player1.balls[i];
   }
@@ -84,6 +87,12 @@ void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, 
     player1.fire();
   }
   if (left_special_pressed){
+    if (player1.getPowerup() == PACMAN){
+      pacman.fire();
+      player1.powerup(NONE);
+      player1.upd();
+      player1Score += 50;
+    }
     player1.specialFire();
   }
 
@@ -143,6 +152,11 @@ void Game::moveUpdate() {
       player1.balls[i].tick();
       player1.balls[i].upd();
     }
+  }
+  
+  if (pacman.hasBeenFired()){
+    pacman.tick();
+    pacman.upd();
   }
 }
 
@@ -212,7 +226,16 @@ void Game::checkCollisions(){
         enemies[j].upd();
       }
     }
-  }  
+  }
+
+  if (pacman.hasBeenFired()){
+    for (int i = 0; i < NUM_ENEMIES; i++){
+      if (pacman.isColliding(enemies[i]) && enemies[i].getHP() > 0) {
+        enemies[i].hit();
+        enemies[i].upd();
+      }
+    }
+  }
 }
 
 void Game::redrawSprites(){
