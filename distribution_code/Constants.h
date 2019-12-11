@@ -46,9 +46,9 @@ namespace Constants {
 
   const int NUM_SCRIPTED_LEVELS = 26;
   const int LEVEL_DATA[NUM_SCRIPTED_LEVELS][3][8] = 
-   {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}},
+   {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}}, 
     {{1, 2, 1, 2, 1, 2, 1, 2}, {2, 1, 2, 1, 2, 1, 2, 1}, {0, 0, 0, 0, 0, 0, 0, 0}}, 
-    {{1, 2, 3, 4, 4, 3, 2, 1}, {0, 1, 2, 3, 3, 2, 1, 0}, {0, 0, 1, 2, 2, 1, 0, 0}},
+    {{1, 2, 3, 4, 4, 3, 2, 1}, {0, 1, 2, 3, 3, 2, 1, 0}, {0, 0, 1, 2, 2, 1, 0, 0}}, 
     {{6, 0, 4, 4, 4, 4, 0, 6}, {0, 6, 5, 6, 6, 5, 6, 0}, {0, 0, 6, 0, 0, 6, 0, 0}},
     {{1, 8, 1, 8, 1, 8, 1, 8}, {8, 1, 8, 1, 8, 1, 8, 1}, {0, 0, 0, 0, 0, 0, 0, 0}},
     {{4, 5, 6, 9, 9, 6, 5, 4}, {0, 4, 5, 6, 6, 5, 4, 0}, {0, 0, 4, 5, 5, 4, 0, 0}},
@@ -99,8 +99,8 @@ namespace Constants {
       }
     }
 
-  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NUKE, SNIPER, SCATTER_SHOT, JUGGERNAUGHT, NONE};
-  const int NUM_P_TYPES = 7;
+  enum PowerupType {LIFE, RAPID_FIRE, SCATTER_SHOT, BOMB_SHOT, SNIPER, PACMAN, JUGGERNAUGHT, NUKE, NONE};
+  const int NUM_P_TYPES = 8;
   inline Color p_color(PowerupType type) {
     switch (type) {
       case LIFE:
@@ -116,7 +116,7 @@ namespace Constants {
       case SNIPER:
         return DAMPWHITE;
       case SCATTER_SHOT:
-        return DAMPAQUA;
+        return PURPLE;
       case JUGGERNAUGHT:
         return rainbow();
       case NONE:

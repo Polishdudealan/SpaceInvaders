@@ -397,18 +397,18 @@ case 10:
 
 //BOOM !!!
 //B
-        matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
-        matrix.fillRect(12,7,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(5,6,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(8,5,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(8,7,1,1, DAMPWHITE.to_333());
 
 //O
-        matrix.fillRect(15,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(15,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(15,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(17,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(11,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(11,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(11,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(13,4,1,5, DAMPWHITE.to_333());
 
 case 11:
 
@@ -441,31 +441,31 @@ case 11:
 
 //BOOM !!!
 //B
-        matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
-        matrix.fillRect(12,7,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(5,6,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(8,5,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(8,7,1,1, DAMPWHITE.to_333());
 
 //O
-        matrix.fillRect(15,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(15,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(15,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(17,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(11,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(11,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(11,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(13,4,1,5, DAMPWHITE.to_333());
 
 //O
-        matrix.fillRect(20,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(20,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(20,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(22,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(16,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(16,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(16,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(18,4,1,5, DAMPWHITE.to_333());
 
 //M
+        matrix.fillRect(20,5,1,4, DAMPWHITE.to_333());
+        matrix.fillRect(22,5,1,3, DAMPWHITE.to_333());
         matrix.fillRect(24,5,1,4, DAMPWHITE.to_333());
-        matrix.fillRect(26,5,1,3, DAMPWHITE.to_333());
-        matrix.fillRect(28,5,1,4, DAMPWHITE.to_333());
-        matrix.fillRect(25,4,1,1, DAMPWHITE.to_333());
-        matrix.fillRect(27,4,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(21,4,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(23,4,1,1, DAMPWHITE.to_333());
 
 case 12:
 
@@ -498,34 +498,34 @@ case 12:
 
 //BOOM !!!
 //B
-        matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
-        matrix.fillRect(12,7,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(5,6,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(5,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(8,5,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(8,7,1,1, DAMPWHITE.to_333());
 
 //O
-        matrix.fillRect(15,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(15,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(15,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(17,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(11,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(11,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(11,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(13,4,1,5, DAMPWHITE.to_333());
 
 //O
-        matrix.fillRect(20,4,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(20,4,1,5, DAMPWHITE.to_333());
-        matrix.fillRect(20,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(22,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(16,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(16,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(16,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(18,4,1,5, DAMPWHITE.to_333());
 
 //M
+        matrix.fillRect(20,5,1,4, DAMPWHITE.to_333());
+        matrix.fillRect(22,5,1,3, DAMPWHITE.to_333());
         matrix.fillRect(24,5,1,4, DAMPWHITE.to_333());
-        matrix.fillRect(26,5,1,3, DAMPWHITE.to_333());
-        matrix.fillRect(28,5,1,4, DAMPWHITE.to_333());
-        matrix.fillRect(25,4,1,1, DAMPWHITE.to_333());
-        matrix.fillRect(27,4,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(21,4,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(23,4,1,1, DAMPWHITE.to_333());
         
 //!     
-        matrix.fillRect(32,3,2,4, DAMPWHITE.to_333());
-        matrix.fillRect(32,8,2,1, DAMPWHITE.to_333());
+        matrix.fillRect(28,3,2,4, DAMPWHITE.to_333());
+        matrix.fillRect(28,8,2,1, DAMPWHITE.to_333());
       }
   }

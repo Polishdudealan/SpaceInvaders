@@ -11,7 +11,8 @@ Game::Game() {
 
 void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  player1.powerup(NONE);
+                                                        // for testing all powerups in game 
+  player1.powerup(NUKE);
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score);
@@ -192,7 +193,7 @@ void Game::checkCollisions(){
           enemies[i].hit();
         }
         if (enemies[i].getHP() == 0 && enemies[i].drops()){
-           powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
+           powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), level <= 8 ? level - 1 : random(0, NUM_P_TYPES));
            powerup.upd();
         }
         ball->hit();

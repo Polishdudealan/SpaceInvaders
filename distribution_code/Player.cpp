@@ -134,6 +134,9 @@ void Player::fire(){
 
 void Player::specialFire(){
   if (specialCycle == specialDelay) {
+    for(int i = 0; i < 1000; i += 100){
+      tone(PIEZOPIN, 1000 + i, 10);
+    }
     Cannonball* ball = getPlayerBall();
     if (ball != NULL) {
       ball->setType(specialType);
@@ -143,8 +146,9 @@ void Player::specialFire(){
     }
   }
   for(int i = 0; i < 1000; i += 100){
-  tone(PIEZOPIN, 2000 + i, 10);
+    tone(PIEZOPIN, 1500 - i, 10);
   }
+  
 }
 
 PowerupType Player::getPowerup() {
