@@ -17,13 +17,15 @@ Signal matrix;
 // a global variable that represents the game Space Invaders
 Gamemode* game;
 
-bool gameRunning = true; 
+//game speed (30 is a good value)
+static int boardComputationDelay = 30;
 
 
 void printMenu(int pos_x, int pos_y);
 void printBox(int x, int y, uint16_t color);
 
 void setup() {
+  boardComputationDelay = 30;
   Serial.begin(115200);
   pinMode(BUTTON1_PIN_NUMBER, INPUT);
   pinMode(BUTTON2_PIN_NUMBER, INPUT);
@@ -135,9 +137,9 @@ void loop() {
   bool right_regular = (digitalRead(BUTTON4_PIN_NUMBER) == HIGH);
 
   //easter egg
-
   if(left_potentiometer < 100 && right_potentiometer > 900 && left_special && right_special) {
     boardComputationDelay = 10;
+    Serial.println("activating easter egg");
   }
   game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
 //  game->update(left_potentiometer, left_special, left_special, right_potentiometer, right_regular, right_special);

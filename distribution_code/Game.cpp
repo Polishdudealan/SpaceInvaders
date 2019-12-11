@@ -161,8 +161,8 @@ void Game::checkCollisions(){
         enemies[i].upd();
         ball->upd();
         //updates player1score and refreshes scoreboard
-        player1Score++;
-        player2Score++;
+        player1Score+=100;
+        player2Score+=100;
         matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
         score_board(player1Score);//TODO fix for 2 player1s     
       }
@@ -183,7 +183,6 @@ void Game::checkCollisions(){
       level--;
       if (player1.getLives() <= 0) {
         //resets easter egg game speed
-        boardComputationDelay = 30;
         game_over();
         return;
       }
@@ -281,10 +280,7 @@ void Game::print_lives(int lives) {
   matrix.print((lives % 10) + '0');
 }
 
-void Game::game_over() {
-  //resets easter egg game speed
-  boardComputationDelay = 30;
-  
+void Game::game_over() {  
   matrix.fillScreen(BLACK.to_333());
 
   int score1 = player1Score;
