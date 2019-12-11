@@ -107,5 +107,5 @@ class Game : public Gamemode {
     void game_over();
 
     // displays scoreboard
-    void score_board(int score1Number, int score2Number);
+    void score_board(int score1Number);
 };

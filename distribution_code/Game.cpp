@@ -16,7 +16,7 @@ void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  score_board(player1Score, player2Score);
+  score_board(player1Score);
 }
 
 void Game::reset_level() {
@@ -72,7 +72,7 @@ void Game::reset_level() {
   print_lives(player1.getLives());
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  score_board(player1Score, player2Score);
+  score_board(player1Score);
 } 
 
 void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) {
@@ -161,7 +161,7 @@ void Game::checkCollisions(){
         player1Score++;
         player2Score++;
         matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
-        score_board(player1Score, player2Score);//TODO fix for 2 player1s     
+        score_board(player1Score);//TODO fix for 2 player1s     
       }
     }
   }
@@ -311,7 +311,7 @@ void Game::game_over() {
   delay(5000);
 }
 
-void Game::score_board(int score1, int score2){
+void Game::score_board(int score1){
   //draws scoreboard line
   matrix.fillRect(0, 5, 16, 1, DAMPBLUE.to_333());
   matrix.fillRect(15, 0, 1, 5, DAMPBLUE.to_333());
@@ -323,9 +323,9 @@ void Game::score_board(int score1, int score2){
   int value2[4];
   for (int i = 3; i >= 0; i--) {
     value1[i] = score1 % 10;
-    value2[i] = score2 % 10;
+    //value2[i] = score2 % 10;
     score1 /= 10;
-    score2 /= 10;
+    //score2 /= 10;
   }
 
   //prints numbers as characters 
