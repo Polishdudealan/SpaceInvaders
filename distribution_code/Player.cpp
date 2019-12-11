@@ -35,13 +35,13 @@ void Player::die() {
 }
 
 void Player::powerup(PowerupType power){
-  powerupAbility = power;
   specialType = STANDARD;
 
   if(power == LIFE){
     lives1up();
     return;
   }
+  powerupAbility = power;
   
   ballDelay = 8;
   if (power == RAPID_FIRE) {

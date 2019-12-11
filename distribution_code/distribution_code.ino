@@ -58,7 +58,7 @@ void setup() {
   Font::printCharacter('P', pos_x + 0, pos_y + 16,  AQUA.to_333(), matrix);
   Font::printCharacter('V', pos_x + 3, pos_y + 16,  AQUA.to_333(), matrix);
   Font::printCharacter('P', pos_x + 6, pos_y + 16,  AQUA.to_333(), matrix);
-  printBox(pos_x - 1, pos_y - 1, RED.to_333());
+  printBox(pos_x - 1, pos_y - 1, GREEN.to_333());
   printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
   printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
   int button = 1;
@@ -138,7 +138,8 @@ void loop() {
   if(left_potentiometer < 100 && right_potentiometer > 900 && left_special && right_special) {
     boardComputationDelay = 5;
   }
-  game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
+//  game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
+  g ame->update(left_potentiometer, left_special, left_special, right_potentiometer, right_regular, right_special);
   if (game->isGameOver()){
     setup();
   }

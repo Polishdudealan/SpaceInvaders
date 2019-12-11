@@ -12,8 +12,6 @@ Game::Game() {
 void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   player1.powerup(NONE);
-  delay(4000);
-  matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score, player2Score);
@@ -39,6 +37,11 @@ void Game::reset_level() {
   maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
   randomSeed(time % 100);
   int powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
+  int timeout = 0;
+  while (LEVEL_DATA[level][powerUpLocation/8][powerUpLocation % 8] == 0 && timeout < 100) {
+    powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
+    timeout++;
+  }
   for (int i = 0; i < layers; i++){
     for (int j = 0; j < 8; j++){
       if (i*8+j == powerUpLocation){
@@ -231,15 +234,6 @@ void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool 
   inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
   moveUpdate();
   checkCollisions();
-  
-  if (player1.getLives() < 1) {
-    matrix.fillScreen(matrix.Color333(0, 0, 0));
-    player1.resetLives();
-    level = 0;
-    game_over();
-    delay(4000);
-    setupGame();  
-  }   
 
   if (level_cleared()){
     reset_level();

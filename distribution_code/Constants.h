@@ -27,10 +27,10 @@ namespace Constants {
   //game speed (30 is a good value)
   static int boardComputationDelay = 30;
   
-  const int BUTTON1_PIN_NUMBER = 35;
-  const int BUTTON2_PIN_NUMBER = 43;
-  const int BUTTON3_PIN_NUMBER = 39;
-  const int BUTTON4_PIN_NUMBER = 41;
+  const int BUTTON1_PIN_NUMBER = 27;
+  const int BUTTON2_PIN_NUMBER = 29;
+  const int BUTTON3_PIN_NUMBER = 31;
+  const int BUTTON4_PIN_NUMBER = 33;
     
   //constants to determine game speed
   const int INVADER_DELAY = 30;

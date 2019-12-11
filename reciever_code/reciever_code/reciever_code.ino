@@ -32,7 +32,6 @@ void setup() {
   }
 }
 
-
 void serialEvent() {
     Serial.readBytes(storage, BUFFER_SIZE);
     //Serial.println("redsomthing");
