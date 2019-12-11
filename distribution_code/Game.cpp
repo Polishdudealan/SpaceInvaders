@@ -11,7 +11,7 @@ Game::Game() {
 
 void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  player1.powerup(SNIPER);
+  player1.powerup(NONE);
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score);
