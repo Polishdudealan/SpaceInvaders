@@ -23,6 +23,9 @@ namespace Constants {
 
   const int POTENTIOMETER1_PIN_NUMBER = A14;
   const int POTENTIOMETER2_PIN_NUMBER = A15 ;
+
+  //game speed (30 is a good value)
+  static int boardComputationDelay = 30;
   
   const int BUTTON1_PIN_NUMBER = 26;
   const int BUTTON2_PIN_NUMBER = 28;
@@ -39,7 +42,7 @@ namespace Constants {
   //number of balls for each player
   const int NUM_PLAYER_BALLS = 8;
 
-  const int NUM_SCRIPTED_LEVELS = 19;
+  const int NUM_SCRIPTED_LEVELS = 26;
   const int LEVEL_DATA[NUM_SCRIPTED_LEVELS][3][8] = 
    {{{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}},
     {{1, 2, 1, 2, 1, 2, 1, 2}, {2, 1, 2, 1, 2, 1, 2, 1}, {0, 0, 0, 0, 0, 0, 0, 0}}, 
@@ -59,11 +62,18 @@ namespace Constants {
     {{0, 1, 4, 7, 7, 4, 1, 0}, {0, 0, 9, 16, 16, 9, 0, 0}, {0, 0, 0, 20, 20, 0, 0, 0}},
     {{0, 0, 4, 7, 7, 4, 0, 0}, {0, 11, 9, 16, 16, 9, 1, 0}, {0, 12, 0, 20, 20, 0, 12, 0}},
     {{0, 0, 4, 7, 7, 4, 0, 0}, {0, 11, 9, 16, 16, 9, 1, 0}, {0, 12, 0, 20, 20, 0, 12, 0}},
-    {{12, 13, 0, 0, 0, 0, 12, 13}, {0, 0, 19, 2, 2, 19, 0, 0}, {21, 12, 0, 0, 0, 0, 12, 21}}};
-;
+    {{7, 13, 0, 0, 0, 0, 13, 7}, {0, 0, 19, 2, 2, 19, 0, 0}, {21, 12, 0, 0, 0, 0, 12, 21}},
+    {{7, 13, 0, 0, 0, 0, 12, 7}, {0, 0, 19, 4, 4, 19, 0, 0}, {25, 12, 0, 0, 0, 0, 12, 21}},
+    {{7, 13, 0, 0, 0, 0, 0, 0}, {0, 0, 17, 17, 12, 0, 0, 0}, {0, 0, 0, 0, 0, 21, 12, 21}},
+    {{0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {30, 0, 0, 0, 0, 0, 0, 30}},
+    {{7, 13, 0, 0, 0, 0, 0, 0}, {0, 0, 17, 17, 12, 0, 0, 0}, {0, 0, 0, 0, 0, 21, 12, 21}},
+    {{7, 0, 0, 0, 0, 0, 12, 17}, {0, 14, 0, 17, 0, 21, 21, 0}, {0, 0, 21, 0, 21, 0, 0, 0}},
+    {{7, 7, 0, 0, 0, 0, 7, 7}, {0, 0, 14, 14, 14, 14, 0, 0}, {21, 21, 0, 0, 0, 0, 21, 21}},
+    {{0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 90, 0, 0, 0}}};
 
-  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NONE};
-  const int NUM_P_TYPES = 4;
+
+  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NUKE, NONE};
+  const int NUM_P_TYPES = 5;
   inline Color p_color(PowerupType type) {
     switch (type) {
       case LIFE:
@@ -74,6 +84,8 @@ namespace Constants {
         return ORANGE;
       case PACMAN:
         return YELLOW;
+      case NUKE:
+        return LIME;
       case NONE:
         return GREEN;
       default:
@@ -87,7 +99,7 @@ namespace Constants {
         return RED;
         break;
       case INVADER:
-        return GREEN; //wen plotnick said to use this color, citing him as a source, only for this
+        return GREEN;
         break;
       case BOMB:
         return ORANGE;

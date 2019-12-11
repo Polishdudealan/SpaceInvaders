@@ -97,6 +97,24 @@ void Game2P::inputUpdate(int left_potentiometer_value, bool left_regular_pressed
       player1.powerup(NONE);
       player1.upd();
       player1Score += 50;
+    }else if (player1.getPowerup() == NUKE) {
+      player1.powerup(NONE);
+      player1Score += 50;
+      for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 500; i++){
+          tone(PIEZOPIN, 500 + i, 10);
+          delay(2);
+        }
+      }
+      matrix.fillScreen(WHITE.to_333());
+      delay(1000);
+      for (int i = 1; i < 12; i++){
+        matrix.fillScreen(BLACK.to_333());
+        player1.balls[i].drawNuke(i, matrix);
+        delay(200);
+      }
+      delay(3000);
+      reset_level();
     }
     player1.specialFire();
   }
@@ -109,6 +127,24 @@ void Game2P::inputUpdate(int left_potentiometer_value, bool left_regular_pressed
       player2.powerup(NONE);
       player2.upd();
       player2Score += 50;
+    } else if (player2.getPowerup() == NUKE) {
+      player2.powerup(NONE);
+      player2Score += 50;
+      for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 500; i++){
+          tone(PIEZOPIN, 500 + i, 10);
+          delay(2);
+        }
+      }
+      matrix.fillScreen(WHITE.to_333());
+      delay(1000);
+      for (int i = 1; i < 12; i++){
+        matrix.fillScreen(BLACK.to_333());
+        player1.balls[i].drawNuke(i, matrix);
+        delay(200);
+      }
+      delay(3000);
+      reset_level();
     }
     player2.specialFire();
   }
@@ -427,6 +463,9 @@ void Game2P::game_over() {
   matrix.print('V');
   matrix.print('E');
   matrix.print('R');
+
+  //resets easter egg game speed
+  boardComputationDelay = 30;
   gameOver = true;
   delay(5000);
 }

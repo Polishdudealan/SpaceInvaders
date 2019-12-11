@@ -38,10 +38,10 @@ void Game::reset_level() {
   int maxStrength = 3*sqrt(level);
   maxStrength = (minStrength < maxStrength) ? maxStrength : level/3 - 30;
   randomSeed(time % 100);
-  int powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
+  int powerUpLocation = random(0, NUM_ENEMIES);
   int timeout = 0;
   while (LEVEL_DATA[level][powerUpLocation/8][powerUpLocation % 8] == 0 && timeout < 100) {
-    powerUpLocation = ((level % 3 == 0) ? random(0, NUM_ENEMIES) : NUM_ENEMIES + 1);
+    powerUpLocation = random(0, NUM_ENEMIES);
     timeout++;
   }
   for (int i = 0; i < layers; i++){
@@ -92,6 +92,24 @@ void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, 
       player1.powerup(NONE);
       player1.upd();
       player1Score += 50;
+    } else if (player1.getPowerup() == NUKE) {
+      player1.powerup(NONE);
+      player1Score += 50;
+      for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 500; i++){
+          tone(PIEZOPIN, 500 + i, 10);
+          delay(2);
+        }
+      }
+      matrix.fillScreen(WHITE.to_333());
+      delay(1000);
+      for (int i = 1; i < 12; i++){
+        matrix.fillScreen(BLACK.to_333());
+        player1.balls[i].drawNuke(i, matrix);
+        delay(200);
+      }
+      delay(3000);
+      reset_level();
     }
     player1.specialFire();
   }
@@ -175,8 +193,8 @@ void Game::checkCollisions(){
         enemies[i].upd();
         ball->upd();
         //updates player1score and refreshes scoreboard
-        player1Score+=100;
-        player2Score+=100;
+        player1Score++;
+        player2Score++;
         matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
         score_board(player1Score);//TODO fix for 2 player1s     
       }
@@ -197,6 +215,7 @@ void Game::checkCollisions(){
       level--;
       if (player1.getLives() <= 0) {
         //resets easter egg game speed
+        boardComputationDelay = 30;
         game_over();
         return;
       }
@@ -302,7 +321,10 @@ void Game::print_lives(int lives) {
   matrix.print((lives % 10) + '0');
 }
 
-void Game::game_over() {  
+void Game::game_over() {
+  //resets easter egg game speed
+  boardComputationDelay = 30;
+  
   matrix.fillScreen(BLACK.to_333());
 
   int score1 = player1Score;

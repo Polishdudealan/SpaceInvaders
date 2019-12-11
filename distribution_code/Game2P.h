@@ -4,6 +4,7 @@
 #include "Powerups.h"
 #include "Cannonball.h"
 #include "Invader.h"
+#include "Pacman.h"
 
 #ifndef FONT
   #define FONT

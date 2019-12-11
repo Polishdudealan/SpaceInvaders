@@ -383,7 +383,7 @@ case 10:
 //BOOM !!!
 //B
         matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,8,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(9,4,1,5, DAMPWHITE.to_333());
         matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
         matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
         matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
@@ -427,7 +427,7 @@ case 11:
 //BOOM !!!
 //B
         matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,8,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(9,4,1,5, DAMPWHITE.to_333());
         matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
         matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
         matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
@@ -484,7 +484,7 @@ case 12:
 //BOOM !!!
 //B
         matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
-        matrix.fillRect(9,8,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(9,4,1,5, DAMPWHITE.to_333());
         matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
         matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
         matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
