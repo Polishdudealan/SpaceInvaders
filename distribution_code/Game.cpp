@@ -203,6 +203,14 @@ void Game::checkCollisions(){
       return;
     }
   }
+
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
+    for (int j = 0; j < NUM_ENEMIES; j++) {
+      if (enemyBalls[i].isColliding(enemies[j])) {
+        enemies[j].upd();
+      }
+    }
+  }  
 }
 
 void Game::redrawSprites(){

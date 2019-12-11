@@ -22,13 +22,11 @@ class Game2P : public Gamemode {
   public:
     Game2P();
       
-    // sets up a new game of Space Invaders
-    // Modifies: global variable matrix
+    // sets up game
     void setupGame();
       
-    // advances the game simulation one step and renders the graphics
-    // see spec for details of game
-    // Modifies: global variable matrix
+
+    // runs game
     void update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed);
 
   private:
@@ -55,6 +53,7 @@ class Game2P : public Gamemode {
     int numUpdates;
     int layers;
     int currentLayer;
+    bool playersCollided = false;
     
     // defines player score and initializes to 0
     int player1Score = 0;
