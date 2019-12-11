@@ -7,7 +7,7 @@
 
 using namespace Constants;
 
-Player::Player(): powerupAbility(NONE), lives(3), ballDelay(8), specialDelay(100), Sprite(15, 30, 3, 2) {}
+Player::Player(Color bodyColor = BLUE): bodyColor(bodyColor), powerupAbility(NONE), lives(3), ballDelay(8), specialDelay(100), Sprite(15, 30, 3, 2) {}
 
 void Player::reload(){
   if (ballCycle < ballDelay){
@@ -64,13 +64,13 @@ void Player::initialize(int x_arg, int y_arg) {
 }
 
 void Player::draw(Signal& matrix) {
-  Color bodyCol = GREEN;
+  if (!enabled) return;
   Color blasterCol = p_color(powerupAbility);
   
-  matrix.drawPixel(x, y + 1, bodyCol.to_333());
+  matrix.drawPixel(x, y + 1, bodyColor.to_333());
   matrix.drawPixel(x + 1, y, blasterCol.to_333());
-  matrix.drawPixel(x + 1, y + 1, bodyCol.to_333());
-  matrix.drawPixel(x + 2, y + 1, bodyCol.to_333());
+  matrix.drawPixel(x + 1, y + 1, bodyColor.to_333());
+  matrix.drawPixel(x + 2, y + 1, bodyColor.to_333());
 }
 
 Cannonball* Player::getPlayerBall() {

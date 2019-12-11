@@ -1,6 +1,6 @@
-#include "Game.h"
+#include "Game2P.h"
 
-Game::Game() {
+Game2P::Game2P() {
   level = 0;
   time = 0;
   numUpdates = 0;
@@ -9,9 +9,10 @@ Game::Game() {
   }
 }
 
-void Game::setupGame() {
+void Game2P::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   player1.powerup(NONE);
+  player2.powerup(NONE);
   delay(4000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   reset_level();
@@ -19,7 +20,7 @@ void Game::setupGame() {
   score_board(player1Score, player2Score);
 }
 
-void Game::reset_level() {
+void Game2P::reset_level() {
   layers = 3;
   currentLayer = layers - 1;
   matrix.fillScreen(matrix.Color333(0, 0, 0));
@@ -27,6 +28,7 @@ void Game::reset_level() {
   
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     player1.balls[i].reset();
+    player2.balls[i].reset();
   }
   powerup.deactivate();
   for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
@@ -52,6 +54,7 @@ void Game::reset_level() {
   int count = 0;
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     updatableSprites[count++] = &player1.balls[i];
+    updatableSprites[count++] = &player2.balls[i];
   }
   for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
     updatableSprites[count++] = &enemyBalls[i];
@@ -60,6 +63,7 @@ void Game::reset_level() {
     updatableSprites[count++] = &enemies[i];
   }
   updatableSprites[count++] = &player1;
+  updatableSprites[count++] = &player2;
   updatableSprites[count++] = &powerup;
 
   for (int i = 0; i < NUM_SPRITES; i++) {
@@ -75,26 +79,41 @@ void Game::reset_level() {
   score_board(player1Score, player2Score);
 } 
 
-void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) {
+void Game2P::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) {
   player1.reload();
+  player2.reload();
   if (left_regular_pressed) {
     player1.fire();
   }
   if (left_special_pressed){
     player1.specialFire();
   }
-
+  if (right_regular_pressed) {
+    player2.fire();
+  }
+  if (right_special_pressed){
+    player2.specialFire();
+  }
+  
   // this allows for the potentiometer to be more narrow, only using the middle two quarters of its range to control the player1
-  int newX = (47 - left_potentiometer_value / 16) >= -1 ? ((47 - left_potentiometer_value / 16) < 31 ? (47 - left_potentiometer_value / 16) : 30 ): -1;
+  int newX1 = (47 - left_potentiometer_value / 16) >= -1 ? ((47 - left_potentiometer_value / 16) < 31 ? (47 - left_potentiometer_value / 16) : 30 ): -1;
   
   // if position changed update
-  if (newX != player1.getX()) {
-    player1.setX(newX);
+  if (newX1 != player1.getX()) {
+    player1.setX(newX1);
     player1.upd();
+  }
+
+  int newX2 = (47 - right_potentiometer_value / 16) >= -1 ? ((47 - right_potentiometer_value / 16) < 31 ? (47 - right_potentiometer_value / 16) : 30 ): -1;
+  
+  // if position changed update
+  if (newX2 != player2.getX()) {
+    player2.setX(newX2);
+    player2.upd();
   }
 }
 
-void Game::moveUpdate() {
+void Game2P::moveUpdate() {
   if (layerCleared(currentLayer)){
     currentLayer--;
   }
@@ -140,28 +159,42 @@ void Game::moveUpdate() {
       player1.balls[i].tick();
       player1.balls[i].upd();
     }
+    if (player2.balls[i].hasBeenFired()){
+      player2.balls[i].tick();
+      player2.balls[i].upd();
+    } 
   }
 }
 
-void Game::checkCollisions(){
+void Game2P::checkCollisions(){
   //loops through all the enemies
   for (int i = 0; i < NUM_ENEMIES; i++){
-    for (int j = 0; j < NUM_PLAYER_BALLS; j++) { 
-      Cannonball* ball = &player1.balls[j];
-      if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getHP() != 0){
-        enemies[i].hit();
-        if (enemies[i].getHP() == 0 && enemies[i].drops()){
-           powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
-           powerup.upd();
+    for (int j = 0; j < NUM_PLAYER_BALLS; j++) {
+      for (int k = 0; k < NUM_PLAYERS; k++) {
+        Cannonball* ball;
+        if (k == 0) {
+          ball = &player1.balls[j];
+        } else {
+          ball = &player2.balls[j];
         }
-        ball->hit();
-        enemies[i].upd();
-        ball->upd();
-        //updates player1score and refreshes scoreboard
-        player1Score++;
-        player2Score++;
-        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
-        score_board(player1Score, player2Score);//TODO fix for 2 player1s     
+        if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getHP() != 0){
+          enemies[i].hit();
+          if (enemies[i].getHP() == 0 && enemies[i].drops()){
+             powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
+             powerup.upd();
+          }
+          ball->hit();
+          enemies[i].upd();
+          ball->upd();
+          //updates player1score and refreshes scoreboard
+          if (k == 0) {
+            player1Score++;
+          } else {
+            player2Score++;            
+          }
+          matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
+          score_board(player1Score, player2Score);//TODO fix for 2 player1s   
+        }
       }
     }
   }
@@ -173,15 +206,19 @@ void Game::checkCollisions(){
     player1.upd();
   }
 
+  if (powerup.check_active() && powerup.isColliding(player2)) {
+    powerup.deactivate();
+    powerup.upd();
+    player2.powerup(powerup.getType());
+    player2.upd();
+  }
+
   // checks for enemies getting past player1
   for (int i = 0; i < NUM_ENEMIES; i++) {           
     if ((enemies[i].getY() == 29 || (player1.isColliding(enemies[i])) && enemies[i].getHP() > 0)) {
       player1.die();
       level--;
       if (player1.getLives() <= 0) {
-        player1Score = 0;
-        player2Score = 0;
-        level = 0;
         game_over();
       }
       reset_level();
@@ -189,15 +226,24 @@ void Game::checkCollisions(){
     }
   }
 
-  // checks for enemies getting past player1
+  for (int i = 0; i < NUM_ENEMIES; i++) {           
+    if ((enemies[i].getY() == 29 || (player2.isColliding(enemies[i])) && enemies[i].getHP() > 0)) {
+      player2.die();
+      level--;
+      if (player2.getLives() <= 0) {
+        game_over();
+      }
+      reset_level();
+      return;
+    }
+  }
+
+  // checks for enemies shooting players
   for (int i = 0; i < NUM_ENEMY_BALLS; i++) {           
     if (player1.isColliding(enemyBalls[i]) && enemyBalls[i].hasBeenFired()) {
       player1.die();
       level--;
       if (player1.getLives() <= 0) {
-        player1Score = 0;
-        player2Score = 0;
-        level = 0;
         game_over();
       }
       reset_level();
@@ -206,13 +252,13 @@ void Game::checkCollisions(){
   }
 }
 
-void Game::redrawSprites(){
+void Game2P::redrawSprites(){
   for (int i = 0; i < NUM_SPRITES; i++) {
     updatableSprites[i]->redraw(matrix);
   }
 }
 
-bool Game::level_cleared() {
+bool Game2P::level_cleared() {
   for (int i = 0; i < layers; i++){
     if (!layerCleared(i)){
       return false;
@@ -221,15 +267,14 @@ bool Game::level_cleared() {
   return true;
 }
 
-bool Game::layerCleared(int layer){
+bool Game2P::layerCleared(int layer){
   for (int i = layer * NUM_ENEMIES / layers; i < (layer + 1) * NUM_ENEMIES / layers; i++) {
     if (enemies[i].getHP() > 0) return false;
   }
   return true;
 }
 
-void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) { 
-  Serial.println("Loop");
+void Game2P::update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) { 
   time++;
   left_potentiometer_value = 1024-left_potentiometer_value;
   inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
@@ -253,7 +298,7 @@ void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool 
 }  
   
 
-void Game::print_level(int level) {
+void Game2P::print_level(int level) {
   matrix.setCursor(1, 0);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('L');
@@ -267,7 +312,7 @@ void Game::print_level(int level) {
   matrix.print((level % 10) + '0');
 }
 
-void Game::print_lives(int lives) {
+void Game2P::print_lives(int lives) {
   matrix.setCursor(1, 0);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('L');
@@ -281,18 +326,29 @@ void Game::print_lives(int lives) {
   matrix.print((lives % 10) + '0');
 }
 
-void Game::game_over() {
+void Game2P::game_over() {
+  //draws scoreboard line
   int score1 = player1Score;
+  int score2 = player2Score;
 
   //converts int score to array of place values
   int value1[4];
+  int value2[4];
   for (int i = 3; i >= 0; i--) {
     value1[i] = score1 % 10;
+    value2[i] = score2 % 10;
     score1 /= 10;
+    score2 /= 10;
   }
- 
+
+  //prints numbers as characters 
+  Font::printCharacter('P', 0, 16, AQUA.to_333(), matrix);
+  Font::printCharacter(1, 4, 16, AQUA.to_333(), matrix);
+  Font::printCharacter('P', 23, 16, AQUA.to_333(), matrix);
+  Font::printCharacter(2, 27, 16, AQUA.to_333(), matrix);
   for (int i = 0; i < 4; i++) {
-    Font::printCharacter(value1[i], 8 + 4 * i, 22, DAMPWHITE.to_333(), matrix);
+    Font::printCharacter(value1[i], 0 + 4 * i, 22, DAMPWHITE.to_333(), matrix);
+    Font::printCharacter(value2[i], 17 + 4 * i, 22, DAMPWHITE.to_333(), matrix);
   }
   
   matrix.setCursor(5, 0);
@@ -314,7 +370,7 @@ void Game::game_over() {
   delay(5000);
 }
 
-void Game::score_board(int score1, int score2){
+void Game2P::score_board(int score1, int score2){
   //draws scoreboard line
   matrix.fillRect(0, 5, 16, 1, DAMPBLUE.to_333());
   matrix.fillRect(15, 0, 1, 5, DAMPBLUE.to_333());
@@ -339,7 +395,7 @@ void Game::score_board(int score1, int score2){
   
 }
 
-Cannonball* Game::getEnemyCannonball() {
+Cannonball* Game2P::getEnemyCannonball() {
   for (int i = 0; i < NUM_ENEMY_BALLS; i++){
     if (!enemyBalls[i].hasBeenFired()){
       return &enemyBalls[i];

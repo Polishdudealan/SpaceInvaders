@@ -1,7 +1,10 @@
 #include "Player.h"
 #include "Cannonball.h"
 #include "Invader.h"
+#include "Gamemode.h"
 #include "Game.h"
+#include "GamePVP.h"
+#include "Game2P.h"
 #ifndef CONSTANTS
   #define CONSTANTS
   #include "Constants.h"
@@ -12,7 +15,7 @@ using namespace Constants;
 Signal matrix;
 
 // a global variable that represents the game Space Invaders
-Game game;
+Gamemode* game;
 
 bool gameRunning = true; 
 
@@ -55,6 +58,9 @@ void setup() {
   Font::printCharacter('P', pos_x + 0, pos_y + 16,  AQUA.to_333(), matrix);
   Font::printCharacter('V', pos_x + 3, pos_y + 16,  AQUA.to_333(), matrix);
   Font::printCharacter('P', pos_x + 6, pos_y + 16,  AQUA.to_333(), matrix);
+  printBox(pos_x - 1, pos_y - 1, RED.to_333());
+  printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
+  printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
   int button = 1;
   int prevButton = 1;
     while(menu) {
@@ -64,14 +70,14 @@ void setup() {
 
         //checks where the potentiometer cursor is
     
-        if(left_potentiometer < 340){
+        if(left_potentiometer < 400){
           button = 1;
         }
-        else if(left_potentiometer >= 340 && left_potentiometer <= 680){
+        else if(left_potentiometer >= 400 && left_potentiometer <= 600){
           button = 2;
 
         }
-        else if(left_potentiometer > 680) {
+        else if(left_potentiometer > 600) {
           button = 3;
         }
         
@@ -101,13 +107,16 @@ void setup() {
           if (left_regular){
             switch (button){
               case 1:
-                game.setupGame();
+                game = new Game();
+                game->setupGame();
                 break;
               case 2:
-                game.setupGame();
+                game = new Game2P();
+                game->setupGame();
                 break;
               case 3:
-                game.setupGame();
+                game = new GamePVP();
+                game->setupGame();
                 break;
             }
             menu = false;
@@ -116,7 +125,7 @@ void setup() {
     } //while loop 
 } //setup()
 
-  void loop() {
+void loop() {
   int left_potentiometer = analogRead(POTENTIOMETER1_PIN_NUMBER);
   bool left_regular = (digitalRead(BUTTON1_PIN_NUMBER) == HIGH);
   bool left_special = (digitalRead(BUTTON2_PIN_NUMBER) == HIGH);
@@ -129,7 +138,10 @@ void setup() {
   if(left_potentiometer < 100 && right_potentiometer > 900 && left_special && right_special) {
     boardComputationDelay = 5;
   }
-  game.update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
+  game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
+  if (game->isGameOver()){
+    setup();
+  }
   
   delay(boardComputationDelay);
 }

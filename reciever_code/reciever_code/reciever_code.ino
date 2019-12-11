@@ -35,36 +35,8 @@ void setup() {
 
 void serialEvent() {
     Serial.readBytes(storage, BUFFER_SIZE);
-<<<<<<< HEAD
     //Serial.println("redsomthing");
     //Serial.println(command);
-=======
-    Serial.print("storage 0: ");
-    Serial.println(storage[0]);
-
-    if (storage[0] > 10 || storage[0] < 0) {
-      Serial.println("error 1");
-
-    }
-    else if (storage[1] > 32 || storage[1] < -32){
-      Serial.println("error 2");
-
-    }
-    else if (storage[2] > 32 || storage[2] < -32) {
-      Serial.println("error 3");
-
-    }
-    else if (storage[3] > 64 || storage[3] < -32) {
-      Serial.println("error 4");
-
-    }
-    else if (storage[4] > 64 || storage[4] < -32) {
-      Serial.println("error 5");
-
-    }
-
-
->>>>>>> 4f7465aaf4cd9bb92639b628ad375ec43ca3d21a
     uint16_t color = ((0x00FF & storage[5]) << 8) | (0x00FF & storage[6]);
         
     //Serial.println(color);
@@ -93,5 +65,5 @@ void serialEvent() {
 }
 
 void loop() {
- 
+
 }

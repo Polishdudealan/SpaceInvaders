@@ -13,7 +13,7 @@ using namespace Constants;
 
 class Player : public Sprite {
   public:
-    Player();
+    Player(Color bodyColor = BLUE);
 
     Cannonball balls[NUM_PLAYER_BALLS];
     
@@ -53,6 +53,8 @@ class Player : public Sprite {
     int ballCycle = 0;
     int specialDelay;
     int specialCycle = 0;
+    bool enabled = true;
+    Color bodyColor;
     PowerupType powerupAbility;
     BallType specialType;
      
