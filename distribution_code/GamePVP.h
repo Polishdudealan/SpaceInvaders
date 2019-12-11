@@ -75,7 +75,7 @@ class pvPlayer : public Sprite {
       if (ballCycle == BALL_DELAY) {
         for (int i = 0; i < NUM_B; i++) {
           if (!balls[i].isActive()){
-            balls[i].fire(x,y);
+            balls[i].fire(x+1,y+1);
             ballCycle = 0;
             for(int i = 0; i < 1000; i += 100){
               tone(PIEZOPIN, 4000 + i, 10);
@@ -128,7 +128,8 @@ class GamePVP : public Gamemode {
       matrix.print('1');
       tone(PIEZOPIN, 500, 500);
       delay(1000);
-      matrix.setCursor(3,8);
+      matrix.fillScreen(BLACK.to_333());
+      matrix.setCursor(2,8);
       matrix.setTextColor(GREEN.to_333());
       matrix.print('F');
       matrix.print('I');
@@ -137,7 +138,6 @@ class GamePVP : public Gamemode {
       matrix.print('T');
       tone(PIEZOPIN, 1000, 500);
       delay(500);
-
       matrix.fillScreen(BLACK.to_333());
     }
       
@@ -150,7 +150,6 @@ class GamePVP : public Gamemode {
         player2.balls[i].erase(matrix);
       }
       left_potentiometer_value = 1024-left_potentiometer_value;
-      right_potentiometer_value = 1024-right_potentiometer_value;
       
       player1.reload();
       player2.reload();
@@ -234,22 +233,17 @@ class GamePVP : public Gamemode {
     }
 
     void game_over() {
-      matrix.setCursor(1, 0);
+      matrix.setCursor(8, 0);
       matrix.setTextColor(p1 == 7 ? BLUE.to_333() : RED.to_333());
-      matrix.print("P");
-      matrix.print("L");
-      matrix.print("A");
-      matrix.print("Y");
-      matrix.print("E");
-      matrix.print("R");
-      
-      matrix.setCursor(1, 8);
+      matrix.print('P');
+      matrix.print('-');
       matrix.print(p1 == 7 ? '1' : '2');
-      matrix.print(" ");
-      matrix.print("W");
-      matrix.print("I");
-      matrix.print("N");
-      matrix.print("S");
+      
+      matrix.setCursor(5, 8);
+      matrix.print('W');
+      matrix.print('I');
+      matrix.print('N');
+      matrix.print('S');
       delay(5000);
       gameOver = true;
     }

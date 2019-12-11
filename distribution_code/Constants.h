@@ -83,7 +83,7 @@ namespace Constants {
       case BOMB_SHOT:
         return ORANGE;
       case PACMAN:
-        return;
+        return YELLOW;
       case NONE:
         return GREEN;
       default:

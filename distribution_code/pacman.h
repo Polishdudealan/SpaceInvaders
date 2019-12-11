@@ -31,6 +31,6 @@ class Pacman : public Sprite {
     bool fired;
     int curFrame = 0;
 
-    void drawPacman(int frame, Signal& matrix);
+    void drawPacman(Signal& matrix);
 
 };
