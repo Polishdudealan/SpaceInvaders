@@ -138,8 +138,8 @@ void loop() {
   if(left_potentiometer < 100 && right_potentiometer > 900 && left_special && right_special) {
     boardComputationDelay = 5;
   }
-//  game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
-  g ame->update(left_potentiometer, left_special, left_special, right_potentiometer, right_regular, right_special);
+  game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
+//  game->update(left_potentiometer, left_special, left_special, right_potentiometer, right_regular, right_special);
   if (game->isGameOver()){
     setup();
   }
