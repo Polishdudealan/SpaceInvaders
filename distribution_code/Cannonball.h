@@ -13,20 +13,25 @@ using namespace Constants;
 
 class Cannonball : public Sprite {
   public:
-    Cannonball(BallType type = PLAYER, int width = 1, int height = 2);
+    Cannonball(BallType type = STANDARD, int width = 1, int height = 2);
     
     // resets private data members to initial values
     void reset();
     
     // getters
     bool hasBeenFired() const;
+
+    //gets the ball type
+    BallType getType();
+
+    //sets what type the ball is
+    void setType(BallType type);
     
     // sets private data members
     void fire(int x_arg, int y_arg);
     
-    // moves the Cannonball and detects if it goes off the screen
-    // Modifies: y, fired
-    void move();
+    //updates all cannonball information, which depends upon type
+    void tick();
     
     // resets private data members to initial values
     void hit();
@@ -39,5 +44,7 @@ class Cannonball : public Sprite {
 
   private:
     bool fired;
+    bool exploding;
+    int explodingDuration;
     BallType type;
 };

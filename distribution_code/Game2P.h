@@ -18,9 +18,9 @@
 
 using namespace Constants;
 
-class Game : public Gamemode {
+class Game2P : public Gamemode {
   public:
-    Game();
+    Game2P();
       
     // sets up a new game of Space Invaders
     // Modifies: global variable matrix
@@ -39,13 +39,13 @@ class Game : public Gamemode {
     static const int NUM_ENEMY_BALLS = 5;
   
     //game constant for the number of players in the game
-    static const int NUM_PLAYERS = 1;
+    static const int NUM_PLAYERS = 2;
 
     //game constant for number of powerups
     static const int NUM_POWERUPS = 1;
 
     //total sprites
-    static const int NUM_SPRITES = NUM_ENEMIES + NUM_ENEMY_BALLS + NUM_PLAYER_BALLS + NUM_PLAYERS + NUM_POWERUPS;
+    static const int NUM_SPRITES = NUM_ENEMIES + NUM_ENEMY_BALLS + NUM_PLAYERS*NUM_PLAYER_BALLS + NUM_PLAYERS + NUM_POWERUPS;
     
     //our class for sending board info to the unos
     Signal matrix;
@@ -61,7 +61,8 @@ class Game : public Gamemode {
     int player2Score = 0;
 
     //****** Sprites ********
-    Player player1;
+    Player player1{BLUE};
+    Player player2{RED};
     Invader enemies[NUM_ENEMIES];
     Cannonball enemyBalls[NUM_ENEMY_BALLS];
     Powerups powerup;
@@ -107,5 +108,5 @@ class Game : public Gamemode {
     void game_over();
 
     // displays scoreboard
-    void score_board(int score1Number);
+    void score_board(int score1Number, int score2Number);
 };
