@@ -29,7 +29,6 @@ void Cannonball::fire(int x_arg, int y_arg) {
   height = 2;
   exploding = false;
   fired = true;
-  
 }
 
 void Cannonball::tick() {

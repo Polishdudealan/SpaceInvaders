@@ -31,8 +31,9 @@ class Invader : public Sprite {
     void draw(Signal& matrix);
     
     // Invader is hit by a Cannonball.
-    // Modifies: strength
+    // Modifies: hP
     void hit();
+    void hit(int damage);
 
     //returns whether this invader drops a powerup
     bool drops();

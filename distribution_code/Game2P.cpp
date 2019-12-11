@@ -237,7 +237,13 @@ void Game2P::checkCollisions(){
           ball = &player2.balls[j];
         }
         if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getHP() != 0){
-          enemies[i].hit();
+          if (ball->getType() == SNIPE){
+            enemies[i].hit(enemies[i].getHP()); 
+          } else if (ball->getType() == STRONG) {
+            enemies[i].hit(3);
+          } else {
+            enemies[i].hit();
+          }
           if (enemies[i].getHP() == 0 && enemies[i].drops()){
              powerup.spawn(enemies[i].getX() + 1, enemies[i].getY(), random(0, NUM_P_TYPES));
              powerup.upd();

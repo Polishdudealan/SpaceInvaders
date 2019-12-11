@@ -51,6 +51,12 @@ void Invader::draw(Signal& matrix) {
 
 void Invader::hit() {
   hP--;
+  upd();
+}
+
+void Invader::hit(int damage) {
+  hP-=damage;
+  upd();
 }
 
 bool Invader::fire(int seed){

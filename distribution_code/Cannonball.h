@@ -29,6 +29,8 @@ class Cannonball : public Sprite {
     
     // sets private data members
     void fire(int x_arg, int y_arg);
+
+    void fire(int x_arg, int y_arg, int damage);
     
     //updates all cannonball information, which depends upon type
     void tick();
@@ -41,6 +43,7 @@ class Cannonball : public Sprite {
 
     //draws nuke
     void drawNuke(int frame,Signal& matrix);
+    
 
   private:
     bool fired;

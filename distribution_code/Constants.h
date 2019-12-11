@@ -6,6 +6,7 @@
 namespace Constants { 
   const Color BLACK(0, 0, 0);
   const Color RED(4, 0, 0);
+  const Color MAGENTA(4, 0, 2);
   const Color ORANGE(6, 1, 0);
   const Color YELLOW(4, 4, 0);
   const Color GREEN(0, 4, 0);
@@ -72,8 +73,8 @@ namespace Constants {
     {{0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 90, 0, 0, 0}}};
 
 
-  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NUKE, NONE};
-  const int NUM_P_TYPES = 5;
+  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NUKE, SNIPER, NONE};
+  const int NUM_P_TYPES = 6;
   inline Color p_color(PowerupType type) {
     switch (type) {
       case LIFE:
@@ -86,24 +87,27 @@ namespace Constants {
         return YELLOW;
       case NUKE:
         return LIME;
+      case SNIPER:
+        return DAMPWHITE;
       case NONE:
         return GREEN;
       default:
         return BLACK;
     }
   }
-  enum BallType {INVADER, STANDARD, BOMB};
+  enum BallType {INVADER, STANDARD, STRONG, BOMB, SNIPE};
   inline Color b_color(BallType type){
     switch (type) {
       case STANDARD:
         return RED;
-        break;
+      case STRONG:
+        return MAGENTA;
       case INVADER:
         return GREEN;
-        break;
       case BOMB:
         return ORANGE;
-        break;
+      case SNIPE:
+        return DAMPWHITE;
       default:
         return BLACK;
     }

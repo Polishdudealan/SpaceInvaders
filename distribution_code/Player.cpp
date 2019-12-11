@@ -35,7 +35,6 @@ void Player::die() {
 }
 
 void Player::powerup(PowerupType power){
-  specialType = STANDARD;
 
   if(power == LIFE){
     lives1up();
@@ -44,13 +43,22 @@ void Player::powerup(PowerupType power){
   powerupAbility = power;
   
   ballDelay = 8;
+  
   if (power == RAPID_FIRE) {
     ballDelay = 4;
     ballCycle = 0;
-  } else if (power = BOMB_SHOT) {
+  } else if (power == BOMB_SHOT) {
     specialType = BOMB;
     specialDelay = 250;
     specialCycle = specialDelay;
+  } else if (power == SNIPER) {
+    specialType = SNIPE;
+    specialDelay = 100;
+    specialCycle = specialDelay;
+  } else {
+    specialDelay = 50;
+    specialCycle = specialDelay;
+    specialType = STRONG;
   }
 }
 
@@ -99,7 +107,6 @@ void Player::fire(){
 }
 
 void Player::specialFire(){
-  if (powerupAbility == NONE || powerupAbility == LIFE) return;
   if (specialCycle == specialDelay) {
     Cannonball* ball = getPlayerBall();
     if (ball != NULL) {
