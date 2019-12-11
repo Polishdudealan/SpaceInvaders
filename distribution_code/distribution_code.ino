@@ -45,19 +45,20 @@ void setup() {
   matrix.print('U');
   
   //one_player
-  Font::printCharacter(1, pos_x + 0, pos_y,  AQUA.to_333(), matrix);
+  Font::printCharacter(1, pos_x -1, pos_y,  AQUA.to_333(), matrix); // changed to 4
   Font::printCharacter('-', pos_x + 3, pos_y,  AQUA.to_333(), matrix); 
-  Font::printCharacter('P', pos_x + 6, pos_y,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x + 7, pos_y,  AQUA.to_333(), matrix);
   
   //two_player
-  Font::printCharacter(2, pos_x + 0, pos_y + 8,  AQUA.to_333(), matrix);
+  Font::printCharacter(2, pos_x -1, pos_y + 8,  AQUA.to_333(), matrix); // changed to 4
   Font::printCharacter('-', pos_x + 3, pos_y + 8,  AQUA.to_333(), matrix); 
-  Font::printCharacter('P', pos_x + 6, pos_y + 8,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x + 7, pos_y + 8,  AQUA.to_333(), matrix); 
   
   //pvp
-  Font::printCharacter('P', pos_x + 0, pos_y + 16,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x -1, pos_y + 16,  AQUA.to_333(), matrix); // changed to 4 
   Font::printCharacter('V', pos_x + 3, pos_y + 16,  AQUA.to_333(), matrix);
-  Font::printCharacter('P', pos_x + 6, pos_y + 16,  AQUA.to_333(), matrix);
+  Font::printCharacter('P', pos_x + 7, pos_y + 16,  AQUA.to_333(), matrix);
+  
   printBox(pos_x - 1, pos_y - 1, GREEN.to_333());
   printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
   printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
@@ -115,7 +116,7 @@ void setup() {
                 game->setupGame();
                 break;
               case 3:
-                game = new GamePVP();
+                //game = new GamePVP();
                 game->setupGame();
                 break;
             }
@@ -133,10 +134,10 @@ void loop() {
   bool right_special = (digitalRead(BUTTON3_PIN_NUMBER) == HIGH);
   bool right_regular = (digitalRead(BUTTON4_PIN_NUMBER) == HIGH);
 
-  //todo implement game select
+  //easter egg
 
   if(left_potentiometer < 100 && right_potentiometer > 900 && left_special && right_special) {
-    boardComputationDelay = 5;
+    boardComputationDelay = 10;
   }
   game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
 //  game->update(left_potentiometer, left_special, left_special, right_potentiometer, right_regular, right_special);
@@ -149,11 +150,11 @@ void loop() {
 
 void printBox(int x, int y, uint16_t color){
   //top line
-  matrix.fillRect(x, y, 11, 1, color);
+  matrix.fillRect(x, y, 11, 1, color); 
   //left side
-  matrix.fillRect(x, y, 1, 6, color);
+  matrix.fillRect(x-1, y, 1, 6, color); //subtracted 1 to width to make box bigger
   //bottom line
-  matrix.fillRect(x, y + 6, 11, 1, color);
+  matrix.fillRect(x, y + 6, 11, 1, color); 
   //right side
-  matrix.fillRect(x + 10, y, 1, 6, color); 
+  matrix.fillRect(x + 11, y, 1, 6, color); //added 1 to width to make box bigger
 }

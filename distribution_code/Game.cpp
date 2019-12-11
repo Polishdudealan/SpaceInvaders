@@ -182,6 +182,8 @@ void Game::checkCollisions(){
       player1.die();
       level--;
       if (player1.getLives() <= 0) {
+        //resets easter egg game speed
+        boardComputationDelay = 30;
         game_over();
         return;
       }
@@ -236,18 +238,22 @@ bool Game::layerCleared(int layer){
 }
 
 void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) { 
-  Serial.println("Loop");
-  time++;
-  left_potentiometer_value = 1024-left_potentiometer_value;
-  inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
-  moveUpdate();
-  checkCollisions();
-
-  if (level_cleared()){
-    reset_level();
-  }
-
-  redrawSprites();  
+    pacman.fire();
+    pacman.tick();
+    pacman.erase(matrix);
+    pacman.draw(matrix);
+//  Serial.println("Loop");
+//  time++;
+//  left_potentiometer_value = 1024-left_potentiometer_value;
+//  inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
+//  moveUpdate();
+//  checkCollisions();
+//
+//  if (level_cleared()){
+//    reset_level();
+//  }
+//
+//  redrawSprites();  
 }  
   
 
@@ -280,7 +286,11 @@ void Game::print_lives(int lives) {
 }
 
 void Game::game_over() {
+  //resets easter egg game speed
+  boardComputationDelay = 30;
+  
   matrix.fillScreen(BLACK.to_333());
+
   int score1 = player1Score;
 
   //converts int score to array of place values
@@ -307,8 +317,7 @@ void Game::game_over() {
   matrix.print('E');
   matrix.print('R');
 
-  //resets easter egg game speed
-  boardComputationDelay = 30;
+
   gameOver = true;
   delay(5000);
 }
