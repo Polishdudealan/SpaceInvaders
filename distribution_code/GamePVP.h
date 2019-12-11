@@ -8,14 +8,14 @@
 //  }
 //
 //  
-//}
+//};
 //
 //class pvPlayer : public Sprite {
 //  void setX(int arg_x) {
 //    x = arg_x
 //  }
 //
-//  void fire()
+//  void fire();
 //}
 //
 //class GamePVP : public Gamemode {

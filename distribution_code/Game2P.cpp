@@ -76,7 +76,8 @@ void Game2P::reset_level() {
   print_level(level);
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
-  print_lives(player1.getLives());
+  print_lives(player1.getLives(), player2.getLives());  //changed so that if either player gets hit their life count will go down
+           
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score, player2Score);
@@ -338,7 +339,7 @@ void Game2P::print_level(int level) {
   matrix.print((level % 10) + '0');
 }
 
-void Game2P::print_lives(int lives) {
+void Game2P::print_lives(int lives,int lives2) {
   matrix.setCursor(1, 0);
   matrix.setTextColor(matrix.Color333(7, 0, 0));
   matrix.print('L');
@@ -357,8 +358,8 @@ void Game2P::print_lives(int lives) {
   matrix.print((lives % 10) + '0');
 
   matrix.setCursor(11, 21); // next line for 2P lives 
-  matrix.print((lives / 10) + '0');
-  matrix.print((lives % 10) + '0');
+  matrix.print((lives2 / 10) + '0');
+  matrix.print((lives2 % 10) + '0');
 }
 
 void Game2P::game_over() {
