@@ -85,18 +85,21 @@ void setup() {
         if (button != prevButton){
           switch (button){
             case 1:
+                tone(PIEZOPIN, 4000, 10);
                 printBox(pos_x - 1, pos_y - 1, RED.to_333());
                 printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
                 printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
                 printBox(11 - 1, 11 - 2, GREEN.to_333());
                 break;
               case 2:
+                tone(PIEZOPIN, 4000, 10);
                 printBox(pos_x - 1, pos_y - 1, RED.to_333());
                 printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
                 printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
                 printBox(11 - 1, 11 + 6, GREEN.to_333());
                 break;
               case 3:
+                tone(PIEZOPIN, 4000, 10);
                 printBox(pos_x - 1, pos_y - 1, RED.to_333());
                 printBox(pos_x - 1, pos_y - 1 + 8, RED.to_333());
                 printBox(pos_x - 1, pos_y - 1 + 16, RED.to_333());
@@ -106,6 +109,7 @@ void setup() {
         }
         prevButton = button;
           if (left_regular){
+            tone(PIEZOPIN, 1000, 10);
             switch (button){
               case 1:
                 game = new Game();

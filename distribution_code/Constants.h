@@ -16,6 +16,7 @@ namespace Constants {
   const Color LIME(2, 4, 0);
   const Color AQUA(0, 4, 4);
   const Color DAMPWHITE(1, 1, 1);
+  const Color DAMPAQUA(0, 2, 2);
   const Color DAMPBLUE(0, 0, 2);
   const Color DAMPRED(2, 0, 0);
   
@@ -72,9 +73,34 @@ namespace Constants {
     {{7, 7, 0, 0, 0, 0, 7, 7}, {0, 0, 14, 14, 14, 14, 0, 0}, {21, 21, 0, 0, 0, 0, 21, 21}},
     {{0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 90, 0, 0, 0}}};
 
+    inline Color rainbow(){
+      int seed = random(0,5);
+      switch (seed) {
+        case 0:
+          return RED;
+          break;
+        case 1:
+          return ORANGE;
+          break;
+        case 2:
+          return YELLOW;
+          break;
+        case 3:
+          return GREEN;
+          break;
+        case 4:
+          return BLUE;
+          break;
+        case 5:
+          return PURPLE;
+          break;
+        default:
+          return BLACK;
+      }
+    }
 
-  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NUKE, SNIPER, NONE};
-  const int NUM_P_TYPES = 6;
+  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NUKE, SNIPER, SCATTER_SHOT, JUGGERNAUGHT, NONE};
+  const int NUM_P_TYPES = 7;
   inline Color p_color(PowerupType type) {
     switch (type) {
       case LIFE:
@@ -89,13 +115,17 @@ namespace Constants {
         return LIME;
       case SNIPER:
         return DAMPWHITE;
+      case SCATTER_SHOT:
+        return DAMPAQUA;
+      case JUGGERNAUGHT:
+        return rainbow();
       case NONE:
         return GREEN;
       default:
         return BLACK;
     }
   }
-  enum BallType {INVADER, STANDARD, STRONG, BOMB, SNIPE};
+  enum BallType {INVADER, STANDARD, STRONG, BOMB, JUGG, SNIPE};
   inline Color b_color(BallType type){
     switch (type) {
       case STANDARD:
@@ -108,9 +138,10 @@ namespace Constants {
         return ORANGE;
       case SNIPE:
         return DAMPWHITE;
+      case JUGG:
+        return rainbow();
       default:
         return BLACK;
     }
   }
-
 };

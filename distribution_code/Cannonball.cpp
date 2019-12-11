@@ -29,11 +29,25 @@ void Cannonball::fire(int x_arg, int y_arg) {
   height = 2;
   exploding = false;
   fired = true;
+  scatterShotLeft = false;
+  scatterShotRight = false;
 }
+
+void Cannonball::fire(int x_arg, int y_arg, bool sLeft, bool sRight) {
+  x = x_arg;
+  y = y_arg;
+  width = 1;
+  height = 2;
+  exploding = false;
+  fired = true;
+  scatterShotLeft = sLeft;
+  scatterShotRight = sRight;  
+}
+
 
 void Cannonball::tick() {
   if (!fired) return;
-  
+  alternator = !alternator;
   if (type == INVADER){
     if (y <= 31){
       y++;
@@ -58,6 +72,8 @@ void Cannonball::tick() {
       }
     } else if (y >= 7) {
       y--;
+      x-=(scatterShotLeft && alternator);
+      x+=(scatterShotRight && alternator);
     } else {
       fired = false;
     }       

@@ -24,7 +24,7 @@ void Game::reset_level() {
   level++;
 
   pacman.deactivate();
-  
+  player1.powerup(player1.getPowerup());
   for (int i = 0; i < NUM_PLAYER_BALLS; i++) {
     player1.balls[i].reset();
   }
@@ -186,7 +186,7 @@ void Game::checkCollisions(){
       if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getHP() != 0){
         if (ball->getType() == SNIPE){
           enemies[i].hit(enemies[i].getHP()); 
-        } else if (ball->getType() == STRONG) {
+        } else if (ball->getType() == STRONG || ball->getType() == JUGG) {
           enemies[i].hit(3);
         } else {
           enemies[i].hit();

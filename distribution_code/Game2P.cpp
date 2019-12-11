@@ -33,6 +33,8 @@ void Game2P::reset_level() {
     enemyBalls[i].reset();
   }
   pacman.deactivate();
+  player1.powerup(player1.getPowerup());
+  player2.powerup(player2.getPowerup());
     
   //defines the strength of invaders
   int minStrength = level/5 + 1;
@@ -239,7 +241,7 @@ void Game2P::checkCollisions(){
         if (enemies[i].isColliding(*ball) && ball->hasBeenFired() && enemies[i].getHP() != 0){
           if (ball->getType() == SNIPE){
             enemies[i].hit(enemies[i].getHP()); 
-          } else if (ball->getType() == STRONG) {
+          } else if (ball->getType() == STRONG || ball->getType() == JUGG) {
             enemies[i].hit(3);
           } else {
             enemies[i].hit();

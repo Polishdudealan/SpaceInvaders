@@ -13,7 +13,7 @@ using namespace Constants;
 
 class Pacman : public Sprite {
   public:
-    Pacman(int width = 13, int height = 13);
+    Pacman(int width = 17, int height = 13);
         
     // getters
     bool hasBeenFired() const;
@@ -31,6 +31,7 @@ class Pacman : public Sprite {
     void deactivate();
   private:
     bool fired;
+    bool alternator = false;
     int curFrame = 0;
 
     void drawPacman(Signal& matrix);

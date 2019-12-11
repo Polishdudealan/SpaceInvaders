@@ -1,10 +1,11 @@
 #include "Pacman.h"
 
-Pacman::Pacman(int width = 13, int height = 13): Sprite(-14,9,width,height) {}
+Pacman::Pacman(int width = 17, int height = 13): Sprite(-14,9,width,height) {}
 
 void Pacman::tick(){
+  alternator = !alternator;
   if (fired && x < 32){
-    x++;
+    x+=alternator;
   } else {
     fired = false;
   }

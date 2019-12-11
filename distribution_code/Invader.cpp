@@ -42,7 +42,7 @@ void Invader::move() {
 }
 
 void Invader::draw(Signal& matrix) {
-  if (hP != 0) {
+  if (hP > 0) {
     draw_with_rgb(num_to_color(hP % 7), num_to_color(((strength - 1) / 7 + 5) % 7), matrix);      
   } else {
     erase(matrix);
@@ -50,12 +50,17 @@ void Invader::draw(Signal& matrix) {
 }
 
 void Invader::hit() {
+  tone(PIEZOPIN, 300, 10);  
   hP--;
   upd();
 }
 
 void Invader::hit(int damage) {
+  tone(PIEZOPIN, 300, 10);
   hP-=damage;
+  if (hP < 0){
+    hP = 0;
+  }
   upd();
 }
 

@@ -30,7 +30,8 @@ class Cannonball : public Sprite {
     // sets private data members
     void fire(int x_arg, int y_arg);
 
-    void fire(int x_arg, int y_arg, int damage);
+    //sets bullets for scattershot
+    void fire(int x_arg, int y_arg, bool sLeft, bool sRight);
     
     //updates all cannonball information, which depends upon type
     void tick();
@@ -50,4 +51,7 @@ class Cannonball : public Sprite {
     bool exploding;
     int explodingDuration;
     BallType type;
+    bool scatterShotLeft = false;
+    bool scatterShotRight = false;
+    bool alternator = false;
 };

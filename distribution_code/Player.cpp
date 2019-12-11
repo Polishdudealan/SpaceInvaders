@@ -32,17 +32,23 @@ void Player::resetLives() {
     
 void Player::die() {
 	lives--; 
+  if (powerupAbility == JUGGERNAUGHT) {
+    lives = 0;
+  }
 }
 
 void Player::powerup(PowerupType power){
-
+  for (int i = 0; i < 50; i++){
+    tone(PIEZOPIN, 500 + i, 10);
+    delay(2);
+  }
   if(power == LIFE){
     lives1up();
     return;
   }
-  powerupAbility = power;
   
   ballDelay = 8;
+  ballCycle = 8;
   
   if (power == RAPID_FIRE) {
     ballDelay = 4;
@@ -55,11 +61,20 @@ void Player::powerup(PowerupType power){
     specialType = SNIPE;
     specialDelay = 100;
     specialCycle = specialDelay;
+  } else if (power == SCATTER_SHOT){
+    specialType = STANDARD;
+    ballDelay = 16;
+    ballCycle = ballDelay;
+  } else if (power == JUGGERNAUGHT) {
+    specialType = STANDARD;
+    ballDelay = 4;
+    ballCycle = ballDelay;
   } else {
     specialDelay = 50;
     specialCycle = specialDelay;
     specialType = STRONG;
   }
+  powerupAbility = power;
 }
 
 void Player::lives1up() {
@@ -94,13 +109,24 @@ void Player::fire(){
   if (ballCycle == ballDelay) {
     Cannonball* ball = getPlayerBall();
     if (ball != NULL) {
-      ball->setType(STANDARD);
+      ball->setType(powerupAbility == JUGGERNAUGHT ? JUGG : STANDARD);
       ball->fire(x + 1, y - 1);
       ballCycle = 0;
       ball->upd();
       // piezo sound effect
       for(int i = 0; i < 1000; i += 100){
       tone(PIEZOPIN, 4000 + i, 10);
+      }
+    }
+    if (powerupAbility == SCATTER_SHOT) {
+      for (int i = 0; i < 2; i++){
+        Cannonball* ball = getPlayerBall();
+        if (ball != NULL){
+          ball->setType(STANDARD);
+          ball->fire(x + 1, y - 1, !i, i);
+          ballCycle = 0;
+          ball->upd();      
+        }
       }
     }
   }
@@ -115,6 +141,9 @@ void Player::specialFire(){
       specialCycle = 0;
       ball->upd();
     }
+  }
+  for(int i = 0; i < 1000; i += 100){
+  tone(PIEZOPIN, 2000 + i, 10);
   }
 }
 
