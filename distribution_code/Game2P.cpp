@@ -77,6 +77,7 @@ void Game2P::reset_level() {
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   print_lives(player1.getLives());
+  print_lives(player2.getLives());         //changed so that if either player gets hit their life count will go down 
   delay(1000);
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score, player2Score);

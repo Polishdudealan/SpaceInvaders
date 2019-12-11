@@ -116,7 +116,7 @@ void setup() {
                 game->setupGame();
                 break;
               case 3:
-                game = new GamePVP();
+//                game = new GamePVP();
                 game->setupGame();
                 break;
             }
