@@ -101,7 +101,7 @@ class Game2P : public Gamemode {
     void print_level(int level);
     
     // displays number of lives
-    void print_lives(int lives);
+    void print_lives(int lives, int lives2);
     
     // displays "game over"
     void game_over();
