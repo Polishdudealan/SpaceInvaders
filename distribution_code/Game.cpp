@@ -237,7 +237,6 @@ bool Game::layerCleared(int layer){
 }
 
 void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) { 
-  Serial.println("Loop");
   time++;
   left_potentiometer_value = 1024-left_potentiometer_value;
   inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);

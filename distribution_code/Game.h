@@ -4,6 +4,7 @@
 #include "Powerups.h"
 #include "Cannonball.h"
 #include "Invader.h"
+#include "Pacman.h"
 
 #ifndef FONT
   #define FONT
@@ -33,7 +34,7 @@ class Game : public Gamemode {
     static const int NUM_ENEMIES = 24;
 
     //game constant for number of enemy balls possible
-    static const int NUM_ENEMY_BALLS = 5;
+    static const int NUM_ENEMY_BALLS = 10;
   
     //game constant for the number of players in the game
     static const int NUM_PLAYERS = 1;
@@ -62,6 +63,7 @@ class Game : public Gamemode {
     Invader enemies[NUM_ENEMIES];
     Cannonball enemyBalls[NUM_ENEMY_BALLS];
     Powerups powerup;
+    Pacman pacman;
     Sprite* updatableSprites[NUM_SPRITES];
 
 

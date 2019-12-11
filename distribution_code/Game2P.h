@@ -34,7 +34,7 @@ class Game2P : public Gamemode {
     static const int NUM_ENEMIES = 24;
 
     //game constant for number of enemy balls possible
-    static const int NUM_ENEMY_BALLS = 5;
+    static const int NUM_ENEMY_BALLS = 10;
   
     //game constant for the number of players in the game
     static const int NUM_PLAYERS = 2;
