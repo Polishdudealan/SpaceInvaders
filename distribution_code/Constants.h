@@ -72,22 +72,20 @@ namespace Constants {
     {{0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 90, 0, 0, 0}}};
 
 
-  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, NONE};
-  const int NUM_P_TYPES = 3;
+  enum PowerupType {LIFE, RAPID_FIRE, BOMB_SHOT, PACMAN, NONE};
+  const int NUM_P_TYPES = 4;
   inline Color p_color(PowerupType type) {
     switch (type) {
       case LIFE:
         return RED;
-        break;
       case RAPID_FIRE:
         return AQUA; //wen plotnick said to use this color, citing him as a source, only for this
-        break;
       case BOMB_SHOT:
-        return YELLOW;
-        break;
+        return ORANGE;
+      case PACMAN:
+        return;
       case NONE:
         return GREEN;
-        break;
       default:
         return BLACK;
     }
@@ -102,7 +100,7 @@ namespace Constants {
         return GREEN; //wen plotnick said to use this color, citing him as a source, only for this
         break;
       case BOMB:
-        return YELLOW;
+        return ORANGE;
         break;
       default:
         return BLACK;

@@ -240,8 +240,9 @@ bool Game::layerCleared(int layer){
 void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool left_special_pressed, int right_potentiometer_value, bool right_regular_pressed, bool right_special_pressed) { 
     pacman.fire();
     pacman.tick();
-    pacman.erase(matrix);
+    matrix.fillScreen(BLACK.to_333());
     pacman.draw(matrix);
+    delay(100);
 //  Serial.println("Loop");
 //  time++;
 //  left_potentiometer_value = 1024-left_potentiometer_value;
