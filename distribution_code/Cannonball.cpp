@@ -42,7 +42,7 @@ void Cannonball::tick() {
     }
   } else {
     if (exploding) {
-      if (explodingDuration < 3) {
+      if (explodingDuration < 5) {
         explodingDuration++;
         width+=2;
         x--;
@@ -60,7 +60,7 @@ void Cannonball::tick() {
       y--;
     } else {
       fired = false;
-    }      
+    }       
   }
 }
 

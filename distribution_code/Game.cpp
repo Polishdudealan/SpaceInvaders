@@ -179,10 +179,8 @@ void Game::checkCollisions(){
       player1.die();
       level--;
       if (player1.getLives() <= 0) {
-        player1Score = 0;
-        player2Score = 0;
-        level = 0;
         game_over();
+        return;
       }
       reset_level();
       return;
@@ -195,10 +193,8 @@ void Game::checkCollisions(){
       player1.die();
       level--;
       if (player1.getLives() <= 0) {
-        player1Score = 0;
-        player2Score = 0;
-        level = 0;
         game_over();
+        return;
       }
       reset_level();
       return;
@@ -282,6 +278,7 @@ void Game::print_lives(int lives) {
 }
 
 void Game::game_over() {
+  matrix.fillScreen(BLACK.to_333());
   int score1 = player1Score;
 
   //converts int score to array of place values

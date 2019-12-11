@@ -220,6 +220,7 @@ void Game2P::checkCollisions(){
       level--;
       if (player1.getLives() <= 0) {
         game_over();
+        return;
       }
       reset_level();
       return;
@@ -232,6 +233,7 @@ void Game2P::checkCollisions(){
       level--;
       if (player2.getLives() <= 0) {
         game_over();
+        return;
       }
       reset_level();
       return;
@@ -245,6 +247,19 @@ void Game2P::checkCollisions(){
       level--;
       if (player1.getLives() <= 0) {
         game_over();
+        return;
+      }
+      reset_level();
+      return;
+    }
+  }
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++) {           
+    if (player2.isColliding(enemyBalls[i]) && enemyBalls[i].hasBeenFired()) {
+      player2.die();
+      level--;
+      if (player2.getLives() <= 0) {
+        game_over();
+        return;
       }
       reset_level();
       return;
@@ -327,6 +342,7 @@ void Game2P::print_lives(int lives) {
 }
 
 void Game2P::game_over() {
+  matrix.fillScreen(BLACK.to_333());
   //draws scoreboard line
   int score1 = player1Score;
   int score2 = player2Score;
