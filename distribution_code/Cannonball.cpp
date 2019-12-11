@@ -350,7 +350,166 @@ case 9:
 //Big Line across 2
         matrix.fillRect(12,31,8,1, ORANGE.to_333()); 
         break;
+
+case 10:
+//top line
+        matrix.fillRect(12,11,8,1, ORANGE.to_333());
+//second line (L, R)       
+        matrix.fillRect(10,12,3,1, ORANGE.to_333());
+        matrix.fillRect(19,12,3,1, ORANGE.to_333());
+//third line (L, R)       
+        matrix.fillRect(8,13,3,1, ORANGE.to_333());
+        matrix.fillRect(21,13,3,1, ORANGE.to_333()); 
+//fourth line (L, R)       
+        matrix.fillRect(7,14,2,1, ORANGE.to_333());
+        matrix.fillRect(23,14,2,1, ORANGE.to_333());
+//fifth line (L, R)       
+        matrix.fillRect(6,15,2,1, ORANGE.to_333());
+        matrix.fillRect(24,15,2,1, ORANGE.to_333());
+//first lines down (L, R)       
+        matrix.fillRect(6,15,1,5, ORANGE.to_333());
+        matrix.fillRect(25,15,1,5, ORANGE.to_333());
+//sixth line across (L, R)       
+        matrix.fillRect(23,20,2,1, ORANGE.to_333());
+//Big Line across 1    
+        matrix.fillRect(7,20,16,1, ORANGE.to_333());
+//2nd lines down L,R  
+        matrix.fillRect(12,20,1,11, ORANGE.to_333());     
+        matrix.fillRect(19,20,1,11, ORANGE.to_333());
+//Big Line across 2
+        matrix.fillRect(12,31,8,1, ORANGE.to_333()); 
+
+//BOOM !!!
+//B
+        matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(9,8,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(12,7,1,1, DAMPWHITE.to_333());
+
+//O
+        matrix.fillRect(15,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(15,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(15,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(17,4,1,5, DAMPWHITE.to_333());
+
+case 11:
+
+//top line
+        matrix.fillRect(12,11,8,1, ORANGE.to_333());
+//second line (L, R)       
+        matrix.fillRect(10,12,3,1, ORANGE.to_333());
+        matrix.fillRect(19,12,3,1, ORANGE.to_333());
+//third line (L, R)       
+        matrix.fillRect(8,13,3,1, ORANGE.to_333());
+        matrix.fillRect(21,13,3,1, ORANGE.to_333()); 
+//fourth line (L, R)       
+        matrix.fillRect(7,14,2,1, ORANGE.to_333());
+        matrix.fillRect(23,14,2,1, ORANGE.to_333());
+//fifth line (L, R)       
+        matrix.fillRect(6,15,2,1, ORANGE.to_333());
+        matrix.fillRect(24,15,2,1, ORANGE.to_333());
+//first lines down (L, R)       
+        matrix.fillRect(6,15,1,5, ORANGE.to_333());
+        matrix.fillRect(25,15,1,5, ORANGE.to_333());
+//sixth line across (L, R)       
+        matrix.fillRect(23,20,2,1, ORANGE.to_333());
+//Big Line across 1    
+        matrix.fillRect(7,20,16,1, ORANGE.to_333());
+//2nd lines down L,R  
+        matrix.fillRect(12,20,1,11, ORANGE.to_333());     
+        matrix.fillRect(19,20,1,11, ORANGE.to_333());
+//Big Line across 2
+        matrix.fillRect(12,31,8,1, ORANGE.to_333()); 
+
+//BOOM !!!
+//B
+        matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(9,8,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(12,7,1,1, DAMPWHITE.to_333());
+
+//O
+        matrix.fillRect(15,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(15,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(15,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(17,4,1,5, DAMPWHITE.to_333());
+
+//O
+        matrix.fillRect(20,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(20,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(20,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(22,4,1,5, DAMPWHITE.to_333());
+
+//M
+        matrix.fillRect(24,5,1,4, DAMPWHITE.to_333());
+        matrix.fillRect(26,5,1,3, DAMPWHITE.to_333());
+        matrix.fillRect(28,5,1,4, DAMPWHITE.to_333());
+        matrix.fillRect(25,4,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(27,4,1,1, DAMPWHITE.to_333());
+
+case 12:
+
+//top line
+        matrix.fillRect(12,11,8,1, ORANGE.to_333());
+//second line (L, R)       
+        matrix.fillRect(10,12,3,1, ORANGE.to_333());
+        matrix.fillRect(19,12,3,1, ORANGE.to_333());
+//third line (L, R)       
+        matrix.fillRect(8,13,3,1, ORANGE.to_333());
+        matrix.fillRect(21,13,3,1, ORANGE.to_333()); 
+//fourth line (L, R)       
+        matrix.fillRect(7,14,2,1, ORANGE.to_333());
+        matrix.fillRect(23,14,2,1, ORANGE.to_333());
+//fifth line (L, R)       
+        matrix.fillRect(6,15,2,1, ORANGE.to_333());
+        matrix.fillRect(24,15,2,1, ORANGE.to_333());
+//first lines down (L, R)       
+        matrix.fillRect(6,15,1,5, ORANGE.to_333());
+        matrix.fillRect(25,15,1,5, ORANGE.to_333());
+//sixth line across (L, R)       
+        matrix.fillRect(23,20,2,1, ORANGE.to_333());
+//Big Line across 1    
+        matrix.fillRect(7,20,16,1, ORANGE.to_333());
+//2nd lines down L,R  
+        matrix.fillRect(12,20,1,11, ORANGE.to_333());     
+        matrix.fillRect(19,20,1,11, ORANGE.to_333());
+//Big Line across 2
+        matrix.fillRect(12,31,8,1, ORANGE.to_333()); 
+
+//BOOM !!!
+//B
+        matrix.fillRect(9,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(9,8,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(9,6,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(9,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(12,5,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(12,7,1,1, DAMPWHITE.to_333());
+
+//O
+        matrix.fillRect(15,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(15,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(15,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(17,4,1,5, DAMPWHITE.to_333());
+
+//O
+        matrix.fillRect(20,4,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(20,4,1,5, DAMPWHITE.to_333());
+        matrix.fillRect(20,8,3,1, DAMPWHITE.to_333());
+        matrix.fillRect(22,4,1,5, DAMPWHITE.to_333());
+
+//M
+        matrix.fillRect(24,5,1,4, DAMPWHITE.to_333());
+        matrix.fillRect(26,5,1,3, DAMPWHITE.to_333());
+        matrix.fillRect(28,5,1,4, DAMPWHITE.to_333());
+        matrix.fillRect(25,4,1,1, DAMPWHITE.to_333());
+        matrix.fillRect(27,4,1,1, DAMPWHITE.to_333());
         
-        
+//!     
+        matrix.fillRect(32,3,2,4, DAMPWHITE.to_333());
+        matrix.fillRect(32,8,2,1, DAMPWHITE.to_333());
       }
   }

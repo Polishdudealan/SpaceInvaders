@@ -4,6 +4,7 @@
 #include "Powerups.h"
 #include "Cannonball.h"
 #include "Invader.h"
+#include "Pacman.h"
 
 #ifndef FONT
   #define FONT
@@ -65,6 +66,7 @@ class Game : public Gamemode {
     Invader enemies[NUM_ENEMIES];
     Cannonball enemyBalls[NUM_ENEMY_BALLS];
     Powerups powerup;
+    Pacman pacman;
     Sprite* updatableSprites[NUM_SPRITES];
 
 
