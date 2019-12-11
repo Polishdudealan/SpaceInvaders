@@ -182,6 +182,8 @@ void Game::checkCollisions(){
       player1.die();
       level--;
       if (player1.getLives() <= 0) {
+        //resets easter egg game speed
+        boardComputationDelay = 30;
         game_over();
         return;
       }
@@ -203,6 +205,14 @@ void Game::checkCollisions(){
       return;
     }
   }
+
+  for (int i = 0; i < NUM_ENEMY_BALLS; i++) {
+    for (int j = 0; j < NUM_ENEMIES; j++) {
+      if (enemyBalls[i].isColliding(enemies[j])) {
+        enemies[j].upd();
+      }
+    }
+  }  
 }
 
 void Game::redrawSprites(){
@@ -276,7 +286,11 @@ void Game::print_lives(int lives) {
 }
 
 void Game::game_over() {
+  //resets easter egg game speed
+  boardComputationDelay = 30;
+  
   matrix.fillScreen(BLACK.to_333());
+
   int score1 = player1Score;
 
   //converts int score to array of place values
@@ -303,8 +317,7 @@ void Game::game_over() {
   matrix.print('E');
   matrix.print('R');
 
-  //resets easter egg game speed
-  boardComputationDelay = 30;
+
   gameOver = true;
   delay(5000);
 }

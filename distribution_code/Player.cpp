@@ -49,8 +49,8 @@ void Player::powerup(PowerupType power){
     ballCycle = 0;
   } else if (power = BOMB_SHOT) {
     specialType = BOMB;
-    specialCycle = 0;
     specialDelay = 250;
+    specialCycle = specialDelay;
   }
 }
 
