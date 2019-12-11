@@ -116,7 +116,7 @@ void setup() {
                 game->setupGame();
                 break;
               case 3:
-                game = new GamePVP();
+                //game = new GamePVP();
                 game->setupGame();
                 break;
             }
@@ -134,10 +134,10 @@ void loop() {
   bool right_special = (digitalRead(BUTTON3_PIN_NUMBER) == HIGH);
   bool right_regular = (digitalRead(BUTTON4_PIN_NUMBER) == HIGH);
 
-  //todo implement game select
+  //easter egg
 
   if(left_potentiometer < 100 && right_potentiometer > 900 && left_special && right_special) {
-    boardComputationDelay = 5;
+    boardComputationDelay = 10;
   }
   game->update(left_potentiometer, left_regular, left_special, right_potentiometer, right_regular, right_special);
 //  game->update(left_potentiometer, left_special, left_special, right_potentiometer, right_regular, right_special);
