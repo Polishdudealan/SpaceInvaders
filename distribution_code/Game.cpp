@@ -12,7 +12,7 @@ Game::Game() {
 void Game::setupGame() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
                                                         // for testing all powerups in game 
-  player1.powerup(NUKE);
+  player1.powerup(NONE);
   reset_level();
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   score_board(player1Score);
@@ -103,7 +103,10 @@ void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, 
         }
       }
       matrix.fillScreen(WHITE.to_333());
-      delay(1000);
+      for (int i = 0; i < 500; i++){
+        tone(PIEZOPIN, 500 - i, 10);
+        delay(2);
+      }
       for (int i = 1; i < 12; i++){
         matrix.fillScreen(BLACK.to_333());
         player1.balls[i].drawNuke(i, matrix);
@@ -111,8 +114,9 @@ void Game::inputUpdate(int left_potentiometer_value, bool left_regular_pressed, 
       }
       delay(3000);
       reset_level();
+    } else {
+      player1.specialFire();
     }
-    player1.specialFire();
   }
 
   // this allows for the potentiometer to be more narrow, only using the middle two quarters of its range to control the player1
