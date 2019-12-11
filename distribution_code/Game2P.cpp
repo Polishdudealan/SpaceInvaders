@@ -427,9 +427,6 @@ void Game2P::game_over() {
   matrix.print('V');
   matrix.print('E');
   matrix.print('R');
-
-  //resets easter egg game speed
-  boardComputationDelay = 30;
   gameOver = true;
   delay(5000);
 }
