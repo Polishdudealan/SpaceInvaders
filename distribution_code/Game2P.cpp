@@ -336,7 +336,16 @@ void Game2P::print_lives(int lives) {
   matrix.print('E');
   matrix.print('S');
 
+  Font::printCharacter('P', 2, 9, AQUA.to_333(), matrix);
+  Font::printCharacter(1, 5, 9, AQUA.to_333(), matrix);
+  Font::printCharacter('P', 2, 21, AQUA.to_333(), matrix);
+  Font::printCharacter(2, 5, 21, AQUA.to_333(), matrix);
+  
   matrix.setCursor(11, 9); // next line 
+  matrix.print((lives / 10) + '0');
+  matrix.print((lives % 10) + '0');
+
+  matrix.setCursor(11, 21); // next line for 2P lives 
   matrix.print((lives / 10) + '0');
   matrix.print((lives % 10) + '0');
 }

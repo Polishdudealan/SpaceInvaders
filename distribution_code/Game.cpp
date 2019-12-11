@@ -331,7 +331,7 @@ void Game::score_board(int score1){
   //prints numbers as characters 
   for (int i = 0; i < 4; i++) {
     Font::printCharacter(value1[i], 0 + 4 * i, 0, DAMPWHITE.to_333(), matrix);
-    Font::printCharacter(value2[i], 17 + 4 * i, 0, DAMPWHITE.to_333(), matrix);
+    //Font::printCharacter(value2[i], 17 + 4 * i, 0, DAMPWHITE.to_333(), matrix);
   }
   
 }
