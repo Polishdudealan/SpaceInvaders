@@ -27,7 +27,7 @@ namespace Constants {
   const int POTENTIOMETER2_PIN_NUMBER = A15 ;
 
   //game speed (30 is a good value)
-  static int boardComputationDelay = 30;
+  static int boardComputationDelay = 20;
   
   const int BUTTON1_PIN_NUMBER = 26;
   const int BUTTON2_PIN_NUMBER = 28;

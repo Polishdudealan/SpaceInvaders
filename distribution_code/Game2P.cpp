@@ -7,6 +7,8 @@ Game2P::Game2P() {
   for (int i = 0; i < NUM_ENEMY_BALLS; i++){
     enemyBalls[i].setType(INVADER);
   }
+  player1Score = 0;
+  player2Score = 0;  
 }
 
 void Game2P::setupGame() {
@@ -271,8 +273,7 @@ void Game2P::checkCollisions(){
           } else {
             player2Score++;            
           }
-          matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
-          score_board(player1Score, player2Score);//TODO fix for 2 player1s   
+ 
         }
       }
     }
@@ -411,6 +412,8 @@ void Game2P::update(int left_potentiometer_value, bool left_regular_pressed, boo
   inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
   moveUpdate();
   checkCollisions();
+  matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
+  score_board(player1Score, player2Score);
 
   if (level_cleared()){
     reset_level();

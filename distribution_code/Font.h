@@ -88,6 +88,50 @@ namespace Font{
       case '-':
         matrix.fillRect(x_start + 0, y_start + 2, 3, 1, color);
         break;
+      case 'H':
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 2, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 0, y_start + 2, 3, 1, color);
+        break;
+      case 'C':
+        matrix.fillRect(x_start + 0, y_start + 0, 3, 1, color);
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 0, y_start + 4, 3, 1, color);
+        break;
+      case 'M':
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 1, y_start + 1, 1, 2, color);
+        matrix.fillRect(x_start + 2, y_start + 0, 1, 5, color);
+        break;
+      case 'E':
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 0, y_start + 0, 3, 1, color);
+        matrix.fillRect(x_start + 0, y_start + 2, 3, 1, color);
+        matrix.fillRect(x_start + 0, y_start + 4, 3, 1, color);
+        break;
+      case 'N':
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 1, y_start + 1, 1, 3, color);
+        matrix.fillRect(x_start + 2, y_start + 0, 1, 5, color);
+        break;
+      case 'U':
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 0, y_start + 4, 3, 1, color);
+        matrix.fillRect(x_start + 2, y_start + 0, 1, 5, color);
+        break;
+      case 'I':
+        matrix.fillRect(x_start + 0, y_start + 0, 3, 1, color);
+        matrix.fillRect(x_start + 1, y_start + 0, 1, 5, color);
+        matrix.fillRect(x_start + 0, y_start + 4, 3, 1, color);
+        break;
+      case 'R':
+        matrix.fillRect(x_start + 0, y_start + 0, 1, 5, color);
+        matrix.drawPixel(x_start + 1, y_start + 0, color);
+        matrix.drawPixel(x_start + 2, y_start + 1, color);
+        matrix.drawPixel(x_start + 1, y_start + 2, color);
+        matrix.drawPixel(x_start + 1, y_start + 3, color);
+        matrix.drawPixel(x_start + 2, y_start + 4, color);
+        break;
       default:
         ;
       }

@@ -58,8 +58,8 @@ class Game : public Gamemode {
     int currentLayer;
     
     // defines player score and initializes to 0
-    int player1Score = 0;
-    int player2Score = 0;
+//    player1Score = 0;
+//    player2Score = 0;
 
     //****** Sprites ********
     Player player1;

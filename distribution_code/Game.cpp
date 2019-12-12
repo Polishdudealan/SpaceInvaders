@@ -4,6 +4,7 @@ Game::Game() {
   level = 0;
   time = 0;
   numUpdates = 0;
+  player1Score = 0;
   for (int i = 0; i < NUM_ENEMY_BALLS; i++){
     enemyBalls[i].setType(INVADER);
   }
@@ -205,9 +206,7 @@ void Game::checkCollisions(){
         ball->upd();
         //updates player1score and refreshes scoreboard
         player1Score++;
-        player2Score++;
-        matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
-        score_board(player1Score);//TODO fix for 2 player1s     
+        player2Score++;   
       }
     }
   }
@@ -295,11 +294,13 @@ void Game::update(int left_potentiometer_value, bool left_regular_pressed, bool 
   inputUpdate(left_potentiometer_value, left_regular_pressed, left_special_pressed, right_potentiometer_value, right_regular_pressed, right_special_pressed);
   moveUpdate();
   checkCollisions();
-
+  matrix.fillRect(0, 0, 32, 5, BLACK.to_333());
+  score_board(player1Score);
+  
   if (level_cleared()){
     reset_level();
   }
-
+  
   redrawSprites();  
 }  
   
@@ -338,7 +339,7 @@ void Game::game_over() {
   
   matrix.fillScreen(BLACK.to_333());
 
-  int score1 = player1Score;
+  uint16_t score1 = player1Score;
 
   //converts int score to array of place values
   int value1[4];

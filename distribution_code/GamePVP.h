@@ -245,6 +245,8 @@ class GamePVP : public Gamemode {
       matrix.print('N');
       matrix.print('S');
       delay(5000);
+      player1Score = -1;
+      player2Score = -1;
       gameOver = true;
     }
 };
