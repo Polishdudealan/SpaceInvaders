@@ -3,6 +3,8 @@ This project resulted in a custom Arduino powered space invaders game. A Master 
 
 Created as part of a project for a programming class by the Arduinerds: Robert, Sam, Ammar, and Myself.
 
-## Watch the promo video [here](https://www.youtube.com/watch?v=hnEeR7Wohws)!
+## Watch the promo video <a href="https://www.youtube.com/watch?v=hnEeR7Wohws" target="_blank">Here</a>!
 
 ![Arduino Space Invaders Console](arduino_space_invaders.jpg)
+
+
